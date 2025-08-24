@@ -15,6 +15,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/.history
 *.log
 *.cache
 .DS_Store
