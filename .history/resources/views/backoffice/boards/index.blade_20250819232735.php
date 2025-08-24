@@ -1,0 +1,96 @@
+@extends('backoffice.layouts.app')
+
+@section('title', '게시판 관리')
+
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/common/buttons.css') }}">
+<link rel="stylesheet" href="{{ asset('css/backoffice/boards.css') }}">
+@endsection
+
+@section('content')
+<div class="board-container">
+    <div class="board-header">
+        <h1>게시판 관리</h1>
+        <a href="{{ route('backoffice.boards.create') }}" class="btn btn-success">
+            <i class="fas fa-plus"></i> 새 게시판
+        </a>
+    </div>
+
+    <div class="board-card">
+        <div class="board-card-header">
+            <h6>게시판 목록</h6>
+        </div>
+        <div class="board-card-body">
+            <div class="table-responsive">
+                <table class="board-table">
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>URL</th>
+                            <th>스킨</th>
+                            <th>상태</th>
+                            <th>생성일</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($boards as $board)
+                        <tr>
+                            <td>{{ $board->name }}</td>
+                            <td>{{ $board->slug }}</td>
+                            <td>{{ $board->skin ? $board->skin->name : '없음' }}</td>
+                            <td>
+                                @if ($board->is_active)
+                                <span class="board-badge board-badge-success">활성</span>
+                                @else
+                                <span class="board-badge board-badge-secondary">비활성</span>
+                                @endif
+                            </td>
+                            <td>{{ $board->created_at->format('Y-m-d') }}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{{ route('boards.index', $board->slug) }}" target="_blank" class="btn btn-success btn-table">
+                                        <i class="fas fa-external-link-alt"></i> <span class="btn-text">보기</span>
+                                    </a>
+                                    <a href="{{ route('backoffice.boards.edit', $board) }}" class="btn btn-primary btn-table">
+                                        <i class="fas fa-edit"></i> <span class="btn-text">수정</span>
+                                    </a>
+                                    <form action="{{ route('backoffice.boards.destroy', $board) }}" method="POST" class="d-inline" onsubmit="return confirm('이 게시판을 삭제하시겠습니까? 관련된 모든 데이터가 함께 삭제됩니다.');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-table">
+                                            <i class="fas fa-trash"></i> <span class="btn-text">삭제</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="text-center">등록된 게시판이 없습니다.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="board-pagination">
+                {{ $boards->links() }}
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+    // 페이지 로드 시 성공 메시지가 있으면 모달로 표시
+    document.addEventListener('DOMContentLoaded', function() {
+        @if(session('success'))
+            if (window.AppUtils && window.AppUtils.modal) {
+                window.AppUtils.modal.success('{{ session('success') }}');
+            }
+        @endif
+    });
+</script>
+@endsection

@@ -1,0 +1,206 @@
+/**
+ * 테이블 공통 스타일
+ */
+
+/* 기본 테이블 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* 테이블 반응형 */
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-responsive table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+/* 게시판 테이블 공통 */
+.board-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.board-table th {
+    text-align: left;
+    padding: 0.75rem 0.5rem;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #e9ecef;
+    background: #f8f9fa;
+}
+
+.board-table td {
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid #f1f3f4;
+    color: #333;
+    vertical-align: middle;
+}
+
+/* 체크박스 컬럼 스타일 - 모든 충돌 방지 */
+.board-table .board-checkbox-column,
+.board-table th.board-checkbox-column,
+.board-table td.board-checkbox-column {
+    text-align: center !important;
+    vertical-align: middle !important;
+    width: 5% !important;
+    min-width: 50px !important;
+    padding: 0.75rem 0.5rem !important;
+}
+
+.board-table .board-checkbox-column input[type="checkbox"],
+.board-table th.board-checkbox-column input[type="checkbox"],
+.board-table td.board-checkbox-column input[type="checkbox"] {
+    margin: 0 auto !important;
+    display: block !important;
+    float: none !important;
+    position: static !important;
+    transform: none !important;
+}
+
+/* 첫 번째 열이 체크박스인 경우 특별 처리 */
+.board-table td:first-child.board-checkbox-column {
+    text-align: center !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    vertical-align: middle !important;
+}
+
+/* 컬럼 너비 유틸리티 클래스 */
+.w80 { width: 80px !important; min-width: 80px !important; }
+.w100 { width: 100px !important; min-width: 100px !important; }
+.w120 { width: 120px !important; min-width: 120px !important; }
+.w150 { width: 150px !important; min-width: 150px !important; }
+.w200 { width: 200px !important; min-width: 200px !important; }
+.w250 { width: 250px !important; min-width: 250px !important; }
+
+/* 퍼센트 기반 넓이 */
+.w5 { width: 5% !important; }
+.w10 { width: 10% !important; }
+.w15 { width: 15% !important; }
+.w20 { width: 20% !important; }
+.w25 { width: 25% !important; }
+.w30 { width: 30% !important; }
+.w40 { width: 40% !important; }
+.w50 { width: 50% !important; }
+
+/* 테이블 스택 스타일 (모바일에서 행 방향으로 변경) */
+.stack-on-mobile {
+    width: 100%;
+}
+
+.stack-on-mobile td {
+    position: relative;
+    display: block;
+    padding: 8px 8px 8px 45%;
+    text-align: right;
+    border-bottom: 1px solid #eee;
+}
+
+.stack-on-mobile td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: left;
+    font-weight: 600;
+}
+
+.stack-on-mobile tr {
+    display: block;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.stack-on-mobile thead {
+    display: none;
+}
+
+/* 스크롤 힌트 */
+.scroll-hint {
+    text-align: center;
+    padding: 5px;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-size: 13px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    opacity: 0.9;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .board-table {
+        font-size: 0.75rem;
+    }
+    
+    .board-table th,
+    .board-table td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .stack-on-mobile {
+        display: block;
+    }
+    
+    .stack-on-mobile thead {
+        display: none;
+    }
+    
+    .stack-on-mobile tbody,
+    .stack-on-mobile tr,
+    .stack-on-mobile th,
+    .stack-on-mobile td {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+    
+    .stack-on-mobile tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+    
+    .stack-on-mobile td {
+        position: relative;
+        padding-left: 130px;
+        min-height: 40px;
+        border: none;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .stack-on-mobile td:before {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 10px;
+        width: 120px;
+        padding-right: 10px;
+        font-weight: bold;
+    }
+}
+
+@media (max-width: 576px) {
+    .stack-on-mobile td {
+        padding: 10px 8px 10px 40%;
+    }
+    
+    .stack-on-mobile td:before {
+        width: 35%;
+    }
+}

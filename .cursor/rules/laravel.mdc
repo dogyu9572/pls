@@ -1,0 +1,77 @@
+---
+alwaysApply: true
+---
+rules:
+  - 모든 변수, 함수, 클래스, 파일명은 의미가 명확하고 직관적으로 작성한다. (약어, 불명확한 이름 금지)
+  - 코드와 주석, 안내문은 한글로 작성한다. (필요시 공식 용어는 영어 병기)
+  - 불필요한 예외처리, 중복 코드, 임시 변수명(temp, foo, bar 등) 사용을 금지한다.
+  - DB 테이블명, 컬럼명은 소문자+언더스코어로 작성하며, 2단어 이내로 간결하게 한다.
+  - Eloquent 모델, 컨트롤러, 마이그레이션, 시더, 팩토리 등 라라벨 표준 구조를 따른다.
+  - Blade 템플릿은 PSR-12 코드 스타일을 준수하고, 들여쓰기는 스페이스 4칸을 사용한다.
+  - Blade에서 반복문, 조건문 등은 최대한 간결하게 작성하고, 복잡한 로직은 컨트롤러/뷰모델로 분리한다.
+  - 라우트, 컨트롤러, 모델, 뷰의 역할을 명확히 분리한다. (비즈니스 로직은 컨트롤러/서비스에만 작성)
+  - 모든 함수/메서드는 한 가지 역할만 하도록 작성한다. (단일 책임 원칙)
+  - 불필요한 주석, TODO, FIXME, 디버그 코드(예: dd, dump)는 남기지 않는다.
+  - 인증, 권한, 파일 업로드 등은 라라벨 내장 기능을 우선 사용한다.
+  - 코드 리뷰/리팩토링/최적화 요청 시 AI가 쉽게 이해할 수 있도록 명확하게 설명한다.
+  - 반복되는 작업, 패턴, 구조는 AI에게 자동화 요청을 적극 활용한다.
+  - 외부 라이브러리/패키지는 공식 문서와 최신 버전만 사용한다.
+  - 모든 에러 메시지, 유효성 검사, 안내문은 사용자에게 친절하게 한글로 제공한다.
+  - 프로젝트 내 모든 규칙, 네이밍, 구조는 일관성을 유지한다.
+
+  # 개발 환경
+  - 터미널 명령어는 반드시 WSL(Ubuntu) 환경에서 실행한다. (wsl 명령어 사용)
+  - PHP, Composer, Artisan 명령어는 WSL 내부에서 실행한다.
+  - Docker 환경에서 Laravel Sail을 사용하여 개발한다.
+  - 데이터베이스는 Docker MySQL 컨테이너를 사용한다.
+  - 마이그레이션, 시더 실행은 Docker 컨테이너 내부에서 실행한다. (docker exec -it maintenance-laravel.test-1 php artisan)
+  - 파일 경로는 WSL 경로 형식을 사용한다. (/mnt/c/ 대신 /home/ 사용)
+
+  # Docker 환경 규칙
+  - 모든 Laravel 명령어는 Docker 컨테이너 내부에서 실행한다.
+  - 데이터베이스 연결은 Docker MySQL 컨테이너를 사용한다.
+  - 환경 설정은 .env 파일과 docker-compose.yml을 통해 관리한다.
+  - 컨테이너 상태 확인은 docker ps 명령어를 사용한다.
+  - 로그 확인은 docker logs 명령어를 사용한다.
+
+  # MySQL 데이터베이스 규칙
+  - MySQL 8.0을 사용한다.
+  - 데이터베이스 이름은 .env 파일의 DB_DATABASE 설정을 따른다.
+  - 테이블명은 복수형, 소문자, 언더스코어를 사용한다. (users, maintenance_requests)
+  - 컬럼명은 소문자, 언더스코어를 사용한다. (user_id, created_at)
+  - 외래키는 단수형 테이블명_id 형식을 사용한다. (user_id, client_id)
+  - 인덱스는 필요한 경우에만 생성한다.
+
+  # 보안
+  - 사용자 입력은 Request 클래스의 rules() 메서드로 간단하게 검증한다.
+  - Eloquent ORM을 최대한한 사용한다. (SQL 인젝션 방지)
+  - Blade에서 {{ }} 사용을 기본으로 한다. ({!! !!}는 신뢰할 수 있는 데이터만)
+  - 폼에는 @csrf 지시어를 추가한다.
+  - 파일 업로드는 간단한 확장자 검사만 한다. (jpg, png, pdf 등)
+  - 민감한 정보는 .env에 저장하고 절대 코드에 하드코딩하지 않는다.
+  - 에러 메시지는 사용자에게 친절하게, 시스템 정보는 노출하지 않는다.
+
+  # Laravel + Docker + WSL 환경 설정
+  - 환경: Docker + WSL (Windows Subsystem for Linux)
+  - 컨테이너 구성: Laravel 컨테이너 + MySQL 컨테이너
+  - MySQL 버전: 8.0.32
+  - MySQL 접속 계정: sail/password
+  - 문자셋: utf8mb4 (한글 완벽 지원)
+  - SQL 모드: STRICT_TRANS_TABLES (엄격한 데이터 검증)
+
+  # 자동 환경 감지 규칙
+  - Laravel 컨테이너 이름 자동 감지: wsl docker ps --format "table {{.Names}}" | grep laravel
+  - MySQL 컨테이너 이름 자동 감지: wsl docker ps --format "table {{.Names}}" | grep mysql
+  - DB 이름 자동 감지: .env 파일의 DB_DATABASE 값 사용
+  - DB 접속 정보 자동 감지: .env 파일의 DB_USERNAME, DB_PASSWORD 값 사용
+  - 컨테이너가 실행 중이지 않으면 먼저 wsl docker-compose up -d 실행
+
+  # 마이그레이션 작업 규칙 (자동 감지)
+  - 마이그레이션 생성: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep laravel | head -1) php artisan make:migration
+  - 마이그레이션 실행: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep laravel | head -1) php artisan migrate
+  - 마이그레이션 리셋: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep laravel | head -1) php artisan migrate:reset
+  - 마이그레이션 롤백: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep laravel | head -1) php artisan migrate:rollback
+  - 마이그레이션 상태: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep laravel | head -1) php artisan migrate:status
+  - 시더 실행: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep laravel | head -1) php artisan db:seed
+  - 테이블 구조 확인: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep mysql | head -1) mysql -u $(grep DB_USERNAME .env | cut -d'=' -f2) -p$(grep DB_PASSWORD .env | cut -d'=' -f2) $(grep DB_DATABASE .env | cut -d'=' -f2) -e "DESCRIBE 테이블명;"
+  - 모든 테이블 확인: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep mysql | head -1) mysql -u $(grep DB_USERNAME .env | cut -d'=' -f2) -p$(grep DB_PASSWORD .env | cut -d'=' -f2) $(grep DB_DATABASE .env | cut -d'=' -f2) -e "SHOW TABLES;"

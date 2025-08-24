@@ -1,0 +1,172 @@
+/* 모달 공통 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.3);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 0;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    width: 340px;
+    max-width: 90%;
+    animation: slideIn 0.3s ease-out;
+    border: none;
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 16px 20px 12px;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    position: relative;
+}
+
+.modal-header.success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.modal-header.error {
+    background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+}
+
+.modal-header.warning {
+    background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+}
+
+.modal-title {
+    margin: 0;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.modal-body {
+    padding: 20px;
+    text-align: center;
+    background: #fff;
+}
+
+.modal-body p {
+    margin: 0;
+    font-size: 13px;
+    color: #495057;
+    line-height: 1.4;
+}
+
+.close-modal {
+    color: rgba(255,255,255,0.8);
+    float: right;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+}
+
+.close-modal:hover {
+    color: white;
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.1);
+}
+
+@keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
+@keyframes slideIn {
+    from {transform: translateY(-30px) scale(0.95); opacity: 0;}
+    to {transform: translateY(0) scale(1); opacity: 1;}
+}
+
+@keyframes fadeOut {
+    from {opacity: 1}
+    to {opacity: 0}
+}
+
+/* 페이드인 애니메이션 */
+.fade-in {
+    animation: fadeIn 0.2s forwards;
+}
+
+.fade-out {
+    animation: fadeOut 0.2s forwards;
+}
+
+/* 모달 액션 버튼 스타일 */
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-confirm {
+    padding: 8px 16px;
+    background-color: #e74a3b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-confirm:hover {
+    background-color: #d52a1a;
+}
+
+.btn-success {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-success:hover {
+    background-color: #3e8e41;
+}
+
+.btn-cancel-modal {
+    padding: 8px 16px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-cancel-modal:hover {
+    background-color: #5a6268;
+}
+
+/* 숨겨진 알림 클래스 */
+.hidden-alert {
+    display: none;
+}

@@ -1,0 +1,160 @@
+/**
+ * 카드 공통 스타일
+ */
+
+/* 기본 카드 */
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border: 1px solid #e9ecef;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    padding: 1.25rem 1.5rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.card-header h6 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-footer {
+    padding: 1rem 1.5rem;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+/* 콘텐츠 카드 (백오피스 표준) */
+.content-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border: 1px solid #e9ecef;
+    overflow: hidden;
+}
+
+.content-card-header {
+    padding: 1.25rem 1.5rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.content-card-header h6 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.content-card-body {
+    padding: 1.5rem;
+}
+
+/* 게시판 카드 */
+.board-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border: 1px solid #e9ecef;
+    overflow: hidden;
+}
+
+.board-card-header {
+    padding: 1.25rem 1.5rem;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.board-card-header h6 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.board-card-body {
+    padding: 1.5rem;
+}
+
+/* 페이지 헤더 카드 */
+.page-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.page-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.page-actions .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.9rem;
+}
+
+/* 게시판 페이지 카드 */
+.board-page-card-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.board-page-card-title h6 {
+    margin: 0;
+    color: #212529;
+    font-weight: 600;
+}
+
+.board-page-count {
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .card-header,
+    .card-body,
+    .card-footer,
+    .content-card-header,
+    .content-card-body,
+    .board-card-header,
+    .board-card-body {
+        padding: 1rem;
+    }
+    
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .page-actions {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .board-page-card-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}

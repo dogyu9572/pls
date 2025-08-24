@@ -1,0 +1,112 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* 메인 레이아웃 스타일 */
+
+/* 헤더 스타일 */
+.main-header {
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.main-header .navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.main-header .navbar-nav .nav-link {
+    color: #666;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.main-header .navbar-nav .nav-link:hover {
+    color: #333;
+}
+
+.main-header .dropdown-menu {
+    border: 1px solid #e9ecef;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.main-header .dropdown-item {
+    color: #666;
+    transition: background-color 0.3s ease;
+}
+
+.main-header .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* 메인 콘텐츠 */
+.main-content {
+    min-height: calc(100vh - 200px);
+    padding: 2rem 0;
+}
+
+/* 푸터 스타일 */
+.main-footer {
+    border-top: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+}
+
+.main-footer a {
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.main-footer a:hover {
+    color: #333;
+    text-decoration: none;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 1rem 0;
+    }
+    
+    .main-header .navbar-brand {
+        font-size: 1.25rem;
+    }
+}
+
+/* 유틸리티 클래스 */
+.text-decoration-none {
+    text-decoration: none;
+}
+
+.text-secondary {
+    color: #6c757d;
+}
+
+.me-3 {
+    margin-right: 1rem;
+}
+
+/* 애니메이션 */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

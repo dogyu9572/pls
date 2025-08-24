@@ -1,0 +1,357 @@
+@extends('backoffice.layouts.app')
+
+@section('title', '백오피스 대시보드')
+
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/backoffice/dashboard.css') }}">
+@endsection
+
+@section('content')
+<div class="dashboard-content">
+    <!-- 대시보드 헤더 -->
+    <div class="dashboard-header">
+        <div class="dashboard-welcome">
+            <h2>{{ auth()->user()->name ?? '관리자' }}님, 환영합니다!</h2>
+            <p>{{ date('Y년 m월 d일') }} 백오피스 대시보드 현황입니다.</p>
+        </div>
+        <div class="dashboard-actions">
+            <a href="{{ route('backoffice.setting.index') }}" class="dashboard-action-btn">
+                <i class="fas fa-cog"></i> 환경설정
+            </a>
+            <a href="{{ url('/') }}" target="_blank" class="dashboard-action-btn">
+                <i class="fas fa-home"></i> 사이트 방문
+            </a>
+        </div>
+    </div>
+
+    <!-- 통계 요약 -->
+    <div class="stats-row">
+        <div class="stat-card stat-users">
+            <div class="stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-info">
+                <h3>회원</h3>
+                <p class="stat-number">{{ \App\Models\User::count() }}</p>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up trend-icon"></i>
+                    <span>5% 증가</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card stat-boards">
+            <div class="stat-icon">
+                <i class="fas fa-clipboard-list"></i>
+            </div>
+            <div class="stat-info">
+                <h3>게시판</h3>
+                <p class="stat-number">{{ \App\Models\Board::count() }}</p>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up trend-icon"></i>
+                    <span>2% 증가</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card stat-posts">
+            <div class="stat-icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="stat-info">
+                <h3>게시글</h3>
+                <p class="stat-number">{{ \App\Models\BoardPost::count() }}</p>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up trend-icon"></i>
+                    <span>12% 증가</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card stat-comments">
+            <div class="stat-icon">
+                <i class="fas fa-comments"></i>
+            </div>
+            <div class="stat-info">
+                <h3>댓글</h3>
+                <p class="stat-number">{{ \App\Models\BoardComment::count() }}</p>
+                <div class="stat-trend trend-up">
+                    <i class="fas fa-arrow-up trend-icon"></i>
+                    <span>8% 증가</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 데이터 그리드 -->
+    <div class="dashboard-grid">
+        <!-- 최근 게시글 -->
+        <div class="grid-item grid-col-6">
+            <div class="grid-item-header">
+                <h3>최근 게시글</h3>
+                <a href="{{ route('backoffice.posts.index') }}" class="more-btn">
+                    <i class="fas fa-arrow-right"></i> 더보기
+                </a>
+            </div>
+            <div class="grid-item-body">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>제목</th>
+                            <th>게시판</th>
+                            <th>작성자</th>
+                            <th>등록일</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse(\App\Models\BoardPost::with(['board', 'user'])->latest()->limit(5)->get() as $post)
+                        <tr>
+                            <td>{{ Str::limit($post->title, 30) }}</td>
+                            <td>{{ $post->board->name }}</td>
+                            <td>{{ $post->user->name ?? '탈퇴회원' }}</td>
+                            <td>{{ $post->created_at->format('Y-m-d') }}</td>
+                            <td>
+                                <a href="{{ route('backoffice.posts.edit', $post->id) }}" class="table-action table-action-edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ route('backoffice.posts.show', $post->id) }}" class="table-action">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center">등록된 게시글이 없습니다.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 최근 회원가입 -->
+        <div class="grid-item grid-col-6">
+            <div class="grid-item-header">
+                <h3>최근 회원가입</h3>
+                <a href="{{ route('backoffice.users.index') }}" class="more-btn">
+                    <i class="fas fa-arrow-right"></i> 더보기
+                </a>
+            </div>
+            <div class="grid-item-body">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>가입일</th>
+                            <th>상태</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse(\App\Models\User::latest()->limit(5)->get() as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->created_at->format('Y-m-d') }}</td>
+                            <td>
+                                <span class="table-badge badge-{{ $user->email_verified_at ? 'success' : 'warning' }}">
+                                    {{ $user->email_verified_at ? '인증완료' : '미인증' }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ route('backoffice.users.edit', $user->id) }}" class="table-action table-action-edit">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>
+                                <a href="{{ route('backoffice.users.show', $user->id) }}" class="table-action">
+                                    <i class="fas fa-user"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center">가입한 회원이 없습니다.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 접속 로그 -->
+        <div class="grid-item grid-col-6">
+            <div class="grid-item-header">
+                <h3>최근 접속 로그</h3>
+                <a href="{{ route('backoffice.logs.access') }}" class="more-btn">
+                    <i class="fas fa-arrow-right"></i> 더보기
+                </a>
+            </div>
+            <div class="grid-item-body">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>IP</th>
+                            <th>사용자</th>
+                            <th>접속시간</th>
+                            <th>상태</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>192.168.1.101</td>
+                            <td>관리자</td>
+                            <td>{{ now()->subMinutes(5)->format('Y-m-d H:i') }}</td>
+                            <td><span class="table-badge badge-success">성공</span></td>
+                        </tr>
+                        <tr>
+                            <td>118.235.12.45</td>
+                            <td>user@example.com</td>
+                            <td>{{ now()->subHours(1)->format('Y-m-d H:i') }}</td>
+                            <td><span class="table-badge badge-success">성공</span></td>
+                        </tr>
+                        <tr>
+                            <td>121.143.88.201</td>
+                            <td>unknown</td>
+                            <td>{{ now()->subHours(2)->format('Y-m-d H:i') }}</td>
+                            <td><span class="table-badge badge-danger">실패</span></td>
+                        </tr>
+                        <tr>
+                            <td>58.124.56.102</td>
+                            <td>member@example.com</td>
+                            <td>{{ now()->subHours(3)->format('Y-m-d H:i') }}</td>
+                            <td><span class="table-badge badge-success">성공</span></td>
+                        </tr>
+                        <tr>
+                            <td>211.214.110.53</td>
+                            <td>admin@example.com</td>
+                            <td>{{ now()->subHours(5)->format('Y-m-d H:i') }}</td>
+                            <td><span class="table-badge badge-success">성공</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 관리자 목록 -->
+        <div class="grid-item grid-col-6">
+            <div class="grid-item-header">
+                <h3>관리자 목록</h3>
+                <a href="{{ route('backoffice.admins.index') }}" class="more-btn">
+                    <i class="fas fa-arrow-right"></i> 더보기
+                </a>
+            </div>
+            <div class="grid-item-body">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>최근접속</th>
+                            <th>권한</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>슈퍼관리자</td>
+                            <td>admin@example.com</td>
+                            <td>{{ now()->subMinutes(30)->format('Y-m-d H:i') }}</td>
+                            <td><span class="table-badge badge-danger">최고관리자</span></td>
+                            <td>
+                                <a href="#" class="table-action table-action-edit">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>게시판관리자</td>
+                            <td>board@example.com</td>
+                            <td>{{ now()->subDays(1)->format('Y-m-d H:i') }}</td>
+                            <td><span class="table-badge badge-info">게시판관리</span></td>
+                            <td>
+                                <a href="#" class="table-action table-action-edit">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>회원관리자</td>
+                            <td>member@example.com</td>
+                            <td>{{ now()->subDays(2)->format('Y-m-d H:i') }}</td>
+                            <td><span class="table-badge badge-info">회원관리</span></td>
+                            <td>
+                                <a href="#" class="table-action table-action-edit">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 게시판 관리 -->
+        <div class="grid-item grid-col-12">
+            <div class="grid-item-header">
+                <h3>게시판 현황</h3>
+                <a href="{{ route('backoffice.boards.index') }}" class="more-btn">
+                    <i class="fas fa-arrow-right"></i> 더보기
+                </a>
+            </div>
+            <div class="grid-item-body">
+                <table class="dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>게시판명</th>
+                            <th>슬러그</th>
+                            <th>게시글</th>
+                            <th>댓글</th>
+                            <th>최근게시물</th>
+                            <th>상태</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse(\App\Models\Board::withCount(['posts', 'comments'])->get() as $board)
+                        <tr>
+                            <td>{{ $board->name }}</td>
+                            <td>{{ $board->slug }}</td>
+                            <td>{{ $board->posts_count }}</td>
+                            <td>{{ $board->comments_count }}</td>
+                            <td>
+                                @php
+                                    $latestPost = $board->posts()->latest()->first();
+                                @endphp
+                                {{ $latestPost && $latestPost->created_at ? $latestPost->created_at->format('Y-m-d') : '없음' }}
+                            </td>
+                            <td>
+                                <span class="table-badge badge-{{ $board->is_active ? 'success' : 'warning' }}">
+                                    {{ $board->is_active ? '활성' : '비활성' }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="{{ route('backoffice.boards.edit', $board->id) }}" class="table-action table-action-edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ route('boards.index', $board->slug) }}" target="_blank" class="table-action">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="7" class="text-center">등록된 게시판이 없습니다.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<script src="{{ asset('js/backoffice/dashboard.js') }}"></script>
+@endpush

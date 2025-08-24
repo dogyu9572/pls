@@ -1,0 +1,97 @@
+/**
+ * 회원 관리 페이지 스타일
+ * 중복 제거됨 - backoffice.css에서 board- 클래스로 통합 관리
+ */
+
+/* 회원 페이지 특화 스타일만 유지 */
+
+/* 회원 테이블 컬럼 너비 설정 (게시판과 다름) */
+.users-page .board-table th:nth-child(1), /* ID */
+.users-page .board-table td:nth-child(1) {
+    width: 8%;
+}
+
+.users-page .board-table th:nth-child(2), /* 이름 */
+.users-page .board-table td:nth-child(2) {
+    width: 20%;
+}
+
+.users-page .board-table th:nth-child(3), /* 이메일 */
+.users-page .board-table td:nth-child(3) {
+    width: 30%;
+}
+
+.users-page .board-table th:nth-child(4), /* 가입일 */
+.users-page .board-table td:nth-child(4) {
+    width: 15%;
+}
+
+.users-page .board-table th:nth-child(5), /* 상태 */
+.users-page .board-table td:nth-child(5) {
+    width: 12%;
+}
+
+.users-page .board-table th:nth-child(6), /* 관리 */
+.users-page .board-table td:nth-child(6) {
+    width: 15%;
+}
+
+/* 데이터 없음 */
+.no-data {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6c757d;
+}
+
+.no-data p {
+    margin: 0;
+    font-size: 1.125rem;
+}
+
+/* 알림 메시지 */
+.alert {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.375rem;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .user-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .user-table {
+        font-size: 0.75rem;
+    }
+    
+    .user-table th,
+    .user-table td {
+        padding: 0.5rem 0.25rem;
+    }
+    
+    .user-btn-group {
+        flex-direction: column;
+        gap: 3px;
+    }
+    
+    .user-btn-group .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
