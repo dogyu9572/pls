@@ -14,18 +14,23 @@ fi
 
 # 2. .env 파일 설정
 echo "⚙️ 환경 설정 중..."
-if [ -f ".env" ]; then
-    sed -i "s/APP_NAME=Laravel/APP_NAME=$PROJECT_NAME/" .env
-    sed -i "s/DB_DATABASE=laravel/DB_DATABASE=$PROJECT_NAME/" .env
-else
-    echo "⚠️ .env 파일이 없습니다. .env.example을 복사해주세요."
-    echo "cp .env.example .env"
+if [ ! -f ".env" ]; then
+    echo "📄 .env 파일 생성 중..."
+    cp .env.example .env
 fi
 
-# 3. Docker 볼륨 이름 고유화 (데이터베이스 분리)
-echo "🔧 Docker 볼륨 고유화 중..."
-sed -i "s/sail-mysql/${PROJECT_NAME}-mysql/g" docker-compose.yml
-sed -i "s/sail-redis/${PROJECT_NAME}-redis/g" docker-compose.yml
+# .env 파일 업데이트
+sed -i "s/APP_NAME=Laravel/APP_NAME=$PROJECT_NAME/" .env
+sed -i "s/DB_DATABASE=laravel/DB_DATABASE=$PROJECT_NAME/" .env
+
+# 3. Docker 볼륨 이름 고유화 (데이터베이스 분리) - GitHub clone 후에는 건너뛰기
+if [ ! -d ".git" ] || [ -z "$(git remote -v 2>/dev/null)" ]; then
+    echo "🔧 Docker 볼륨 고유화 중..."
+    sed -i "s/sail-mysql/${PROJECT_NAME}-mysql/g" docker-compose.yml
+    sed -i "s/sail-redis/${PROJECT_NAME}-redis/g" docker-compose.yml
+else
+    echo "✅ GitHub 프로젝트 감지: Docker 볼륨 설정 건너뛰기"
+fi
 
 # 5. 권한 설정
 echo "🔐 권한 설정 중..."
