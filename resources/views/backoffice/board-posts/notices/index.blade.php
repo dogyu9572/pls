@@ -28,7 +28,7 @@
         <div class="board-card">
             <div class="board-card-header">
                 <div class="board-page-card-title">
-                    <h6>공지사항 게시판</h6>
+                    <h6>{{ $board->name }}</h6>
                     <span class="board-page-count">총 {{ $posts->total() }}개</span>
                 </div>
             </div>

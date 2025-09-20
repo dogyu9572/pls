@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('department')->nullable()->comment('부서');
+            $table->string('position')->nullable()->comment('직위');
+            $table->string('contact', 50)->nullable()->comment('연락처');
             $table->rememberToken();
             $table->timestamps();
         });

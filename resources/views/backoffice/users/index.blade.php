@@ -38,7 +38,7 @@
                     <table class="board-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>번호</th>
                                 <th>이름</th>
                                 <th>이메일</th>
                                 <th>가입일</th>
@@ -47,9 +47,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $user)
+                            @foreach($users as $index => $user)
                                 <tr>
-                                    <td>{{ $user->id }}</td>
+                                    <td>{{ $users->total() - ($users->currentPage() - 1) * $users->perPage() - $loop->index }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->created_at->format('Y-m-d') }}</td>

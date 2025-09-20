@@ -18,7 +18,8 @@ class AdminMenu extends Model
         'url',
         'icon',
         'order',
-        'is_active'
+        'is_active',
+        'permission_key'
     ];
 
     /**
@@ -115,5 +116,52 @@ class AdminMenu extends Model
         }
 
         return null;
+    }
+
+    /**
+     * 이 메뉴에 대한 사용자 권한들과의 관계
+     */
+    public function userPermissions()
+    {
+        return $this->hasMany(UserMenuPermission::class, 'menu_id');
+    }
+
+    /**
+     * 이 메뉴에 접근 권한이 있는 사용자들
+     */
+    public function authorizedUsers()
+    {
+        return $this->belongsToMany(User::class, 'user_menu_permissions')
+            ->wherePivot('granted', true)
+            ->withPivot('granted')
+            ->withTimestamps();
+    }
+
+    /**
+     * 권한이 필요한 메뉴들만 조회 (permission_key가 있는 메뉴)
+     */
+    public static function getPermissionRequiredMenus()
+    {
+        return self::whereNotNull('permission_key')
+            ->where('is_active', true)
+            ->orderBy('order')
+            ->get();
+    }
+
+    /**
+     * 메뉴 트리 구조로 권한 메뉴들을 가져오기
+     */
+    public static function getPermissionMenuTree()
+    {
+        return self::with('children')
+            ->whereNull('parent_id')
+            ->where('is_active', true)
+            ->orderBy('order')
+            ->get()
+            ->map(function ($menu) {
+                // 자식 메뉴 중 활성화된 것만 필터링
+                $menu->children = $menu->children->where('is_active', true);
+                return $menu;
+            });
     }
 }

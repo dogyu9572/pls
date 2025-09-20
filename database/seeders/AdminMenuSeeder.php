@@ -40,12 +40,13 @@ class AdminMenuSeeder extends Seeder
         // 기본설정
         AdminMenu::create([
             'id' => 3,
-            'parent_id' => null,
-            'name' => '기본설정',
-            'url' => '/backoffice/setting',
-            'icon' => 'fa-sliders-h',
+            'parent_id' => 2,
+            'name' => '관리자관리',
+            'url' => '/backoffice/admins',
+            'icon' => 'fa-users-cog',
             'order' => 1,
             'is_active' => true,
+            'permission_key' => 'admin_management',
         ]);
 
         // 메뉴 관리

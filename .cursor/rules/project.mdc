@@ -20,7 +20,7 @@ alwaysApply: true
 # 파일 분리 규칙 (우선 적용)
 
 ## CSS/JS 분리 (우선 적용)
-- **금지**: Blade 파일에 `<style>`, `<script>` 태그 직접 작성
+- **금지**: Blade 파일에 `<style>`, `<script>` 태그 직접 작성 금지
 - **CSS**: `public/css/` 디렉토리에 저장, Blade에서 직접 스타일링 금지
 - **JS**: `public/js/` 디렉토리에 저장, Blade에서 직접 스크립트 작성 금지
 - **기술**: 바닐라 JS 우선, Fetch API 사용, jQuery 의존성 최소화

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Services\UserService;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,7 +24,27 @@ class UserController extends BaseController
     public function index()
     {
         $users = $this->userService->getAllUsers();
-        return $this->view('backoffice.users.index', compact('users'));
+        return view('backoffice.users.index', compact('users'));
+    }
+
+    /**
+     * 회원 생성 폼 표시
+     */
+    public function create()
+    {
+        return view('backoffice.users.create');
+    }
+
+    /**
+     * 회원 저장
+     */
+    public function store(StoreUserRequest $request)
+    {
+        $data = $request->validated();
+        $this->userService->createUser($data);
+
+        return redirect()->route('backoffice.users.index')
+            ->with('success', '회원이 추가되었습니다.');
     }
 
     /**
@@ -31,7 +52,7 @@ class UserController extends BaseController
      */
     public function show(User $user)
     {
-        return $this->view('backoffice.users.show', compact('user'));
+        return view('backoffice.users.show', compact('user'));
     }
 
     /**
@@ -39,13 +60,13 @@ class UserController extends BaseController
      */
     public function edit(User $user)
     {
-        return $this->view('backoffice.users.edit', compact('user'));
+        return view('backoffice.users.edit', compact('user'));
     }
 
     /**
      * 회원 정보 업데이트
      */
-    public function update(UpdateProfileRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $this->userService->updateUser($user, $request->validated());
         

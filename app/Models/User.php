@@ -25,6 +25,9 @@ class User extends Authenticatable
         'role',
         'is_active',
         'last_login_at',
+        'department',
+        'position',
+        'contact',
     ];
 
     /**
@@ -98,5 +101,70 @@ class User extends Authenticatable
     public function scopeAdmins($query)
     {
         return $query->whereIn('role', ['super_admin', 'admin']);
+    }
+
+    /**
+     * 사용자의 메뉴 권한들과의 관계
+     */
+    public function menuPermissions()
+    {
+        return $this->hasMany(UserMenuPermission::class);
+    }
+
+    /**
+     * 사용자가 접근 가능한 메뉴들
+     */
+    public function accessibleMenus()
+    {
+        return $this->belongsToMany(AdminMenu::class, 'user_menu_permissions')
+            ->wherePivot('granted', true)
+            ->withPivot('granted')
+            ->withTimestamps();
+    }
+
+    /**
+     * 특정 메뉴에 대한 권한 확인
+     */
+    public function hasMenuPermission($menuId): bool
+    {
+        if ($this->isSuperAdmin()) {
+            return true; // 슈퍼 관리자는 모든 메뉴 접근 가능
+        }
+
+        return $this->menuPermissions()
+            ->where('menu_id', $menuId)
+            ->where('granted', true)
+            ->exists();
+    }
+
+    /**
+     * 사용자의 모든 메뉴 권한 조회 (권한 부여 여부 포함)
+     */
+    public function getAllMenuPermissions(): array
+    {
+        // 슈퍼 관리자는 모든 메뉴에 권한이 있다고 반환
+        if ($this->isSuperAdmin()) {
+            $allMenus = \App\Models\AdminMenu::where('is_active', true)->get();
+            $result = [];
+            foreach ($allMenus as $menu) {
+                $result[$menu->id] = true;
+            }
+            return $result;
+        }
+
+        $permissions = $this->menuPermissions()
+            ->get()
+            ->pluck('granted', 'menu_id')
+            ->toArray();
+
+        // 모든 메뉴에 대해 권한 정보 생성 (권한이 없는 메뉴는 false)
+        $allMenus = \App\Models\AdminMenu::where('is_active', true)->get();
+        $result = [];
+
+        foreach ($allMenus as $menu) {
+            $result[$menu->id] = $permissions[$menu->id] ?? false;
+        }
+
+        return $result;
     }
 }

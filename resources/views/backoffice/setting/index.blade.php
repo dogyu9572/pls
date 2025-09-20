@@ -22,10 +22,6 @@
 </div>
 
 <div class="board-container">
-    <div class="board-header">
-        <h1>사이트 설정</h1>
-    </div>
-
     <div class="board-card">
         <div class="board-card-header">
             <h6>기본 설정</h6>

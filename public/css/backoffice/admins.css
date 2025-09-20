@@ -1,0 +1,512 @@
+/* 관리자 관리 페이지 스타일 */
+
+.admins-page .board-table th,
+.admins-page .board-table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.admins-page .board-table th:nth-child(1),
+.admins-page .board-table td:nth-child(1) { width: 60px; }
+.admins-page .board-table th:nth-child(2),
+.admins-page .board-table td:nth-child(2) { width: 120px; }
+.admins-page .board-table th:nth-child(3),
+.admins-page .board-table td:nth-child(3) { width: 100px; }
+.admins-page .board-table th:nth-child(4),
+.admins-page .board-table td:nth-child(4) { width: 100px; }
+.admins-page .board-table th:nth-child(5),
+.admins-page .board-table td:nth-child(5) { width: 100px; }
+.admins-page .board-table th:nth-child(6),
+.admins-page .board-table td:nth-child(6) { width: 200px; }
+.admins-page .board-table th:nth-child(7),
+.admins-page .board-table td:nth-child(7) { width: 120px; }
+.admins-page .board-table th:nth-child(8),
+.admins-page .board-table td:nth-child(8) { width: 100px; }
+.admins-page .board-table th:nth-child(9),
+.admins-page .board-table td:nth-child(9) { width: 80px; }
+.admins-page .board-table th:nth-child(10),
+.admins-page .board-table td:nth-child(10) { width: 200px; }
+
+/* 역할 배지 */
+.role-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.role-super_admin {
+    background-color: #dc3545;
+    color: white;
+}
+
+.role-admin {
+    background-color: #007bff;
+    color: white;
+}
+
+.role-manager {
+    background-color: #28a745;
+    color: white;
+}
+
+.role-user {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* 상태 배지 */
+.status-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.status-active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* 관리자 폼 스타일 */
+.admin-form-container {
+    padding: 20px;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.admin-card-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.admin-card-header h6 {
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.admin-card-body {
+    padding: 20px;
+}
+
+.form-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.form-actions .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.9rem;
+}
+
+.admin-form {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.form-section {
+    padding: 25px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+}
+
+.form-section h3 {
+    margin: 0 0 20px 0;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px !important;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+}
+
+.form-group .form-text {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+/* 라디오 버튼 그룹 */
+.radio-group {
+    display: flex;
+    gap: 20px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+    margin-right: 8px;
+}
+
+/* 권한 설정 스타일 */
+.permissions-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.permission-category {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.permission-category-header {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+}
+
+.permission-category h4 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* 부모 메뉴와 자식 메뉴 구분 */
+.permission-item.parent-menu {
+    background-color: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    font-weight: 600;
+}
+
+.permission-item.child-menu {
+    margin-left: 20px;
+    background-color: #f5f5f5;
+}
+
+.permission-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.permission-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.permission-item:hover {
+    background-color: #e9ecef;
+}
+
+.permission-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.permission-item span {
+    font-size: 14px;
+    color: #555;
+}
+
+/* 관리자 상세 페이지 스타일 */
+.admin-detail-container {
+    padding: 20px;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.detail-header h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.detail-actions .btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.9rem;
+}
+
+.detail-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.detail-card-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.detail-card-header h6 {
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.detail-card-body {
+    padding: 20px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px 30px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.detail-item label {
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.detail-item span {
+    color: #333;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0;
+}
+
+/* 권한 상태 표시 */
+.permission-item.granted {
+    background-color: #d4edda;
+    border-left: 4px solid #28a745;
+}
+
+.permission-item.denied {
+    background-color: #f8d7da;
+    border-left: 4px solid #dc3545;
+}
+
+.permission-icon {
+    margin-right: 10px;
+}
+
+/* 슈퍼 관리자 알림 */
+.super-admin-notice {
+    margin-bottom: 20px;
+}
+
+.super-admin-notice .alert {
+    border-radius: 8px;
+    border: none;
+    padding: 20px;
+}
+
+.super-admin-notice .alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 4px solid #ffc107;
+}
+
+.super-admin-notice .alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+.super-admin-notice .fas.fa-crown {
+    color: #ffc107;
+    margin-right: 8px;
+}
+
+/* 권한 설정 안내 */
+.permission-notice {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border-left: 4px solid #6c757d;
+}
+
+.permission-notice .fas.fa-info-circle {
+    color: #6c757d;
+    margin-right: 5px;
+}
+
+/* 권한 부여된 메뉴만 표시 */
+.granted-permissions-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.granted-permissions-container .permission-category {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.granted-permissions-container .permission-category-header {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+}
+
+.granted-permissions-container .permission-category h4 {
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.granted-permissions-container .permission-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.granted-permissions-container .permission-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: #d4edda;
+    border-left: 4px solid #28a745;
+}
+
+.granted-permissions-container .permission-item.child-menu {
+    margin-left: 20px;
+    background-color: #e8f5e8;
+}
+
+.granted-permissions-container .permission-icon {
+    margin-right: 10px;
+}
+
+.granted-permissions-container .permission-item span:last-child {
+    font-size: 14px;
+    color: #155724;
+    font-weight: 500;
+}
+
+/* 권한 없음 표시 */
+.no-permissions {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
+.no-permissions .alert {
+    border-radius: 8px;
+    border: none;
+    padding: 30px;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border-left: 4px solid #6c757d;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .form-header,
+    .detail-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .form-actions,
+    .detail-actions {
+        justify-content: center;
+    }
+    
+    .form-grid,
+    .detail-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+    
+    .permissions-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-grid,
+    .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}

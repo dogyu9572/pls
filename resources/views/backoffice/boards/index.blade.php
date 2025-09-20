@@ -31,6 +31,7 @@
                 <table class="board-table">
                     <thead>
                         <tr>
+                            <th>번호</th>
                             <th>이름</th>
                             <th class="w15">게시판명</th>
                             <th class="w15">스킨</th>
@@ -42,6 +43,7 @@
                     <tbody>
                         @forelse ($boards as $board)
                         <tr>
+                            <td>{{ $boards->total() - ($boards->currentPage() - 1) * $boards->perPage() - $loop->index }}</td>
                             <td>{{ $board->name }}</td>
                             <td>{{ $board->slug }}</td>
                             <td>{{ $board->skin ? $board->skin->name : '없음' }}</td>
@@ -69,7 +71,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center">등록된 게시판이 없습니다.</td>
+                            <td colspan="7" class="text-center">등록된 게시판이 없습니다.</td>
                         </tr>
                         @endforelse
                     </tbody>

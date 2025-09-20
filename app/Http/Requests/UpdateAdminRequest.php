@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\User;
 
 class UpdateAdminRequest extends FormRequest
 {
@@ -20,14 +21,33 @@ class UpdateAdminRequest extends FormRequest
      */
     public function rules(): array
     {
+        $adminId = $this->route('admin');
+        
+        // 라우트 모델 바인딩으로 User 인스턴스가 전달된 경우
+        if ($adminId instanceof User) {
+            $adminId = $adminId->id;
+        }
+
         return [
+            'login_id' => [
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique('users')->ignore($adminId)
+            ],
             'name' => 'required|string|max:255',
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')->ignore($this->route('id'))
+                Rule::unique('users')->ignore($adminId)
             ],
             'password' => 'nullable|string|min:8|confirmed',
+            'department' => 'nullable|string|max:255',
+            'position' => 'nullable|string|max:255',
+            'contact' => 'nullable|string|max:50',
+            'is_active' => 'boolean',
+            'permissions' => 'array',
+            'permissions.*' => 'boolean',
         ];
     }
 
@@ -36,14 +56,6 @@ class UpdateAdminRequest extends FormRequest
      */
     public function messages(): array
     {
-        return [
-            'name.required' => '이름을 입력해주세요.',
-            'name.max' => '이름은 255자를 초과할 수 없습니다.',
-            'email.required' => '이메일을 입력해주세요.',
-            'email.email' => '올바른 이메일 형식이 아닙니다.',
-            'email.unique' => '이미 사용 중인 이메일입니다.',
-            'password.min' => '비밀번호는 최소 8자 이상이어야 합니다.',
-            'password.confirmed' => '비밀번호 확인이 일치하지 않습니다.',
-        ];
+        return AdminValidationMessages::getUpdateMessages();
     }
 }

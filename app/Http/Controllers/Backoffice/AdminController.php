@@ -33,7 +33,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('backoffice.admins.create');
+        $menus = $this->adminService->getAllMenus();
+        return view('backoffice.admins.create', compact('menus'));
     }
 
     /**
@@ -41,7 +42,16 @@ class AdminController extends Controller
      */
     public function store(StoreAdminRequest $request)
     {
-        $admin = $this->adminService->createAdmin($request->validated());
+        $data = $request->validated();
+        $permissions = $data['permissions'] ?? [];
+        unset($data['permissions']);
+
+        $admin = $this->adminService->createAdmin($data);
+        
+        // 권한 저장
+        if (!empty($permissions)) {
+            $this->adminService->saveMenuPermissions($admin->id, $permissions);
+        }
 
         return redirect()->route('backoffice.admins.index')
             ->with('success', '관리자가 추가되었습니다.');
@@ -62,7 +72,8 @@ class AdminController extends Controller
     public function edit($id)
     {
         $admin = $this->adminService->getAdmin($id);
-        return view('backoffice.admins.edit', compact('admin'));
+        $menus = $this->adminService->getAllMenus();
+        return view('backoffice.admins.edit', compact('admin', 'menus'));
     }
 
     /**
@@ -71,7 +82,14 @@ class AdminController extends Controller
     public function update(UpdateAdminRequest $request, $id)
     {
         $admin = $this->adminService->getAdmin($id);
-        $this->adminService->updateAdmin($admin, $request->validated());
+        $data = $request->validated();
+        $permissions = $data['permissions'] ?? [];
+        unset($data['permissions']);
+
+        $this->adminService->updateAdmin($admin, $data);
+        
+        // 권한 업데이트
+        $this->adminService->saveMenuPermissions($admin->id, $permissions);
 
         return redirect()->route('backoffice.admins.index')
             ->with('success', '관리자 정보가 수정되었습니다.');

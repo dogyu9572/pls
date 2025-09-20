@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->integer('order')->default(0);
             $table->boolean('is_active')->default(true);
+            $table->string('permission_key', 100)->nullable()->comment('권한 식별키');
             $table->timestamps();
         });
     }
