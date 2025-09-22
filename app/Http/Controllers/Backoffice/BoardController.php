@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backoffice\CreateBoardRequest;
 use App\Http\Requests\Backoffice\UpdateBoardRequest;
 use App\Models\Board;
-use App\Models\BoardSetting;
 use App\Services\BoardService;
 use App\Services\BoardFileGeneratorService;
 use Illuminate\Http\Request;
@@ -85,8 +84,7 @@ class BoardController extends BaseController
     public function show(Board $board)
     {
         $board->load('skin');
-        $settings = BoardSetting::getAllSettings($board->id);
-        return $this->view('backoffice.boards.show', compact('board', 'settings'));
+        return $this->view('backoffice.boards.show', compact('board'));
     }
 
     /**
@@ -95,8 +93,7 @@ class BoardController extends BaseController
     public function edit(Board $board)
     {
         $skins = $this->boardService->getActiveSkins();
-        $settings = BoardSetting::getAllSettings($board->id);
-        return $this->view('backoffice.boards.edit', compact('board', 'skins', 'settings'));
+        return $this->view('backoffice.boards.edit', compact('board', 'skins'));
     }
 
     /**

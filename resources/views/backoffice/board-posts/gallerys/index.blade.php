@@ -29,8 +29,7 @@
         <div class="board-card">
             <div class="board-card-header">
                 <div class="board-page-card-title">
-                    <h6>갤러리</h6>
-                    <span class="board-page-count">총 {{ $posts->total() }}개</span>
+                    <h6>갤러리</h6>                   
                 </div>
             </div>
             <div class="board-card-body">
@@ -132,7 +131,7 @@
                                             {{ $postNumber }}
                                         @endif
                                     </td>
-                                    <td class="text-center">
+                                    <td>
                                         @if($post->thumbnail)
                                             <img src="{{ asset('storage/' . $post->thumbnail) }}" 
                                                  alt="썸네일" 

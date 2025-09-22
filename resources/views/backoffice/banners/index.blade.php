@@ -178,9 +178,6 @@
                     <i class="fas fa-image"></i>
                     <h5>등록된 배너가 없습니다</h5>
                     <p>새 배너를 추가해보세요.</p>
-                    <a href="{{ route('backoffice.banners.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> 첫 번째 배너 추가
-                    </a>
                 </div>
             @endif
         </div>

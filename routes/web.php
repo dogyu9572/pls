@@ -12,6 +12,7 @@ use App\Http\Controllers\Backoffice\UserController;
 use App\Http\Controllers\Backoffice\LogController;
 use App\Http\Controllers\Backoffice\AdminController;
 use App\Http\Controllers\Backoffice\BannerController;
+use App\Http\Controllers\Backoffice\PopupController;
 
 use App\Http\Controllers\UserController as FrontendUserController;
 use App\Http\Controllers\Auth\LoginController;
@@ -179,6 +180,12 @@ Route::middleware('backoffice')->prefix('backoffice')->group(function () {
         'names' => 'backoffice.banners'
     ]);
     Route::post('banners/update-order', [BannerController::class, 'updateOrder'])->name('backoffice.banners.update-order');
+
+    // 팝업 관리
+    Route::resource('popups', PopupController::class, [
+        'names' => 'backoffice.popups'
+    ]);
+    Route::post('popups/update-order', [PopupController::class, 'updateOrder'])->name('backoffice.popups.update-order');
 
 });
 

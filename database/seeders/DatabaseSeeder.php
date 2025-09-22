@@ -27,5 +27,8 @@ class DatabaseSeeder extends Seeder
 
         // 배너 시더 실행
         $this->call(BannerSeeder::class);
+
+        // 팝업 시더 실행
+        $this->call(PopupSeeder::class);
     }
 }

@@ -37,6 +37,29 @@
     color: #e74a3b;
 }
 
+/* 세션 연장 버튼 스타일 */
+.session-extend-btn {
+    margin-left: 8px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    border-radius: 3px;
+    border: 1px solid #666;
+    background: transparent;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 400;
+}
+
+.session-extend-btn:hover {
+    background-color: #666;
+    color: white;
+}
+
+.session-extend-btn:active {
+    transform: scale(0.95);
+}
+
 /* 유저 드롭다운 스타일 개선 */
 .user-dropdown {
     position: relative;

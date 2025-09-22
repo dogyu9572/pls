@@ -1,0 +1,461 @@
+/* 팝업 관리 페이지 스타일 */
+
+/* 페이지 헤더 스타일은 공통 CSS 사용 */
+
+/* 팝업 검색 필터 스타일 */
+.popup-filter {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.filter-form {
+    margin: 0;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+}
+
+.filter-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    font-size: 14px;
+}
+
+.filter-input,
+.filter-select {
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.date-separator {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: end;
+}
+
+/* 목록 헤더 스타일 */
+.popup-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.list-info {
+    display: flex;
+    align-items: center;
+}
+
+.list-count {
+    font-weight: 500;
+    color: #495057;
+    font-size: 14px;
+}
+
+.list-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.per-page-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.per-page-label {
+    font-size: 14px;
+    color: #495057;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.per-page-select {
+    padding: 6px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.per-page-select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+/* 팝업 목록 스타일 */
+.popup-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.popup-item {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.popup-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-color: #007bff;
+}
+
+.popup-drag-handle {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: grab;
+    color: #6c757d;
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.popup-drag-handle:hover {
+    background-color: #f8f9fa;
+    color: #4a90e2;
+}
+
+.popup-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-grow: 1;
+    margin-left: 40px;
+}
+
+.popup-preview {
+    width: 120px;
+    height: 80px;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid #e9ecef;
+}
+
+.popup-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.html-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.html-preview i {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.no-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.no-image i {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.popup-details {
+    flex: 1;
+}
+
+.popup-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 10px 0;
+}
+
+.popup-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.popup-type,
+.popup-size,
+.popup-position,
+.popup-status,
+.popup-order,
+.popup-period,
+.popup-created {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+.popup-status.active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.popup-status.inactive {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.popup-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 드래그 앤 드롭 스타일 */
+.sortable-ghost {
+    opacity: 0.4;
+    background-color: #f8f9fa;
+}
+
+.sortable-chosen {
+    transform: rotate(2deg);
+}
+
+.sortable-drag {
+    transform: rotate(5deg);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 빈 상태 스타일 */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #dee2e6;
+}
+
+.empty-state h5 {
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+.empty-state p {
+    margin-bottom: 1.5rem;
+}
+
+/* 폼 스타일 */
+.radio-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.radio-label input[type="radio"] {
+    margin-right: 0.5rem;
+}
+
+.radio-text {
+    color: #495057;
+}
+
+.input-group {
+    display: flex !important;
+    align-items: stretch !important;
+    width: 100%;
+    max-width: 200px;
+    gap: 0;
+}
+
+.input-group .board-form-control {
+    flex: 1;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-right: 0 !important;
+    margin: 0 !important;
+    min-width: 0;
+    margin-right: 0 !important;
+    padding-right: 8px !important;
+    height: 38px;
+}
+
+.input-group-text {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 0.5rem 0.75rem;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
+    font-size: 14px;
+    color: #495057;
+    white-space: nowrap;
+    height: 38px;
+    line-height: 1;
+    margin-left: 0 !important;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+/* 날짜 입력 필드 스타일 - 배너와 동일 */
+.board-container .board-form-control[type="date"] {
+    position: relative !important;
+    cursor: pointer !important;
+    padding-right: 40px !important; /* 달력 아이콘을 위한 공간 확보 */
+}
+
+.board-container .board-form-control[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute !important;
+    top: 50% !important;
+    right: 8px !important;
+    transform: translateY(-50%) !important;
+    width: 20px !important;
+    height: 20px !important;
+    cursor: pointer !important;
+    opacity: 0.7 !important;
+    transition: opacity 0.2s ease !important;
+}
+
+.board-container .board-form-control[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1 !important;
+}
+
+/* 섹션 표시/숨김 */
+.popup-image-section,
+.popup-html-section {
+    transition: all 0.3s ease;
+}
+
+/* 현재 이미지 스타일 */
+.current-image {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.current-image img {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1200px) {
+    .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .popup-list-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .list-controls {
+        justify-content: center;
+    }
+    
+    .popup-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .popup-info {
+        margin-left: 0;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .popup-preview {
+        width: 100%;
+        height: 150px;
+    }
+    
+    .popup-actions {
+        justify-content: center;
+    }
+    
+    .popup-drag-handle {
+        position: static;
+        transform: none;
+        align-self: center;
+        margin-bottom: 10px;
+    }
+}

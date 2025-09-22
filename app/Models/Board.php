@@ -82,22 +82,6 @@ class Board extends Model
         return $this->belongsTo(BoardSkin::class, 'skin_id');
     }
 
-    /**
-     * 이 게시판의 설정값들 관계
-     */
-    public function settings()
-    {
-        return $this->hasMany(BoardSetting::class);
-    }
-
-    /**
-     * 설정값 가져오기
-     */
-    public function getSetting($key, $default = null)
-    {
-        $setting = $this->settings()->where('key', $key)->first();
-        return $setting ? $setting->value : $default;
-    }
 
     /**
      * 이 게시판의 게시글 수 가져오기
@@ -125,16 +109,6 @@ class Board extends Model
         }
     }
 
-    /**
-     * 설정값 저장하기
-     */
-    public function saveSetting($key, $value)
-    {
-        return $this->settings()->updateOrCreate(
-            ['key' => $key],
-            ['value' => $value]
-        );
-    }
     
     /**
      * 이 게시판의 커스텀 스킨 뷰 경로를 가져옵니다.

@@ -41,7 +41,7 @@ class BoardSeeder extends Seeder
                 'name' => '갤러리',
                 'slug' => 'gallerys',
                 'description' => null,
-                'skin_id' => 3,
+                'skin_id' => 2,
                 'is_active' => 1,
                 'table_created' => 0,
                 'list_count' => 10,

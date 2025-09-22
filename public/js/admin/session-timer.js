@@ -25,6 +25,58 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 사용자 활동 감지 이벤트 목록 (mousemove 제거하여 마우스 움직임마다 갱신 방지)
     const resetEvents = ['mousedown', 'keypress', 'scroll', 'touchstart'];
+    
+    // 세션 연장 버튼 이벤트
+    const sessionExtendBtn = document.getElementById('sessionExtendBtn');
+    if (sessionExtendBtn) {
+        sessionExtendBtn.addEventListener('click', function() {
+            // 현재 시간으로 로그인 시간 갱신 (120분으로 리셋)
+            const now = new Date().getTime();
+            localStorage.setItem('backoffice_login_time', now);
+            
+            // 로그인 시간 업데이트
+            loginTime = now;
+            
+            // 경고 상태 해제
+            sessionTimeLeft.parentElement.classList.remove('text-danger');
+            
+            // 성공 메시지 표시
+            showExtendMessage('세션이 갱신되었습니다.');
+        });
+    }
+    
+    // 연장 성공 메시지 표시
+    function showExtendMessage(message) {
+        // 기존 메시지 제거
+        const existingMessage = document.querySelector('.session-extend-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+        
+        // 새 메시지 생성
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'session-extend-message';
+        messageDiv.textContent = message;
+        messageDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            z-index: 9999;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        `;
+        
+        document.body.appendChild(messageDiv);
+        
+        // 3초 후 자동 제거
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 3000);
+    }
 
     // 세션 타이머 업데이트 함수
     function updateSessionTimer() {
@@ -33,12 +85,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const remainingTime = sessionTimeout - elapsedTime;
 
         if (remainingTime <= 0) {
-            // 세션 만료 시 경고만 표시 (강제 로그아웃 제거)
+            // 세션 만료 시 자동 로그아웃
             sessionTimeLeft.textContent = '(만료됨)';
             sessionTimeLeft.parentElement.classList.add('text-danger');
             
             // 세션 만료 시 localStorage 정리
             localStorage.removeItem('backoffice_login_time');
+            
+            // 3초 후 자동 로그아웃
+            setTimeout(() => {
+                window.location.href = logoutUrl;
+            }, 3000);
+            
             return;
         }
 

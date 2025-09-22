@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Board;
 use App\Models\BoardSkin;
-use App\Models\BoardSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
@@ -95,10 +94,6 @@ class BoardService
         // 게시판 생성
         $board = Board::create($data);
 
-        // 기본 설정값 저장
-        if (isset($data['settings'])) {
-            $this->saveBoardSettings($board, $data['settings']);
-        }
 
         return $board;
     }
@@ -147,10 +142,6 @@ class BoardService
 
         $result = $board->update($data);
 
-        // 설정값 업데이트
-        if (isset($data['settings'])) {
-            $this->saveBoardSettings($board, $data['settings']);
-        }
 
         return $result;
     }
@@ -161,10 +152,7 @@ class BoardService
     public function deleteBoard(Board $board): bool
     {
         try {
-            // 1. 관련 설정 삭제
-            BoardSetting::where('board_id', $board->id)->delete();
-            
-            // 2. 게시판 삭제
+            // 게시판 삭제
             $result = $board->delete();
             
             if ($result) {
@@ -220,13 +208,4 @@ class BoardService
         return $slug;
     }
 
-    /**
-     * 게시판 설정을 저장합니다.
-     */
-    private function saveBoardSettings(Board $board, array $settings): void
-    {
-        foreach ($settings as $key => $value) {
-            $board->saveSetting($key, $value);
-        }
-    }
 }

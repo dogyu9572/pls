@@ -25,9 +25,12 @@
                     <span>{{ auth()->user()->name ?? '관리자' }}님 <span class="session-timer" id="sessionTimer">
                         <i class="fas fa-clock"></i>
                         <span class="session-timer-text"><span id="sessionTimeLeft">--:--</span></span>
-                    </span></span>
+                    </span>
+                    <button class="session-extend-btn" id="sessionExtendBtn" title="30분 연장">
+                        연장
+                    </button></span>
                     <div class="dropdown-content">
-                        <a href="#">정보수정</a>
+                        <a href="{{ route('backoffice.admins.edit', auth()->user()->id) }}">정보수정</a>
                         <a href="{{ url('/backoffice/logout') }}">로그아웃</a>
                     </div>
                 </div>
@@ -37,6 +40,7 @@
             </div>
         </div>
     </div>
+
 
     @include('backoffice.layouts.footer')
 
