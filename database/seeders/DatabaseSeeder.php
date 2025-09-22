@@ -24,5 +24,8 @@ class DatabaseSeeder extends Seeder
 
         // 게시판 시더 실행
         $this->call(BoardSeeder::class);
+
+        // 배너 시더 실행
+        $this->call(BannerSeeder::class);
     }
 }

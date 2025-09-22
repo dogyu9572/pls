@@ -11,6 +11,7 @@ use App\Http\Controllers\Backoffice\BoardPostController;
 use App\Http\Controllers\Backoffice\UserController;
 use App\Http\Controllers\Backoffice\LogController;
 use App\Http\Controllers\Backoffice\AdminController;
+use App\Http\Controllers\Backoffice\BannerController;
 
 use App\Http\Controllers\UserController as FrontendUserController;
 use App\Http\Controllers\Auth\LoginController;
@@ -173,6 +174,11 @@ Route::middleware('backoffice')->prefix('backoffice')->group(function () {
         'names' => 'backoffice.users'
     ]);
 
+    // 배너 관리
+    Route::resource('banners', BannerController::class, [
+        'names' => 'backoffice.banners'
+    ]);
+    Route::post('banners/update-order', [BannerController::class, 'updateOrder'])->name('backoffice.banners.update-order');
 
 });
 

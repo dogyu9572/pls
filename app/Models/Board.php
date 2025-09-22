@@ -38,7 +38,6 @@ class Board extends Model
         'is_active' => 'boolean',
         'list_count' => 'integer',
         'enable_notice' => 'boolean',
-        'custom_fields_config' => 'array',
     ];
 
     /**
@@ -154,6 +153,23 @@ class Board extends Model
         return \Illuminate\Support\Facades\File::exists($customSkinPath);
     }
     
+    /**
+     * 커스텀 필드 설정을 안전하게 가져옵니다.
+     */
+    public function getCustomFieldsConfigAttribute($value)
+    {
+        if (is_string($value) && !empty($value)) {
+            // 이중 JSON 인코딩된 경우 처리
+            $decoded = json_decode($value, true);
+            if (is_string($decoded)) {
+                $decoded = json_decode($decoded, true);
+            }
+            return is_array($decoded) ? $decoded : [];
+        }
+        
+        return is_array($value) ? $value : [];
+    }
+
     /**
      * 이 게시판의 스킨 뷰 경로를 가져옵니다 (커스텀 우선, 기본 스킨 대체).
      */
