@@ -13,7 +13,7 @@ class BoardSkinSeeder extends Seeder
     public function run(): void
     {
         // 기존 데이터 삭제
-        BoardSkin::truncate();
+        BoardSkin::query()->delete();
 
         // 기본 스킨
         BoardSkin::create([

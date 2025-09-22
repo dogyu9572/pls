@@ -52,7 +52,11 @@ else
     echo "✅ Git 저장소가 이미 초기화되어 있습니다."
 fi
 
-# 5. Docker 컨테이너 시작
+# 5. Composer 의존성 설치
+echo "📦 Composer 의존성 설치 중..."
+composer install --no-interaction --prefer-dist --optimize-autoloader
+
+# 6. Docker 컨테이너 시작
 echo "🐳 Docker 컨테이너 시작 중..."
 ./vendor/bin/sail up -d
 

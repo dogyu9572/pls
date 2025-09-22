@@ -13,7 +13,7 @@ class AdminMenuSeeder extends Seeder
     public function run(): void
     {
         // 기존 데이터 삭제
-        AdminMenu::truncate();
+        AdminMenu::query()->delete();
 
         // 대시보드
         AdminMenu::create([

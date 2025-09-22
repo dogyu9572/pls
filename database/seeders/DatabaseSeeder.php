@@ -13,12 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 테스트 관리자 계정 생성
-        User::create([
-            'name' => '관리자',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
-        ]);
+        // 사용자 시더 실행
+        $this->call(UserSeeder::class);
 
         // 관리자 메뉴 시더 실행
         $this->call(AdminMenuSeeder::class);

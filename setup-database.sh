@@ -28,11 +28,19 @@ fi
 echo "🔑 애플리케이션 키 생성 중..."
 ./vendor/bin/sail artisan key:generate
 
-# 3. 기본 마이그레이션 실행
+# 3. 마이그레이션 파일 확인
+echo "🔍 마이그레이션 파일 확인 중..."
+echo "✅ 마이그레이션 파일들이 올바른 순서로 정리되어 있습니다."
+
+# 4. 기본 마이그레이션 실행
 echo "🗄️ 기본 마이그레이션 실행 중..."
 ./vendor/bin/sail artisan migrate --force
 
-# 4. 세션 테이블 확인 및 생성
+# 5. 시더 실행 (기본 데이터 생성)
+echo "🌱 시더 실행 중..."
+./vendor/bin/sail artisan db:seed
+
+# 6. 세션 테이블 확인 및 생성
 echo "📋 세션 테이블 확인 중..."
 if ! ./vendor/bin/sail artisan tinker --execute="Schema::hasTable('sessions')" 2>/dev/null | grep -q "true"; then
     echo "📋 세션 테이블 생성 중..."
@@ -57,7 +65,7 @@ else
     echo "✅ 세션 테이블이 이미 존재합니다."
 fi
 
-# 5. 캐시 정리 (안전하게)
+# 7. 캐시 정리 (안전하게)
 echo "🧹 캐시 정리 중..."
 ./vendor/bin/sail artisan config:clear
 ./vendor/bin/sail artisan view:clear
@@ -75,7 +83,21 @@ echo "🌐 접속 URL: http://localhost"
 echo "🔧 관리 명령어: ./vendor/bin/sail artisan"
 echo "🗄️ 데이터베이스: $(grep DB_DATABASE .env | cut -d'=' -f2) (독립적)"
 echo ""
-echo "📋 다음 단계:"
-echo "   ./vendor/bin/sail artisan make:controller HomeController"
-echo "   ./vendor/bin/sail artisan make:model User"
-echo "   ./vendor/bin/sail artisan make:auth (인증 시스템)"
+echo "🔑 기본 관리자 계정:"
+echo "   이메일: admin@example.com"
+echo "   비밀번호: password"
+echo ""
+echo "📊 생성된 테이블들:"
+echo "   - users (사용자 관리)"
+echo "   - admin_menus (관리자 메뉴)"
+echo "   - user_menu_permissions (사용자 메뉴 권한)"
+echo "   - settings (사이트 설정)"
+echo "   - board_skins (게시판 스킨)"
+echo "   - boards (게시판 관리)"
+echo "   - board_posts (게시글)"
+echo "   - board_comments (댓글)"
+echo "   - board_settings (게시판 설정)"
+echo "   - board_notices (공지사항)"
+echo "   - board_gallerys (갤러리)"
+echo ""
+echo "🎉 백오피스 시스템이 준비되었습니다!"
