@@ -20,6 +20,43 @@ class BoardService
     }
 
     /**
+     * 필터링된 게시판 목록을 가져옵니다.
+     */
+    public function getBoardsWithFilters(Request $request)
+    {
+        $query = Board::with('skin');
+        
+        // 게시판명 검색
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+        
+        // 활성화 상태 필터
+        if ($request->filled('is_active')) {
+            $query->where('is_active', $request->is_active);
+        }
+        
+        // 스킨 필터
+        if ($request->filled('skin_id')) {
+            $query->where('skin_id', $request->skin_id);
+        }
+        
+        // 등록일 필터
+        if ($request->filled('created_from')) {
+            $query->whereDate('created_at', '>=', $request->created_from);
+        }
+        if ($request->filled('created_to')) {
+            $query->whereDate('created_at', '<=', $request->created_to);
+        }
+        
+        // 목록 개수 설정
+        $perPage = $request->get('per_page', 10);
+        $perPage = in_array($perPage, [10, 20, 50, 100]) ? $perPage : 10;
+        
+        return $query->orderBy('created_at', 'desc')->paginate($perPage);
+    }
+
+    /**
      * 활성화된 스킨 목록을 가져옵니다.
      */
     public function getActiveSkins()

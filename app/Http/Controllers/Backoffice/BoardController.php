@@ -28,9 +28,9 @@ class BoardController extends BaseController
     /**
      * 게시판 목록을 표시합니다.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $boards = $this->boardService->getBoards();
+        $boards = $this->boardService->getBoardsWithFilters($request);
         return $this->view('backoffice.boards.index', compact('boards'));
     }
 

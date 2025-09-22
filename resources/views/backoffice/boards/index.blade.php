@@ -24,9 +24,84 @@
 
     <div class="board-card">
         <div class="board-card-header">
-            <h6>{{ $pageTitle }}</h6>
+            <div class="board-page-card-title">
+                <h6>{{ $pageTitle }}</h6>                
+            </div>
         </div>
         <div class="board-card-body">
+            <!-- 검색 필터 -->
+            <div class="board-filter">
+                <form method="GET" action="{{ route('backoffice.boards.index') }}" class="filter-form">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="name" class="filter-label">게시판명</label>
+                            <input type="text" id="name" name="name" class="filter-input"
+                                placeholder="게시판명을 입력하세요" value="{{ request('name') }}">
+                        </div>
+                        <div class="filter-group">
+                            <label for="is_active" class="filter-label">상태</label>
+                            <select id="is_active" name="is_active" class="filter-select">
+                                <option value="">전체</option>
+                                <option value="1" {{ request('is_active') == '1' ? 'selected' : '' }}>활성화</option>
+                                <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>비활성화</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="skin_id" class="filter-label">스킨</label>
+                            <select id="skin_id" name="skin_id" class="filter-select">
+                                <option value="">전체</option>
+                                @foreach(\App\Models\BoardSkin::where('is_active', true)->get() as $skin)
+                                    <option value="{{ $skin->id }}" {{ request('skin_id') == $skin->id ? 'selected' : '' }}>
+                                        {{ $skin->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="created_from" class="filter-label">등록일</label>
+                            <div class="date-range">
+                                <input type="date" id="created_from" name="created_from" class="filter-input"
+                                    value="{{ request('created_from') }}">
+                                <span class="date-separator">~</span>
+                                <input type="date" id="created_to" name="created_to" class="filter-input"
+                                    value="{{ request('created_to') }}">
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <div class="filter-buttons">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i> 검색
+                                </button>
+                                <a href="{{ route('backoffice.boards.index') }}" class="btn btn-secondary">
+                                    <i class="fas fa-undo"></i> 초기화
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 목록 개수 선택 -->
+            <div class="board-list-header">
+                <div class="list-info">
+                    <span class="list-count">Total : {{ $boards->total() }}</span>
+                </div>
+                <div class="list-controls">
+                    <form method="GET" action="{{ route('backoffice.boards.index') }}" class="per-page-form">
+                        @foreach(request()->except('per_page') as $key => $value)
+                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                        @endforeach
+                        <label for="per_page" class="per-page-label">목록개수:</label>
+                        <select id="per_page" name="per_page" class="per-page-select" onchange="this.form.submit()">
+                            <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
+                            <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
+                            <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                            <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+
             <div class="table-responsive">
                 <table class="board-table">
                     <thead>

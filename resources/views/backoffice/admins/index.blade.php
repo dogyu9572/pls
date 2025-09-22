@@ -29,10 +29,91 @@
 
     <div class="board-card">
         <div class="board-card-header">
-            <h6>관리자 목록</h6>
+            <div class="board-page-card-title">
+                <h6>관리자 목록</h6>
+            </div>
         </div>
         <div class="board-card-body">
+            <!-- 검색 필터 -->
+            <div class="admin-filter">
+                <form method="GET" action="{{ route('backoffice.admins.index') }}" class="filter-form">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="name" class="filter-label">이름</label>
+                            <input type="text" id="name" name="name" class="filter-input"
+                                placeholder="이름을 입력하세요" value="{{ request('name') }}">
+                        </div>
+                        <div class="filter-group">
+                            <label for="email" class="filter-label">이메일</label>
+                            <input type="text" id="email" name="email" class="filter-input"
+                                placeholder="이메일을 입력하세요" value="{{ request('email') }}">
+                        </div>
+                        <div class="filter-group">
+                            <label for="department" class="filter-label">부서</label>
+                            <input type="text" id="department" name="department" class="filter-input"
+                                placeholder="부서를 입력하세요" value="{{ request('department') }}">
+                        </div>
+                        <div class="filter-group">
+                            <label for="role" class="filter-label">권한</label>
+                            <select id="role" name="role" class="filter-select">
+                                <option value="">전체</option>
+                                <option value="super_admin" {{ request('role') == 'super_admin' ? 'selected' : '' }}>슈퍼관리자</option>
+                                <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>관리자</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="is_active" class="filter-label">상태</label>
+                            <select id="is_active" name="is_active" class="filter-select">
+                                <option value="">전체</option>
+                                <option value="1" {{ request('is_active') == '1' ? 'selected' : '' }}>활성화</option>
+                                <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>비활성화</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="created_from" class="filter-label">등록일</label>
+                            <div class="date-range">
+                                <input type="date" id="created_from" name="created_from" class="filter-input"
+                                    value="{{ request('created_from') }}">
+                                <span class="date-separator">~</span>
+                                <input type="date" id="created_to" name="created_to" class="filter-input"
+                                    value="{{ request('created_to') }}">
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <div class="filter-buttons">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i> 검색
+                                </button>
+                                <a href="{{ route('backoffice.admins.index') }}" class="btn btn-secondary">
+                                    <i class="fas fa-undo"></i> 초기화
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             @if($admins->count() > 0)
+                <!-- 목록 개수 선택 -->
+                <div class="admin-list-header">
+                    <div class="list-info">
+                        <span class="list-count">Total : {{ $admins->total() }}</span>
+                    </div>
+                    <div class="list-controls">
+                        <form method="GET" action="{{ route('backoffice.admins.index') }}" class="per-page-form">
+                            @foreach(request()->except('per_page') as $key => $value)
+                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                            @endforeach
+                            <label for="per_page" class="per-page-label">표시 개수:</label>
+                            <select id="per_page" name="per_page" class="per-page-select" onchange="this.form.submit()">
+                                <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
+                                <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
+                                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                                <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="board-table">
                         <thead>
@@ -52,7 +133,7 @@
                         <tbody>
                             @foreach($admins as $index => $admin)
                                 <tr>
-                                    <td>{{ $admins->count() - $loop->index }}</td>
+                                    <td>{{ $admins->total() - ($admins->currentPage() - 1) * $admins->perPage() - $loop->index }}</td>
                                     <td>{{ $admin->login_id ?: '-' }}</td>
                                     <td>{{ $admin->name }}</td>
                                     <td>{{ $admin->department ?: '-' }}</td>
@@ -102,6 +183,7 @@
                         </tbody>
                     </table>
                 </div>
+                <x-pagination :paginator="$admins" />
             @else
                 <div class="no-data">
                     <p>등록된 관리자가 없습니다.</p>

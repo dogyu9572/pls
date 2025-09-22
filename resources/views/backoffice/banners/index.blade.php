@@ -36,8 +36,7 @@
     <div class="board-card">
         <div class="board-card-header">
             <div class="board-page-card-title">
-                <h6>배너 관리</h6>
-                <span class="board-page-count">총 {{ $banners->total() }}개</span>
+                <h6>배너 관리</h6>               
             </div>
         </div>
         <div class="board-card-body">
@@ -96,14 +95,14 @@
                 <!-- 목록 개수 선택 -->
                 <div class="banner-list-header">
                     <div class="list-info">
-                        <span class="list-count">총 {{ $banners->total() }}개</span>
+                        <span class="list-count">Total : {{ $banners->total() }}</span>
                     </div>
                     <div class="list-controls">
                         <form method="GET" action="{{ route('backoffice.banners.index') }}" class="per-page-form">
                             @foreach(request()->except('per_page') as $key => $value)
                                 <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                             @endforeach
-                            <label for="per_page" class="per-page-label">목록갯수:</label>
+                            <label for="per_page" class="per-page-label">목록개수:</label>
                             <select id="per_page" name="per_page" class="per-page-select" onchange="this.form.submit()">
                                 <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
                                 <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>

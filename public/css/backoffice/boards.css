@@ -96,3 +96,51 @@
         width: 100%;
     }
 }
+
+/* 목록 헤더 스타일 */
+.board-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.list-info {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.list-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.per-page-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.per-page-label {
+    font-size: 14px;
+    color: #495057;
+    margin: 0;
+}
+
+.per-page-select {
+    padding: 6px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.per-page-select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}

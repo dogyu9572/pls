@@ -21,9 +21,9 @@ class AdminController extends Controller
     /**
      * 관리자 목록을 표시
      */
-    public function index()
+    public function index(Request $request)
     {
-        $admins = $this->adminService->getAdmins();
+        $admins = $this->adminService->getAdminsWithFilters($request);
 
         return view('backoffice.admins.index', compact('admins'));
     }

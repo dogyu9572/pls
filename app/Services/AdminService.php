@@ -19,6 +19,53 @@ class AdminService
     }
 
     /**
+     * 필터링된 관리자 목록을 가져옵니다.
+     */
+    public function getAdminsWithFilters(\Illuminate\Http\Request $request)
+    {
+        $query = User::whereIn('role', ['super_admin', 'admin']);
+        
+        // 이름 검색
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+        
+        // 이메일 검색
+        if ($request->filled('email')) {
+            $query->where('email', 'like', '%' . $request->email . '%');
+        }
+        
+        // 부서 필터
+        if ($request->filled('department')) {
+            $query->where('department', 'like', '%' . $request->department . '%');
+        }
+        
+        // 권한 필터
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
+        }
+        
+        // 상태 필터
+        if ($request->filled('is_active')) {
+            $query->where('is_active', $request->is_active);
+        }
+        
+        // 등록일 필터
+        if ($request->filled('created_from')) {
+            $query->whereDate('created_at', '>=', $request->created_from);
+        }
+        if ($request->filled('created_to')) {
+            $query->whereDate('created_at', '<=', $request->created_to);
+        }
+        
+        // 목록 개수 설정
+        $perPage = $request->get('per_page', 10);
+        $perPage = in_array($perPage, [10, 20, 50, 100]) ? $perPage : 10;
+        
+        return $query->orderBy('created_at', 'desc')->paginate($perPage);
+    }
+
+    /**
      * 관리자를 생성합니다.
      */
     public function createAdmin(array $data): User
