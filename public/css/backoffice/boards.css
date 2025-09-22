@@ -95,6 +95,16 @@
         min-width: auto;
         width: 100%;
     }
+    
+    .board-list-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+    
+    .list-controls {
+        justify-content: center;
+    }
 }
 
 /* 목록 헤더 스타일 */
@@ -108,20 +118,26 @@
 }
 
 .list-info {
+    display: flex;
+    align-items: center;
+}
+
+.list-count {
+    font-weight: 500;
+    color: #495057;
     font-size: 14px;
-    color: #6c757d;
 }
 
 .list-controls {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
 }
 
 .per-page-form {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
 }
 
 .per-page-label {

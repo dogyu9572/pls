@@ -35,11 +35,6 @@ class AdminService
             $query->where('email', 'like', '%' . $request->email . '%');
         }
         
-        // 부서 필터
-        if ($request->filled('department')) {
-            $query->where('department', 'like', '%' . $request->department . '%');
-        }
-        
         // 권한 필터
         if ($request->filled('role')) {
             $query->where('role', $request->role);

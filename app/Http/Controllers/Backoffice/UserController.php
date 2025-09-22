@@ -21,9 +21,9 @@ class UserController extends BaseController
     /**
      * 회원 목록을 표시
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->userService->getAllUsers();
+        $users = $this->userService->getUsersWithFilters($request);
         return view('backoffice.users.index', compact('users'));
     }
 

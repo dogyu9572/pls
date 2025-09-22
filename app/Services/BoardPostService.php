@@ -25,9 +25,13 @@ class BoardPostService
         
         $this->applySearchFilters($query, $request);
         
+        // 목록 개수 설정
+        $perPage = $request->get('per_page', 15);
+        $perPage = in_array($perPage, [10, 20, 50, 100]) ? $perPage : 15;
+        
         $posts = $query->orderBy('is_notice', 'desc')
             ->orderBy('created_at', 'desc')
-            ->paginate(15)
+            ->paginate($perPage)
             ->withQueryString();
 
         $this->transformDates($posts);

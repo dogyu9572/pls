@@ -37,6 +37,7 @@
             <!-- 검색 필터 -->
             <div class="admin-filter">
                 <form method="GET" action="{{ route('backoffice.admins.index') }}" class="filter-form">
+                    <!-- 첫 번째 줄 -->
                     <div class="filter-row">
                         <div class="filter-group">
                             <label for="name" class="filter-label">이름</label>
@@ -47,11 +48,6 @@
                             <label for="email" class="filter-label">이메일</label>
                             <input type="text" id="email" name="email" class="filter-input"
                                 placeholder="이메일을 입력하세요" value="{{ request('email') }}">
-                        </div>
-                        <div class="filter-group">
-                            <label for="department" class="filter-label">부서</label>
-                            <input type="text" id="department" name="department" class="filter-input"
-                                placeholder="부서를 입력하세요" value="{{ request('department') }}">
                         </div>
                         <div class="filter-group">
                             <label for="role" class="filter-label">권한</label>
@@ -69,6 +65,10 @@
                                 <option value="0" {{ request('is_active') == '0' ? 'selected' : '' }}>비활성화</option>
                             </select>
                         </div>
+                    </div>
+                    
+                    <!-- 두 번째 줄 -->
+                    <div class="filter-row">
                         <div class="filter-group">
                             <label for="created_from" class="filter-label">등록일</label>
                             <div class="date-range">
@@ -104,7 +104,7 @@
                             @foreach(request()->except('per_page') as $key => $value)
                                 <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                             @endforeach
-                            <label for="per_page" class="per-page-label">표시 개수:</label>
+                            <label for="per_page" class="per-page-label">목록 개수:</label>
                             <select id="per_page" name="per_page" class="per-page-select" onchange="this.form.submit()">
                                 <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
                                 <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>

@@ -4,6 +4,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backoffice/boards.css') }}">
 @endsection
 
 @section('content')
@@ -76,6 +77,31 @@
                         </div>
                     </form>
                 </div>
+
+                @if($posts->count() > 0)
+                    <!-- 목록 개수 선택 -->
+                    <div class="board-list-header">
+                        <div class="list-info">
+                            <span class="list-count">Total : {{ $posts->total() }}</span>
+                        </div>
+                        <div class="list-controls">
+                            <form method="GET" action="{{ route('backoffice.board-posts.index', $board->slug ?? 'notice') }}" class="per-page-form">
+                                @foreach(request()->except('per_page') as $key => $value)
+                                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                @endforeach
+                                <label for="per_page" class="per-page-label">목록 개수:</label>
+                                <select id="per_page" name="per_page" class="per-page-select" onchange="this.form.submit()">
+                                    <option value="10" {{ request('per_page', 15) == 10 ? 'selected' : '' }}>10</option>
+                                    <option value="15" {{ request('per_page', 15) == 15 ? 'selected' : '' }}>15</option>
+                                    <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
+                                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                                    <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="table-responsive">
                     <table class="board-table">
                         <thead>

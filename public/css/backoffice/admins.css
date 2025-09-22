@@ -24,6 +24,11 @@
     flex-wrap: wrap;
     gap: 1rem;
     align-items: end;
+    margin-bottom: 1rem;
+}
+
+.filter-row:last-child {
+    margin-bottom: 0;
 }
 
 .filter-group {

@@ -102,7 +102,7 @@
                             @foreach(request()->except('per_page') as $key => $value)
                                 <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                             @endforeach
-                            <label for="per_page" class="per-page-label">목록개수:</label>
+                            <label for="per_page" class="per-page-label">목록 개수:</label>
                             <select id="per_page" name="per_page" class="per-page-select" onchange="this.form.submit()">
                                 <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
                                 <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
