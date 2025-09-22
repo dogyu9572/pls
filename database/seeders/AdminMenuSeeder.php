@@ -187,7 +187,21 @@ class AdminMenuSeeder extends Seeder
             ],
         ];
 
-        foreach ($menus as $menu) {
+        // parent_id가 null인 메뉴들을 먼저 생성
+        $parentMenus = array_filter($menus, function($menu) {
+            return $menu['parent_id'] === null;
+        });
+        
+        foreach ($parentMenus as $menu) {
+            AdminMenu::create($menu);
+        }
+        
+        // 그 다음에 자식 메뉴들을 생성
+        $childMenus = array_filter($menus, function($menu) {
+            return $menu['parent_id'] !== null;
+        });
+        
+        foreach ($childMenus as $menu) {
             AdminMenu::create($menu);
         }
     }

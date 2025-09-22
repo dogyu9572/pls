@@ -21,5 +21,8 @@ class DatabaseSeeder extends Seeder
 
         // 게시판 스킨 시더 실행
         $this->call(BoardSkinSeeder::class);
+
+        // 게시판 시더 실행
+        $this->call(BoardSeeder::class);
     }
 }
