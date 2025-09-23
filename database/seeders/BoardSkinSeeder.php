@@ -30,7 +30,7 @@ class BoardSkinSeeder extends Seeder
                 'updated_at' => '2025-05-05 09:33:08',
             ],
             [
-                'id' => 3,
+                'id' => 2,
                 'name' => '갤러리 스킨',
                 'directory' => 'gallery',
                 'description' => '갤러리 형태의 게시판에서 사용할 수 있는 이미지 중심 스킨입니다.',
