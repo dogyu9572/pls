@@ -3,8 +3,9 @@
 @section('title', $board->name ?? '게시판')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backoffice/boards.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backoffice/sorting.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
 @endsection
 
 @section('content')
@@ -29,7 +30,7 @@
         <div class="board-card">
             <div class="board-card-header">
                 <div class="board-page-card-title">
-                    <h6>{{ $board->name }}</h6>                  
+                    <h6>국문연혁관리</h6>                 
                 </div>
             </div>
             <div class="board-card-body">
@@ -77,52 +78,57 @@
                     </form>
                 </div>
 
-                @if($posts->count() > 0)
-                    <!-- 목록 개수 선택 -->
-                    <div class="board-list-header">
-                        <div class="list-info">
-                            <span class="list-count">Total : {{ $posts->total() }}</span>
-                        </div>
-                        <div class="list-controls">
-                            <form method="GET" action="{{ route('backoffice.board-posts.index', $board->slug ?? 'notice') }}" class="per-page-form">
-                                @foreach(request()->except('per_page') as $key => $value)
-                                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
-                                @endforeach
-                                <label for="per_page" class="per-page-label">목록 개수:</label>
-                                <select id="per_page" name="per_page" class="per-page-select" onchange="this.form.submit()">
-                                    <option value="10" {{ request('per_page', 15) == 10 ? 'selected' : '' }}>10</option>
-                                    <option value="15" {{ request('per_page', 15) == 15 ? 'selected' : '' }}>15</option>
-                                    <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
-                                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                                    <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
-                                </select>
-                            </form>
-                        </div>
+                <!-- 목록 개수 선택 -->
+                <div class="board-list-header">
+                    <div class="list-info">
+                        <span class="list-count">Total : {{ $posts->total() }}</span>
                     </div>
-                @endif
+                    <div class="list-controls">
+                        <form method="GET" action="{{ route('backoffice.board-posts.index', $board->slug ?? 'notice') }}" class="per-page-form">
+                            <input type="hidden" name="start_date" value="{{ request('start_date') }}">
+                            <input type="hidden" name="end_date" value="{{ request('end_date') }}">
+                            <input type="hidden" name="keyword" value="{{ request('keyword') }}">
+                            <input type="hidden" name="search_type" value="{{ request('search_type') }}">
+                            <label for="per_page" class="per-page-label">표시 개수:</label>
+                            <select name="per_page" id="per_page" class="per-page-select" onchange="this.form.submit()">
+                                <option value="10" {{ request('per_page', 15) == 10 ? 'selected' : '' }}>10개</option>
+                                <option value="20" {{ request('per_page', 15) == 20 ? 'selected' : '' }}>20개</option>
+                                <option value="50" {{ request('per_page', 15) == 50 ? 'selected' : '' }}>50개</option>
+                                <option value="100" {{ request('per_page', 15) == 100 ? 'selected' : '' }}>100개</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
 
                 <div class="table-responsive">
-                    <table class="board-table">
+                    <table class="board-table {{ $board->enable_sorting ? 'sortable-table' : '' }}">
                         <thead>
                             <tr>
                                 <th class="w5 board-checkbox-column">
                                     <input type="checkbox" id="select-all" class="form-check-input">
                                 </th>
+                                @if($board->enable_sorting)
+                                    <th class="w5">순서</th>
+                                @endif
                                 <th class="w5">번호</th>
                                 <th class="w10">구분</th>
                                 <th>제목</th>
                                 <th class="w10">작성자</th>
-                                <th class="w10">조회수</th>
                                 <th class="w10">작성일</th>
                                 <th class="w15">관리</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody @if($board->enable_sorting) id="sortable-tbody" @endif>
                             @forelse($posts as $post)
-                                <tr>
+                                <tr @if($board->enable_sorting) data-post-id="{{ $post->id }}" @endif>
                                     <td>
                                         <input type="checkbox" name="selected_posts[]" value="{{ $post->id }}" class="form-check-input post-checkbox">
                                     </td>
+                                    @if($board->enable_sorting)
+                                        <td class="sort-handle-cell">
+                                            <i class="fas fa-grip-vertical sort-handle" title="드래그하여 순서 변경"></i>
+                                        </td>
+                                    @endif
                                     <td>
                                         @if ($post->is_notice)
                                             <span class="board-notice-badge">공지</span>
@@ -140,7 +146,6 @@
                                         {{ $post->title }}
                                     </td>
                                     <td>{{ $post->author_name ?? '알 수 없음' }}</td>
-                                    <td>{{ $post->view_count ?? 0 }}</td>
                                     <td>{{ $post->created_at->format('Y-m-d') }}</td>
                                     <td>
                                         <div class="board-btn-group">
@@ -163,7 +168,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center">등록된 게시글이 없습니다.</td>
+                                    <td colspan="{{ $board->enable_sorting ? '8' : '7' }}" class="text-center">등록된 게시글이 없습니다.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -178,4 +183,7 @@
 
 @section('scripts')
     <script src="{{ asset('js/backoffice/board-posts.js') }}"></script>
+    @if($board->enable_sorting)
+        <script src="{{ asset('js/backoffice/sorting.js') }}"></script>
+    @endif
 @endsection

@@ -1,6 +1,6 @@
 @extends('backoffice.layouts.app')
 
-@section('title', ($board->name ?? '게시판'))
+@section('title', '인사말 관리')
 
 @section('styles')
      <link rel="stylesheet" href="{{ asset('css/backoffice/summernote-custom.css') }}">
@@ -18,7 +18,7 @@
 
     <div class="board-card">
         <div class="board-card-header">
-            <h6>게시글 작성</h6>
+            <h6>인사말 관리</h6>
         </div>
         <div class="board-card-body">
             @if ($errors->any())
@@ -34,45 +34,13 @@
             <form action="{{ route('backoffice.board-posts.store', $board->slug ?? 'notice') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                @if($board->isNoticeEnabled())
-                <div class="board-form-group">
-                    <div class="board-checkbox-item">
-                        <input type="checkbox" 
-                               class="board-checkbox-input" 
-                               id="is_notice" 
-                               name="is_notice" 
-                               value="1" 
-                               {{ old('is_notice') == '1' ? 'checked' : '' }}>
-                        <label for="is_notice" class="board-form-label">
-                            <i class="fas fa-bullhorn"></i> 공지글
-                        </label>
-                    </div>
-                    <small class="board-form-text">체크하면 공지글로 설정되어 최상단에 표시됩니다.</small>
-                </div>
-                @endif
+                <!-- 기본 필드들 숨김 처리 (greetings 게시판은 커스텀 필드만 사용) -->
+                <input type="hidden" name="is_notice" value="0">
+                <input type="hidden" name="category" value="인사말">
+                <input type="hidden" name="title" value="인사말">
+                <input type="hidden" name="content" value="인사말 내용">
 
-                <div class="board-form-group">
-                    <label for="category" class="board-form-label">카테고리 분류</label>
-                    <select class="board-form-control" id="category" name="category">
-                        <option value="">카테고리를 선택하세요</option>
-                        <option value="일반" {{ old('category') == '일반' ? 'selected' : '' }}>일반</option>
-                        <option value="공지" {{ old('category') == '공지' ? 'selected' : '' }}>공지</option>
-                        <option value="안내" {{ old('category') == '안내' ? 'selected' : '' }}>안내</option>
-                        <option value="이벤트" {{ old('category') == '이벤트' ? 'selected' : '' }}>이벤트</option>
-                        <option value="기타" {{ old('category') == '기타' ? 'selected' : '' }}>기타</option>
-                    </select>
-                </div>
-
-                <div class="board-form-group">
-                    <label for="title" class="board-form-label">제목 <span class="required">*</span></label>
-                    <input type="text" class="board-form-control" id="title" name="title" value="{{ old('title') }}" required>
-                </div>
-
-                <div class="board-form-group">
-                    <label for="content" class="board-form-label">내용 <span class="required">*</span></label>
-                    <textarea class="board-form-control board-form-textarea" id="content" name="content" rows="15" required>{{ old('content') }}</textarea>
-                </div>
-
+                <!-- 정렬 순서 입력 (정렬 기능이 활성화된 경우만) -->
                 @if($board->enable_sorting)
                 <div class="board-form-group">
                     <label for="sort_order" class="board-form-label">정렬 순서</label>
@@ -192,7 +160,8 @@
                     @endforeach
                 @endif
 
-                <div class="board-form-group">
+                <!-- 첨부파일 섹션 숨김 처리 (greetings 게시판은 커스텀 필드만 사용) -->
+                <div class="board-form-group" style="display: none;">
                     <label class="board-form-label">첨부파일</label>
                     <div class="board-file-upload">
                         <div class="board-file-input-wrapper">

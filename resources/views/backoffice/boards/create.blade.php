@@ -154,6 +154,22 @@
                     <small class="board-form-text">체크하면 게시글 작성 시 공지여부를 설정할 수 있습니다. 공지글은 최상단에 표시됩니다.</small>
                 </div>
 
+                <div class="board-form-group">
+                    <div class="board-checkbox-item">
+                        <input type="checkbox" class="board-checkbox-input" id="is_single_page" name="is_single_page" value="1" {{ old('is_single_page', '0') == '1' ? 'checked' : '' }}>
+                        <label for="is_single_page" class="board-form-label">단일페이지 모드</label>
+                    </div>
+                    <small class="board-form-text">체크하면 게시판이 단일페이지로 동작합니다. 목록 대신 하나의 페이지에서만 내용을 관리할 수 있습니다.</small>
+                </div>
+
+                <div class="board-form-group">
+                    <div class="board-checkbox-item">
+                        <input type="checkbox" class="board-checkbox-input" id="enable_sorting" name="enable_sorting" value="1" {{ old('enable_sorting', '0') == '1' ? 'checked' : '' }}>
+                        <label for="enable_sorting" class="board-form-label">정렬 기능 활성화</label>
+                    </div>
+                    <small class="board-form-text">체크하면 게시글의 순서를 숫자 입력이나 드래그 앤 드롭으로 변경할 수 있습니다.</small>
+                </div>
+
                 <!-- 커스텀 필드 설정 -->
                 <div class="board-form-group">
                     <label class="board-form-label">커스텀 필드 설정</label>

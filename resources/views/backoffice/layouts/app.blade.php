@@ -56,6 +56,9 @@
         };
         window.logoutUrl = "{{ url('/backoffice/logout') }}"; // 로그아웃 URL
     </script>
+    <!-- SortableJS 라이브러리 -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    
     <script src="{{ asset('js/admin/session-timer.js') }}"></script>
     <script src="{{ asset('js/backoffice.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>

@@ -29,10 +29,22 @@ class BoardPostService
         $perPage = $request->get('per_page', 15);
         $perPage = in_array($perPage, [10, 20, 50, 100]) ? $perPage : 15;
         
-        $posts = $query->orderBy('is_notice', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->paginate($perPage)
-            ->withQueryString();
+        // 정렬 기능이 활성화된 게시판인지 확인
+        $board = \App\Models\Board::where('slug', $slug)->first();
+        if ($board && $board->enable_sorting) {
+            // 정렬 기능이 활성화된 경우: sort_order 우선 (큰 숫자가 위에), 그 다음 공지글, 그 다음 생성일
+            $posts = $query->orderBy('sort_order', 'desc')
+                ->orderBy('is_notice', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage)
+                ->withQueryString();
+        } else {
+            // 정렬 기능이 비활성화된 경우: 기존 정렬 방식
+            $posts = $query->orderBy('is_notice', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->paginate($perPage)
+                ->withQueryString();
+        }
 
         $this->transformDates($posts);
         return $posts;
@@ -114,6 +126,7 @@ class BoardPostService
             'attachments' => json_encode($this->handleAttachments($request, $slug)),
             'custom_fields' => $this->getCustomFieldsJson($request, $board),
             'view_count' => 0,
+            'sort_order' => $request->input('sort_order', 0),
             'created_at' => now(),
             'updated_at' => now()
         ];
@@ -237,6 +250,7 @@ class BoardPostService
             'thumbnail' => $this->handleThumbnail($request, $slug),
             'attachments' => json_encode($this->handleAttachments($request, $slug)),
             'custom_fields' => $this->getCustomFieldsJson($request, $board),
+            'sort_order' => $request->input('sort_order', 0),
             'updated_at' => now()
         ];
     }

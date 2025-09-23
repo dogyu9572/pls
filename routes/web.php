@@ -95,6 +95,10 @@ Route::middleware('backoffice')->prefix('backoffice')->group(function () {
     // 메뉴 순서 업데이트
     Route::post('admin-menus/update-order', [AdminMenuController::class, 'updateOrder'])
         ->name('backoffice.admin-menus.update-order');
+    
+    // 메뉴 부모 업데이트 (드래그로 메뉴 이동)
+    Route::post('admin-menus/update-parent', [AdminMenuController::class, 'updateParent'])
+        ->name('backoffice.admin-menus.update-parent');
 
 
     // 기본설정 관리
@@ -134,7 +138,10 @@ Route::middleware('backoffice')->prefix('backoffice')->group(function () {
         ]);
     });
 
-    // 게시글 관리 (특정 게시판) - 먼저 정의
+    // 정렬 순서 업데이트
+    Route::post('board-posts/update-sort-order', [BoardPostController::class, 'updateSortOrder'])->name('backoffice.board-posts.update-sort-order');
+
+    // 게시글 관리 (특정 게시판)
     Route::prefix('board-posts/{slug}')->name('backoffice.board-posts.')->group(function () {
         Route::get('/', [BoardPostController::class, 'index'])->name('index');
         Route::get('/create', [BoardPostController::class, 'create'])->name('create');

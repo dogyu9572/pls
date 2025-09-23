@@ -33,6 +33,14 @@ function initializeSlugGeneration() {
 // 커스텀 필드 관리
 let customFieldCounter = 0;
 
+// 페이지 로드 시 기존 필드 개수로 카운터 초기화
+function initializeCustomFieldCounter() {
+    const container = document.getElementById('customFieldsList');
+    if (container) {
+        customFieldCounter = container.children.length;
+    }
+}
+
 function addCustomField() {
     const container = document.getElementById('customFieldsList');
     if (!container) {
@@ -46,7 +54,7 @@ function addCustomField() {
     const fieldHtml = `
         <div class="custom-field-item" id="${fieldId}">
             <div class="custom-field-header">
-                <h6>커스텀 필드 #${customFieldCounter}</h6>
+                <h6>커스텀 필드 #${existingFields + 1}</h6>
                 <div class="custom-field-actions">
                     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="moveCustomField('${fieldId}', 'up')" title="위로 이동">
                         <i class="fas fa-arrow-up"></i>
@@ -166,6 +174,9 @@ function validateBoardForm() {
 document.addEventListener('DOMContentLoaded', function() {
     // 슬러그 자동 생성 초기화
     initializeSlugGeneration();
+    
+    // 커스텀 필드 카운터 초기화
+    initializeCustomFieldCounter();
     
     // 커스텀 필드 추가 버튼 이벤트 리스너
     const addCustomFieldBtn = document.getElementById('addCustomFieldBtn');

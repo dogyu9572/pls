@@ -57,6 +57,7 @@ class BoardFileGeneratorService
                 $table->string('category')->nullable();
                 $table->json('attachments')->nullable();
                 $table->integer('view_count')->default(0);
+                $table->integer('sort_order')->default(0)->comment('정렬 순서');
                 
                 // 커스텀 필드들 (JSON으로 저장)
                 $table->json('custom_fields')->nullable();
@@ -72,6 +73,7 @@ class BoardFileGeneratorService
                 $table->index(['category', 'created_at']);
                 $table->index(['user_id', 'created_at']);
                 $table->index(['thumbnail']); // 갤러리 검색용
+                $table->index(['sort_order']); // 정렬 성능 최적화
             });
         }
     }
@@ -83,7 +85,7 @@ class BoardFileGeneratorService
     {
         // 스킨 ID에 따라 소스 경로 결정
         $skinSlug = $this->getSkinSlug($board->skin_id);
-        $sourcePath = resource_path("views/backoffice/board_skins/{$skinSlug}");
+        $sourcePath = resource_path("views/backoffice/board-skins/{$skinSlug}");
         $targetPath = resource_path("views/backoffice/board-posts/{$board->slug}");
         
         // 디버깅 로그

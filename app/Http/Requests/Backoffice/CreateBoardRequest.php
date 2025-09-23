@@ -26,6 +26,8 @@ class CreateBoardRequest extends FormRequest
             'description' => 'nullable|max:255',
             'skin_id' => 'required|exists:board_skins,id',
             'is_active' => 'boolean',
+            'is_single_page' => 'boolean',
+            'enable_sorting' => 'boolean',
             'list_count' => 'integer|min:5|max:100',
             'enable_notice' => 'boolean',
             'permission_read' => 'required|in:all,member,admin',

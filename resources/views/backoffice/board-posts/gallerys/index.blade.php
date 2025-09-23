@@ -143,20 +143,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('backoffice.board-posts.show', [$board->slug ?? 'notice', $post->id]) }}"
-                                            class="board-post-title-link">
-                                            {{ $post->title }}
-                                        </a>
+                                        {{ $post->title }}
                                     </td>
                                     <td>{{ $post->author_name ?? '알 수 없음' }}</td>
                                     <td>{{ $post->view_count ?? 0 }}</td>
                                     <td>{{ $post->created_at->format('Y-m-d') }}</td>
                                     <td>
                                         <div class="board-btn-group">
-                                            <a href="{{ route('backoffice.board-posts.show', [$board->slug ?? 'notice', $post->id]) }}"
-                                                class="btn btn-info btn-sm">
-                                                <i class="fas fa-eye"></i> 보기
-                                            </a>
                                             <a href="{{ route('backoffice.board-posts.edit', [$board->slug ?? 'notice', $post->id]) }}"
                                                 class="btn btn-primary btn-sm">
                                                 <i class="fas fa-edit"></i> 수정

@@ -1,6 +1,6 @@
 @extends('backoffice.layouts.app')
 
-@section('title', ($board->name ?? '게시판'))
+@section('title', '인사말 관리')
 
 @section('styles')
      <link rel="stylesheet" href="{{ asset('css/backoffice/summernote-custom.css') }}">
@@ -9,16 +9,11 @@
 @endsection
 
 @section('content')
-<div class="board-container">
-    <div class="board-header">
-        <a href="{{ route('backoffice.board-posts.index', $board->slug ?? 'notice') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> 목록으로
-        </a>
-    </div>
+<div class="board-container">   
 
     <div class="board-card">
         <div class="board-card-header">
-            <h6>게시글 작성</h6>
+            <h6>인사말 관리</h6>
         </div>
         <div class="board-card-body">
             @if ($errors->any())
@@ -31,52 +26,21 @@
                 </div>
             @endif
 
-            <form action="{{ route('backoffice.board-posts.store', $board->slug ?? 'notice') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('backoffice.board-posts.update', [$board->slug ?? 'notice', $post->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
 
-                @if($board->isNoticeEnabled())
-                <div class="board-form-group">
-                    <div class="board-checkbox-item">
-                        <input type="checkbox" 
-                               class="board-checkbox-input" 
-                               id="is_notice" 
-                               name="is_notice" 
-                               value="1" 
-                               {{ old('is_notice') == '1' ? 'checked' : '' }}>
-                        <label for="is_notice" class="board-form-label">
-                            <i class="fas fa-bullhorn"></i> 공지글
-                        </label>
-                    </div>
-                    <small class="board-form-text">체크하면 공지글로 설정되어 최상단에 표시됩니다.</small>
-                </div>
-                @endif
+                <!-- 기본 필드들 숨김 처리 (greetings 게시판은 커스텀 필드만 사용) -->
+                <input type="hidden" name="is_notice" value="{{ $post->is_notice ? '1' : '0' }}">
+                <input type="hidden" name="category" value="{{ $post->category }}">
+                <input type="hidden" name="title" value="{{ $post->title }}">
+                <input type="hidden" name="content" value="{{ $post->content }}">
 
-                <div class="board-form-group">
-                    <label for="category" class="board-form-label">카테고리 분류</label>
-                    <select class="board-form-control" id="category" name="category">
-                        <option value="">카테고리를 선택하세요</option>
-                        <option value="일반" {{ old('category') == '일반' ? 'selected' : '' }}>일반</option>
-                        <option value="공지" {{ old('category') == '공지' ? 'selected' : '' }}>공지</option>
-                        <option value="안내" {{ old('category') == '안내' ? 'selected' : '' }}>안내</option>
-                        <option value="이벤트" {{ old('category') == '이벤트' ? 'selected' : '' }}>이벤트</option>
-                        <option value="기타" {{ old('category') == '기타' ? 'selected' : '' }}>기타</option>
-                    </select>
-                </div>
-
-                <div class="board-form-group">
-                    <label for="title" class="board-form-label">제목 <span class="required">*</span></label>
-                    <input type="text" class="board-form-control" id="title" name="title" value="{{ old('title') }}" required>
-                </div>
-
-                <div class="board-form-group">
-                    <label for="content" class="board-form-label">내용 <span class="required">*</span></label>
-                    <textarea class="board-form-control board-form-textarea" id="content" name="content" rows="15" required>{{ old('content') }}</textarea>
-                </div>
-
+                <!-- 정렬 순서 입력 (정렬 기능이 활성화된 경우만) -->
                 @if($board->enable_sorting)
                 <div class="board-form-group">
                     <label for="sort_order" class="board-form-label">정렬 순서</label>
-                    <input type="number" class="board-form-control" id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}" min="0">
+                    <input type="number" class="board-form-control" id="sort_order" name="sort_order" value="{{ old('sort_order', $post->sort_order ?? 0) }}" min="0">
                     <small class="board-form-text">숫자가 작을수록 위에 표시됩니다. (0이면 자동 정렬)</small>
                 </div>
                 @endif
@@ -84,6 +48,15 @@
                 <!-- 커스텀 필드 입력 폼 -->
                 @if($board->custom_fields_config && count($board->custom_fields_config) > 0)
                     @foreach($board->custom_fields_config as $fieldConfig)
+                        @php
+                            $customFields = $post->custom_fields ? json_decode($post->custom_fields, true) : [];
+                            $fieldValue = $customFields[$fieldConfig['name']] ?? '';
+                            
+                            // 체크박스와 라디오 버튼의 경우 배열로 처리
+                            if (in_array($fieldConfig['type'], ['checkbox', 'radio']) && $fieldValue && !is_array($fieldValue)) {
+                                $fieldValue = [$fieldValue];
+                            }
+                        @endphp
                         <div class="board-form-group">
                             <label for="custom_field_{{ $fieldConfig['name'] }}" class="board-form-label">
                                 {{ $fieldConfig['label'] }}
@@ -97,53 +70,60 @@
                                        class="board-form-control" 
                                        id="custom_field_{{ $fieldConfig['name'] }}" 
                                        name="custom_field_{{ $fieldConfig['name'] }}" 
-                                       value="{{ old('custom_field_' . $fieldConfig['name']) }}"
+                                       value="{{ old('custom_field_' . $fieldConfig['name'], $fieldValue) }}"
                                        placeholder="{{ $fieldConfig['placeholder'] ?? '' }}"
                                        @if($fieldConfig['required']) required @endif>
                             @elseif($fieldConfig['type'] === 'select')
-                                @if($fieldConfig['options'])
-                                    <select class="board-form-control" 
-                                            id="custom_field_{{ $fieldConfig['name'] }}" 
-                                            name="custom_field_{{ $fieldConfig['name'] }}"
-                                            @if($fieldConfig['required']) required @endif>
-                                        <option value="">선택하세요</option>
+                                <select class="board-form-control" 
+                                        id="custom_field_{{ $fieldConfig['name'] }}" 
+                                        name="custom_field_{{ $fieldConfig['name'] }}"
+                                        @if($fieldConfig['required']) required @endif>
+                                    <option value="">선택하세요</option>
+                                    @if($fieldConfig['options'])
                                         @foreach(explode("\n", $fieldConfig['options']) as $option)
                                             @php $option = trim($option); @endphp
                                             @if(!empty($option))
-                                                <option value="{{ $option }}" {{ old('custom_field_' . $fieldConfig['name']) == $option ? 'selected' : '' }}>
+                                                <option value="{{ $option }}" {{ old('custom_field_' . $fieldConfig['name'], $fieldValue) == $option ? 'selected' : '' }}>
                                                     {{ $option }}
                                                 </option>
                                             @endif
                                         @endforeach
-                                    </select>
-                                @else
-                                    <div class="board-form-text text-muted">셀렉박스는 선택 옵션이 필요합니다.</div>
-                                @endif
+                                    @endif
+                                </select>
                             @elseif($fieldConfig['type'] === 'checkbox')
                                 @if($fieldConfig['options'])
                                     <div class="board-options-list board-options-horizontal">
                                         @foreach(explode("\n", $fieldConfig['options']) as $option)
                                             @php $option = trim($option); @endphp
                                             @if(!empty($option))
+                                                @php
+                                                    $isChecked = is_array($fieldValue) ? in_array($option, $fieldValue) : $fieldValue == $option;
+                                                    $isOldChecked = is_array(old('custom_field_' . $fieldConfig['name'])) ? in_array($option, old('custom_field_' . $fieldConfig['name'])) : old('custom_field_' . $fieldConfig['name']) == $option;
+                                                @endphp
                                                 <div class="board-option-item">
                                                     <input type="checkbox" 
                                                            id="option_{{ $fieldConfig['name'] }}_{{ $loop->index }}" 
                                                            name="custom_field_{{ $fieldConfig['name'] }}[]" 
                                                            value="{{ $option }}"
-                                                           {{ in_array($option, old('custom_field_' . $fieldConfig['name'], [])) ? 'checked' : '' }}>
+                                                           {{ ($isChecked || $isOldChecked) ? 'checked' : '' }}>
                                                     <label for="option_{{ $fieldConfig['name'] }}_{{ $loop->index }}">{{ $option }}</label>
                                                 </div>
                                             @endif
                                         @endforeach
                                     </div>
                                 @else
+                                    @php
+                                        $isChecked = is_array($fieldValue) ? in_array('1', $fieldValue) : $fieldValue == '1' || $fieldValue == 1;
+                                        $isOldChecked = is_array(old('custom_field_' . $fieldConfig['name'])) ? in_array('1', old('custom_field_' . $fieldConfig['name'])) : old('custom_field_' . $fieldConfig['name']) == '1';
+                                    @endphp
                                     <div class="board-checkbox-item">
                                         <input type="checkbox" 
                                                class="board-checkbox-input" 
                                                id="custom_field_{{ $fieldConfig['name'] }}" 
                                                name="custom_field_{{ $fieldConfig['name'] }}" 
                                                value="1"
-                                               {{ old('custom_field_' . $fieldConfig['name']) == '1' ? 'checked' : '' }}>
+                                               {{ ($isChecked || $isOldChecked) ? 'checked' : '' }}
+                                               @if($fieldConfig['required']) required @endif>
                                         <label for="custom_field_{{ $fieldConfig['name'] }}" class="board-form-label">
                                             {{ $fieldConfig['label'] }}
                                         </label>
@@ -155,12 +135,16 @@
                                         @foreach(explode("\n", $fieldConfig['options']) as $option)
                                             @php $option = trim($option); @endphp
                                             @if(!empty($option))
+                                                @php
+                                                    $isChecked = is_array($fieldValue) ? in_array($option, $fieldValue) : $fieldValue == $option;
+                                                    $isOldChecked = is_array(old('custom_field_' . $fieldConfig['name'])) ? in_array($option, old('custom_field_' . $fieldConfig['name'])) : old('custom_field_' . $fieldConfig['name']) == $option;
+                                                @endphp
                                                 <div class="board-option-item">
                                                     <input type="radio" 
                                                            id="option_{{ $fieldConfig['name'] }}_{{ $loop->index }}" 
                                                            name="custom_field_{{ $fieldConfig['name'] }}" 
                                                            value="{{ $option }}"
-                                                           {{ old('custom_field_' . $fieldConfig['name']) == $option ? 'checked' : '' }}
+                                                           {{ ($isChecked || $isOldChecked) ? 'checked' : '' }}
                                                            @if($fieldConfig['required']) required @endif>
                                                     <label for="option_{{ $fieldConfig['name'] }}_{{ $loop->index }}">{{ $option }}</label>
                                                 </div>
@@ -171,28 +155,26 @@
                                     <div class="board-form-text text-muted">라디오 버튼은 선택 옵션이 필요합니다.</div>
                                 @endif
                             @elseif($fieldConfig['type'] === 'date')
-                                <input type="text" 
+                                <input type="date" 
                                        class="board-form-control" 
                                        id="custom_field_{{ $fieldConfig['name'] }}" 
                                        name="custom_field_{{ $fieldConfig['name'] }}" 
-                                       value="{{ old('custom_field_' . $fieldConfig['name']) }}"
+                                       value="{{ old('custom_field_' . $fieldConfig['name'], $fieldValue) }}"
                                        @if($fieldConfig['required']) required @endif>
                             @elseif($fieldConfig['type'] === 'editor')
                                 <textarea class="board-form-control board-form-textarea summernote-editor" 
                                           id="custom_field_{{ $fieldConfig['name'] }}" 
                                           name="custom_field_{{ $fieldConfig['name'] }}" 
                                           rows="10"
-                                          @if($fieldConfig['required']) required @endif>{{ old('custom_field_' . $fieldConfig['name']) }}</textarea>
+                                          @if($fieldConfig['required']) required @endif>{{ old('custom_field_' . $fieldConfig['name'], $fieldValue) }}</textarea>
                             @endif
                             
-                            @if($fieldConfig['max_length'] && in_array($fieldConfig['type'], ['text']))
-                                <small class="board-form-text">최대 {{ $fieldConfig['max_length'] }}자 (영어 기준)까지 입력 가능합니다.</small>
-                            @endif
                         </div>
                     @endforeach
                 @endif
 
-                <div class="board-form-group">
+                <!-- 첨부파일 섹션 숨김 처리 (greetings 게시판은 커스텀 필드만 사용) -->
+                <div class="board-form-group" style="display: none;">
                     <label class="board-form-label">첨부파일</label>
                     <div class="board-file-upload">
                         <div class="board-file-input-wrapper">
@@ -203,6 +185,30 @@
                                 <span class="board-file-input-subtext">최대 5개, 각 파일 10MB 이하</span>
                             </div>
                         </div>
+                        
+                        @if($post->attachments)
+                            @php
+                                $existingAttachments = json_decode($post->attachments, true);
+                            @endphp
+                            @if($existingAttachments && is_array($existingAttachments) && count($existingAttachments) > 0)
+                                <div class="board-existing-files">
+                                    <div class="board-attachment-list">
+                                        @foreach($existingAttachments as $index => $attachment)
+                                            <div class="board-attachment-item existing-file" data-index="{{ $index }}">
+                                                <i class="fas fa-file"></i>
+                                                <span class="board-attachment-name">{{ $attachment['name'] }}</span>
+                                                <span class="board-attachment-size">({{ number_format($attachment['size'] / 1024 / 1024, 2) }}MB)</span>
+                                                <button type="button" class="board-attachment-remove" onclick="removeExistingFile({{ $index }})">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                                <input type="hidden" name="existing_attachments[]" value="{{ json_encode($attachment) }}">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
+                        
                         <div class="board-file-preview" id="filePreview"></div>
                     </div>
                 </div>

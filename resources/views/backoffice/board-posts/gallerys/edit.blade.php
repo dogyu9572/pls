@@ -42,6 +42,15 @@
                     </div>                    
                 </div>
 
+                <!-- 정렬 순서 입력 (정렬 기능이 활성화된 경우만) -->
+                @if($board->enable_sorting)
+                <div class="board-form-group">
+                    <label for="sort_order" class="board-form-label">정렬 순서</label>
+                    <input type="number" class="board-form-control" id="sort_order" name="sort_order" value="{{ old('sort_order', $post->sort_order ?? 0) }}" min="0">
+                    <small class="board-form-text">숫자가 작을수록 위에 표시됩니다. (0이면 자동 정렬)</small>
+                </div>
+                @endif
+
                 <div class="board-form-group">
                     <label for="category" class="board-form-label">카테고리 분류</label>
                     <select class="board-form-control" id="category" name="category">

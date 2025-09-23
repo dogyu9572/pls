@@ -1,0 +1,217 @@
+/* 정렬 기능 관련 스타일 */
+.sorting-controls {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.sorting-controls h6 {
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+.sorting-info {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.sort-input {
+    width: 60px;
+    text-align: center;
+    margin-right: 0.5rem;
+}
+
+.post-item {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.post-item.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+}
+
+.post-item.drag-over {
+    border-top: 2px solid #007bff;
+}
+
+.sort-handle {
+    cursor: move;
+    color: #6c757d;
+    padding: 0.25rem;
+    margin-right: 0.5rem;
+}
+
+.sort-handle:hover {
+    color: #007bff;
+}
+
+.sort-order-display {
+    display: inline-block;
+    background: #e9ecef;
+    color: #495057;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    min-width: 30px;
+    text-align: center;
+}
+
+.sorting-enabled .post-item {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem;
+    background: #fff;
+}
+
+.sorting-enabled .post-item:hover {
+    border-color: #007bff;
+    box-shadow: 0 2px 4px rgba(0,123,255,0.1);
+}
+
+.sorting-enabled .post-item .board-post-title {
+    display: flex;
+    align-items: center;
+}
+
+.sorting-enabled .post-item .board-post-title a {
+    flex: 1;
+    text-decoration: none;
+    color: #212529;
+}
+
+.sorting-enabled .post-item .board-post-title a:hover {
+    color: #007bff;
+}
+
+/* 드래그 앤 드롭 애니메이션 */
+.sortable-ghost {
+    opacity: 0.4;
+}
+
+.sortable-chosen {
+    transform: scale(1.02);
+}
+
+.sortable-drag {
+    transform: rotate(2deg);
+}
+
+/* 정렬 버튼 */
+.sort-actions {
+    display: flex;
+    gap: 0.25rem;
+    margin-left: auto;
+}
+
+.sort-actions .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+/* 정렬 상태 표시 */
+.sorting-status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background: #d4edda;
+    color: #155724;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+}
+
+.sorting-status.disabled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* 테이블 형태의 정렬 스타일 */
+.sortable-table tbody tr {
+    cursor: move;
+}
+
+.sortable-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.sort-handle-cell {
+    vertical-align: middle;
+    position: relative;
+}
+
+.sort-handle-cell .sort-handle {
+    cursor: move;
+    color: #6c757d;
+    font-size: 1.1rem;
+    padding: 0.25rem;
+    margin-right: 0.5rem;
+    display: inline-block;
+}
+
+.sort-handle-cell .sort-handle:hover {
+    color: #007bff;
+    transform: scale(1.1);
+}
+
+.sort-handle-cell .sort-order-display {
+    display: inline-block;
+    background: #e9ecef;
+    color: #495057;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    min-width: 25px;
+    text-align: center;
+}
+
+/* 드래그 중 테이블 행 스타일 */
+.sortable-table tbody tr.sortable-ghost {
+    opacity: 0.4;
+    background-color: #f8f9fa;
+}
+
+.sortable-table tbody tr.sortable-chosen {
+    background-color: #e3f2fd;
+    transform: scale(1.01);
+}
+
+.sortable-table tbody tr.sortable-drag {
+    background-color: #fff3e0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 정렬 컨트롤 개선 */
+.sorting-controls {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sorting-controls .sorting-info {
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.sorting-controls .sorting-info i {
+    color: #007bff;
+    margin-right: 0.25rem;
+}
+
+.sorting-controls .sort-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: auto;
+}

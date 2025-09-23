@@ -23,6 +23,8 @@ class Board extends Model
         'is_active',
         'list_count',
         'enable_notice',
+        'is_single_page',
+        'enable_sorting',
         'permission_read',
         'permission_write',
         'permission_comment',
@@ -38,6 +40,9 @@ class Board extends Model
         'is_active' => 'boolean',
         'list_count' => 'integer',
         'enable_notice' => 'boolean',
+        'is_single_page' => 'boolean',
+        'enable_sorting' => 'boolean',
+        'custom_fields_config' => 'array',
     ];
 
     /**
@@ -49,6 +54,8 @@ class Board extends Model
         'is_active' => true,
         'list_count' => 10,
         'enable_notice' => false,
+        'is_single_page' => false,
+        'enable_sorting' => false,
     ];
 
     /**

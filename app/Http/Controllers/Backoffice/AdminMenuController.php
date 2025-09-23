@@ -116,4 +116,32 @@ class AdminMenuController extends BaseController
         return response()->json(['success' => true]);
     }
 
+    /**
+     * 메뉴 부모 업데이트 (드래그로 메뉴 이동)
+     */
+    public function updateParent(Request $request)
+    {
+        $validated = $request->validate([
+            'menu_id' => 'required|exists:admin_menus,id',
+            'parent_id' => 'nullable|exists:admin_menus,id'
+        ]);
+
+        try {
+            $menu = AdminMenu::find($validated['menu_id']);
+            $menu->parent_id = $validated['parent_id'];
+            $menu->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => '메뉴가 성공적으로 이동되었습니다.'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => '메뉴 이동 중 오류가 발생했습니다: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

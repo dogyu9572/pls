@@ -37,14 +37,18 @@ function initMainMenuSortable() {
             ghostClass: 'sortable-ghost', // 드래그 중인 항목의 원래 위치 스타일
             chosenClass: 'sortable-chosen', // 선택된 항목 스타일
             dragClass: 'sortable-drag', // 드래그 중인 항목 스타일
-            filter: '.submenu-list', // 서브메뉴 리스트는 드래그에서 제외
+            group: {
+                name: 'menu',
+                pull: true,
+                put: true
+            },
             fallbackTolerance: 5, // 작은 움직임 무시
             onStart: function() {
                 document.body.style.cursor = 'grabbing';
             },
             onEnd: function(evt) {
                 document.body.style.cursor = '';
-                saveMenuOrder('main');
+                handleMenuMove(evt);
             }
         });
     }
@@ -64,9 +68,9 @@ function initSubmenuSortable() {
             chosenClass: 'sortable-chosen', // 선택된 항목 스타일
             dragClass: 'sortable-drag', // 드래그 중인 항목 스타일
             group: {
-                name: 'submenu',
-                pull: false,
-                put: false
+                name: 'menu',
+                pull: true,
+                put: true
             },
             fallbackTolerance: 5, // 작은 움직임 무시
             onStart: function() {
@@ -74,8 +78,7 @@ function initSubmenuSortable() {
             },
             onEnd: function(evt) {
                 document.body.style.cursor = '';
-                const parentId = submenuList.dataset.parentId;
-                saveMenuOrder('sub', parentId);
+                handleMenuMove(evt);
             }
         });
     });
@@ -267,8 +270,87 @@ function detectUrlPrefix(url) {
     } else if (url.startsWith('/backoffice/')) {
         urlPrefixSelect.value = 'admin';
     } else if (url.startsWith('http://') || url.startsWith('https://')) {
-        urlPrefixSelect.value = 'external';
+        urlPrefixSelect.value = 'external'; 
     } else {
         urlPrefixSelect.value = '';
     }
+}
+
+// 메뉴 이동 처리 함수
+function handleMenuMove(evt) {
+    const draggedElement = evt.item;
+    const menuId = draggedElement.dataset.id;
+    
+    // 새로운 부모 ID 결정
+    let newParentId = null;
+    
+    if (evt.to.id === 'mainMenuList') {
+        // 메인 메뉴 리스트로 이동 (1차 메뉴)
+        newParentId = null;
+    } else if (evt.to.classList.contains('submenu-list')) {
+        // 서브메뉴 리스트로 이동 (2차 메뉴)
+        newParentId = evt.to.dataset.parentId;
+    }
+    
+    // 기존 부모 ID 결정
+    let oldParentId = null;
+    if (evt.from.classList.contains('submenu-list')) {
+        // 서브메뉴에서 이동
+        oldParentId = evt.from.dataset.parentId;
+    } else if (evt.from.id === 'mainMenuList') {
+        // 메인 메뉴에서 이동
+        oldParentId = null;
+    }
+    
+    console.log('Menu move:', {
+        menuId: menuId,
+        oldParentId: oldParentId,
+        newParentId: newParentId,
+        from: evt.from,
+        to: evt.to
+    });
+    
+    // 부모가 변경된 경우에만 처리
+    if (newParentId !== oldParentId) {
+        updateMenuParent(menuId, newParentId);
+    } else {
+        // 같은 레벨 내에서 순서만 변경된 경우
+        if (evt.to.id === 'mainMenuList') {
+            saveMenuOrder('main');
+        } else if (evt.to.classList.contains('submenu-list')) {
+            saveMenuOrder('sub', evt.to.dataset.parentId);
+        }
+    }
+}
+
+// 메뉴 부모 업데이트 함수
+function updateMenuParent(menuId, newParentId) {
+    fetch('/backoffice/admin-menus/update-parent', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            menu_id: menuId,
+            parent_id: newParentId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // 성공 시 페이지 새로고침
+            location.reload();
+        } else {
+            alert('메뉴 이동 중 오류가 발생했습니다: ' + (data.message || '알 수 없는 오류'));
+            // 오류 시 페이지 새로고침하여 원래 상태로 복구
+            location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('메뉴 이동 중 오류가 발생했습니다.');
+        // 오류 시 페이지 새로고침하여 원래 상태로 복구
+        location.reload();
+    });
 }

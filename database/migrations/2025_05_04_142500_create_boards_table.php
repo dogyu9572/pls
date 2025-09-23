@@ -21,6 +21,8 @@ return new class extends Migration
             $table->boolean('table_created')->default(false);  // 동적 테이블 생성 여부
             $table->integer('list_count')->default(15);  // 페이지당 게시물 수
             $table->boolean('enable_notice')->default(true);  // 공지사항 활성화 여부
+            $table->boolean('is_single_page')->default(false)->comment('단일페이지 모드 여부');  // 단일페이지 모드
+            $table->boolean('enable_sorting')->default(false)->comment('정렬 기능 활성화 여부');  // 정렬 기능 활성화
             $table->integer('hot_threshold')->default(100);  // 인기 게시물 조회수 기준
             $table->string('permission_read')->default('all');  // 읽기 권한 (all, member, admin)
             $table->string('permission_write')->default('member');  // 쓰기 권한
