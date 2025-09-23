@@ -12,8 +12,8 @@ class BoardSeeder extends Seeder
      */
     public function run(): void
     {
-        // 기존 데이터 삭제
-        Board::query()->delete();
+        // 기존 데이터 삭제 (하드 삭제)
+        Board::query()->forceDelete();
 
         // 실제 데이터베이스 데이터를 기반으로 생성
         $boards = [
