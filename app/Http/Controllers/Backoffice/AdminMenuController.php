@@ -22,7 +22,7 @@ class AdminMenuController extends BaseController
      */
     public function create()
     {
-        $menus = AdminMenu::whereNull('parent_id')->get();
+        $menus = AdminMenu::whereNull('parent_id')->orderBy('order')->get();
         return $this->view('backoffice.menus.create', compact('menus'));
     }
 
@@ -56,6 +56,7 @@ class AdminMenuController extends BaseController
     {
         $menus = AdminMenu::whereNull('parent_id')
             ->where('id', '!=', $menu->id)
+            ->orderBy('order')
             ->get();
 
         return $this->view('backoffice.menus.edit', compact('menu', 'menus'));
