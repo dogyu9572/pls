@@ -93,6 +93,12 @@ class PopupController extends Controller
             $data['popup_image'] = $request->file('popup_image')->store('popups', 'public');
         }
         
+        // 기본값 설정
+        $data['width'] = $data['width'] ?: 400;
+        $data['height'] = $data['height'] ?: 300;
+        $data['position_top'] = $data['position_top'] ?: 100;
+        $data['position_left'] = $data['position_left'] ?: 100;
+        
         // 게시기간 사용하지 않는 경우 날짜 초기화
         if (!$data['use_period']) {
             $data['start_date'] = null;
@@ -162,6 +168,12 @@ class PopupController extends Controller
             }
             $data['popup_image'] = null;
         }
+        
+        // 기본값 설정
+        $data['width'] = $data['width'] ?: 400;
+        $data['height'] = $data['height'] ?: 300;
+        $data['position_top'] = $data['position_top'] ?: 100;
+        $data['position_left'] = $data['position_left'] ?: 100;
         
         // 게시기간 사용하지 않는 경우 날짜 초기화
         if (!$data['use_period']) {

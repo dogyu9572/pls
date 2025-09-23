@@ -2,6 +2,10 @@
  * 백오피스 세션 타이머 관리 스크립트
  */
 document.addEventListener('DOMContentLoaded', function() {
+    // 세션 설정 (기본값 설정)
+    const sessionConfig = window.sessionConfig || { lifetime: 120 };
+    const logoutUrl = window.logoutUrl || '/backoffice/logout';
+    
     // 세션 관련 변수들
     const sessionTimeout = sessionConfig.lifetime * 60; // 세션 타임아웃(초 단위)
     const warningThreshold = 5 * 60; // 경고 표시 시점(초 단위, 5분 전)

@@ -453,16 +453,36 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* 모바일 토글 버튼 */
-.sidebar-toggle {
-    display: none !important; /* important 추가하여 다른 스타일보다 우선 적용 */
-    background: transparent;
+#sidebarToggle {
+    display: none;
+    background: none;
     border: none;
-    font-size: 1.5rem;
-    color: #333;
+    outline: none;
     cursor: pointer;
     padding: 0;
     margin-right: 15px;
+    text-decoration: none;
+    color: inherit;
 }
+
+@media (max-width: 768px) {
+    #sidebarToggle {
+        display: flex;
+        align-items: center;
+    }
+}
+
+#sidebarToggle:focus,
+#sidebarToggle:active,
+#sidebarToggle:hover {
+    background: none;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 햄버거 메뉴 스타일은 인라인으로 처리됨 */
 
 /* 유틸리티 클래스: 모바일에서만 표시 (부트스트랩 스타일 흉내) */
 .d-md-none {
@@ -1067,6 +1087,40 @@ img {
         width: 100%;
         overflow-x: hidden; /* 가로 스크롤 방지 */
     }
+    
+    /* 모바일에서 텍스트 최적화 */
+    .dashboard-welcome p {
+        word-wrap: break-word;
+        word-break: break-word;
+        white-space: normal;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .dashboard-welcome {
+        padding: 15px;
+        text-align: center;
+    }
+    
+    /* 모든 텍스트 요소 최적화 */
+    body {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    /* 카드 요소 최적화 */
+    .card, .dashboard-card {
+        margin: 10px;
+        padding: 15px;
+        font-size: 14px;
+    }
+    
+    /* 버튼 최적화 */
+    .btn, .dashboard-action-btn {
+        font-size: 12px;
+        padding: 8px 12px;
+        white-space: nowrap;
+    }
 
     .sidebar {
         position: fixed;
@@ -1075,6 +1129,12 @@ img {
         transition: left 0.3s ease;
         z-index: 1000;
         height: 100vh;
+        height: 100dvh; /* 동적 뷰포트 높이 사용 */
+        min-height: 100vh;
+        min-height: 100dvh;
+        top: 0;
+        bottom: 0;
+        overflow-y: auto;
     }
 
     .sidebar.active {
@@ -2168,13 +2228,3 @@ img {
     padding: 1.5rem;
     background-color: white;
 }
-
-
-
-
-
-
-
-
-
-

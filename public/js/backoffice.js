@@ -25,6 +25,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 초기 로드 시 실행
     toggleSidebarButtonVisibility();
+    
+    // 모바일에서 사이드바 초기 상태 설정
+    if (sidebar && window.innerWidth <= 768) {
+        sidebar.classList.remove('active');
+    }
+    
+    // 백드롭 초기화
+    if (backdrop) {
+        backdrop.style.display = 'none';
+    }
 
     // 윈도우 크기 변경 시 실행
     window.addEventListener('resize', toggleSidebarButtonVisibility);
@@ -38,29 +48,68 @@ document.addEventListener('DOMContentLoaded', function() {
             sidebarToggle.addEventListener('click', toggleSidebar);
             backdrop.addEventListener('click', closeSidebar);
         }
+    }
 
-        // 윈도우 리사이즈 시 모바일 메뉴 상태 관리
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768 && sidebar.classList.contains('active')) {
+    // 콘텐츠 영역 클릭 시 사이드바 닫기 (모바일에서만)
+    const content = document.querySelector('.content');
+    if (content) {
+        content.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
                 closeSidebar();
             }
         });
     }
 
+    // 윈도우 리사이즈 시 모바일 메뉴 상태 관리
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && sidebar.classList.contains('active')) {
+            closeSidebar();
+        }
+    });
+
     // 사이드바 토글 함수
     function toggleSidebar(e) {
-        if (e) e.preventDefault();
-        sidebar.classList.toggle('active');
-        backdrop.classList.toggle('active');
-        body.classList.toggle('sidebar-open');
+        if (e && e.type !== 'touchstart') {
+            e.preventDefault();
+        }
+        
+        const isActive = sidebar.classList.contains('active');
+        
+        if (isActive) {
+            // 사이드바 닫기
+            sidebar.classList.remove('active');
+            backdrop.classList.remove('active');
+            body.classList.remove('sidebar-open');
+            backdrop.style.display = 'none';
+        } else {
+            // 사이드바 열기
+            sidebar.classList.add('active');
+            backdrop.classList.add('active');
+            body.classList.add('sidebar-open');
+            backdrop.style.display = 'block';
+        }
     }
 
     // 사이드바 닫기 함수
     function closeSidebar(e) {
-        if (e) e.preventDefault();
+        if (e && e.type !== 'touchstart') {
+            e.preventDefault();
+        }
         sidebar.classList.remove('active');
         backdrop.classList.remove('active');
         body.classList.remove('sidebar-open');
+        // 강제로 숨기기
+        sidebar.style.cssText = 'position: fixed !important; left: -280px !important; width: 260px !important; height: 100vh !important; height: 100dvh !important; min-height: 150vh !important; min-height: 150dvh !important; top: 0 !important; bottom: 0 !important; z-index: 1000 !important; background-color: #343a40 !important; transition: left 0.3s ease !important; overflow-y: auto !important;';
+        // min-height 강제 설정
+        sidebar.style.setProperty('min-height', '150vh', 'important');
+        sidebar.style.setProperty('min-height', '150dvh', 'important');
+        
+        // 백드롭 강제 숨기기
+        backdrop.style.display = 'none';
+        backdrop.style.visibility = 'hidden';
+        backdrop.style.opacity = '0';
+        backdrop.style.visibility = 'hidden';
+        backdrop.style.opacity = '0';
     }
 
     // 테이블 반응형 처리 (모바일에서 테이블 헤더 라벨 추가)

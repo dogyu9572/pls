@@ -15,9 +15,13 @@
         <div class="content">
             <div class="header">
                 <!-- 모바일에서만 보이는 사이드바 토글 버튼 -->
-                <button id="sidebarToggle" class="sidebar-toggle d-md-none">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <a href="#" id="sidebarToggle" class="sidebar-toggle" style="display: flex !important; align-items: center !important;">
+                    <div class="hamburger" style="width: 20px !important; height: 16px !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important;">
+                        <span style="display: block !important; width: 100% !important; height: 2px !important; background-color: #333333 !important; border-radius: 1px !important;"></span>
+                        <span style="display: block !important; width: 100% !important; height: 2px !important; background-color: #333333 !important; border-radius: 1px !important;"></span>
+                        <span style="display: block !important; width: 100% !important; height: 2px !important; background-color: #333333 !important; border-radius: 1px !important;"></span>
+                    </div>
+                </a>
                 <h2>@yield('title', '백오피스')</h2>
 
                 <!-- 유저 드롭다운과 세션 타이머를 함께 배치 -->
@@ -46,13 +50,14 @@
 
     <!-- 세션 타이머 구성 및 로그아웃 URL -->
     <script>
-        // 세션 설정 객체
-        const sessionConfig = {
+        // 전역 변수로 설정
+        window.sessionConfig = {
             lifetime: {{ config('session.lifetime', 120) }} // 세션 타임아웃(분 단위)
         };
-        const logoutUrl = "{{ url('/backoffice/logout') }}"; // 로그아웃 URL
+        window.logoutUrl = "{{ url('/backoffice/logout') }}"; // 로그아웃 URL
     </script>
     <script src="{{ asset('js/admin/session-timer.js') }}"></script>
+    <script src="{{ asset('js/backoffice.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 
     @yield('scripts')
