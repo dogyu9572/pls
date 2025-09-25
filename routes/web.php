@@ -194,6 +194,10 @@ Route::middleware('backoffice')->prefix('backoffice')->group(function () {
     ]);
     Route::post('popups/update-order', [PopupController::class, 'updateOrder'])->name('backoffice.popups.update-order');
 
+    // 세션 연장
+    Route::post('session/extend', [App\Http\Controllers\Backoffice\SessionController::class, 'extend'])
+        ->name('backoffice.session.extend');
+
 });
 
 // =============================================================================

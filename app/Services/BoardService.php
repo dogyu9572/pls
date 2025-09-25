@@ -82,14 +82,20 @@ class BoardService
 
         // 커스텀 필드 설정 처리
         $customFieldsConfig = null;
-        if (isset($data['custom_fields']) && is_array($data['custom_fields'])) {
-            $customFieldsConfig = $this->processCustomFieldsConfig($data['custom_fields']);
+        if (isset($data['custom_fields']) && !empty($data['custom_fields'])) {
+            // 문자열로 온 경우 JSON 디코딩
+            if (is_string($data['custom_fields'])) {
+                $data['custom_fields'] = json_decode($data['custom_fields'], true) ?: [];
+            }
+            
+            // 배열이고 비어있지 않은 경우에만 처리
+            if (is_array($data['custom_fields']) && !empty($data['custom_fields'])) {
+                $customFieldsConfig = $this->processCustomFieldsConfig($data['custom_fields']);
+            }
         }
 
-        // 커스텀 필드 설정을 데이터에 추가
-        if ($customFieldsConfig) {
-            $data['custom_fields_config'] = $customFieldsConfig;
-        }
+        // 커스텀 필드 설정을 데이터에 추가 (null이면 빈 설정으로 처리)
+        $data['custom_fields_config'] = $customFieldsConfig;
 
         // 게시판 생성
         $board = Board::create($data);
@@ -135,9 +141,19 @@ class BoardService
         }
 
         // 커스텀 필드 설정 처리
-        if (isset($data['custom_fields']) && is_array($data['custom_fields'])) {
-            $customFieldsConfig = $this->processCustomFieldsConfig($data['custom_fields']);
-            $data['custom_fields_config'] = $customFieldsConfig;
+        if (isset($data['custom_fields'])) {
+            // custom_fields가 문자열로 오는 경우 배열로 변환
+            if (is_string($data['custom_fields'])) {
+                $data['custom_fields'] = json_decode($data['custom_fields'], true) ?: [];
+            }
+            
+            if (is_array($data['custom_fields']) && !empty($data['custom_fields'])) {
+                $customFieldsConfig = $this->processCustomFieldsConfig($data['custom_fields']);
+                $data['custom_fields_config'] = $customFieldsConfig;
+            } else {
+                // 커스텀 필드가 비어있거나 삭제된 경우 null로 설정
+                $data['custom_fields_config'] = null;
+            }
         }
 
         $result = $board->update($data);

@@ -52,14 +52,11 @@
                 @endif
 
                 <div class="board-form-group">
-                    <label for="category" class="board-form-label">카테고리 분류</label>
+                    <label for="category" class="board-form-label">등록페이지</label>
                     <select class="board-form-control" id="category" name="category">
                         <option value="">카테고리를 선택하세요</option>
-                        <option value="일반" {{ old('category') == '일반' ? 'selected' : '' }}>일반</option>
-                        <option value="공지" {{ old('category') == '공지' ? 'selected' : '' }}>공지</option>
-                        <option value="안내" {{ old('category') == '안내' ? 'selected' : '' }}>안내</option>
-                        <option value="이벤트" {{ old('category') == '이벤트' ? 'selected' : '' }}>이벤트</option>
-                        <option value="기타" {{ old('category') == '기타' ? 'selected' : '' }}>기타</option>
+                        <option value="국문" {{ old('category') == '국문' ? 'selected' : '' }}>국문</option>
+                        <option value="영문" {{ old('category') == '영문' ? 'selected' : '' }}>영문</option>                       
                     </select>
                 </div>
 
@@ -193,19 +190,19 @@
                 @endif
 
                 <div class="board-form-group">
-                    <label class="board-form-label">첨부파일</label>
+                    <label for="thumbnail" class="board-form-label">인증서</label>
                     <div class="board-file-upload">
                         <div class="board-file-input-wrapper">
-                            <input type="file" class="board-file-input" id="attachments" name="attachments[]" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt,.zip,.rar">
+                            <input type="file" class="board-file-input" id="thumbnail" name="thumbnail" accept=".jpg,.jpeg,.png,.gif">
                             <div class="board-file-input-content">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <span class="board-file-input-text">파일을 선택하거나 여기로 드래그하세요</span>
-                                <span class="board-file-input-subtext">최대 5개, 각 파일 10MB 이하</span>
+                                <i class="fas fa-image"></i>
+                                <span class="board-file-input-text">인증서를 선택하거나 여기로 드래그하세요</span>
+                                <span class="board-file-input-subtext">JPG, PNG, GIF 파일만 가능 (최대 5MB)</span>
                             </div>
                         </div>
-                        <div class="board-file-preview" id="filePreview"></div>
+                        <div class="board-file-preview" id="thumbnailPreview"></div>
                     </div>
-                </div>
+                </div>               
 
                 <div class="board-form-actions">
                     <button type="submit" class="btn btn-primary">
@@ -225,4 +222,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script src="{{ asset('js/backoffice/board-post-form.js') }}"></script>
+    <script src="{{ asset('js/backoffice/board-posts.js') }}"></script>
 @endsection

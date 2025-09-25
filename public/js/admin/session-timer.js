@@ -34,23 +34,42 @@ document.addEventListener('DOMContentLoaded', function() {
     const sessionExtendBtn = document.getElementById('sessionExtendBtn');
     if (sessionExtendBtn) {
         sessionExtendBtn.addEventListener('click', function() {
-            // 현재 시간으로 로그인 시간 갱신 (120분으로 리셋)
-            const now = new Date().getTime();
-            localStorage.setItem('backoffice_login_time', now);
-            
-            // 로그인 시간 업데이트
-            loginTime = now;
-            
-            // 경고 상태 해제
-            sessionTimeLeft.parentElement.classList.remove('text-danger');
-            
-            // 성공 메시지 표시
-            showExtendMessage('세션이 갱신되었습니다.');
+            // 서버에 세션 연장 요청
+            fetch('/backoffice/session/extend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 현재 시간으로 로그인 시간 갱신 (120분으로 리셋)
+                    const now = new Date().getTime();
+                    localStorage.setItem('backoffice_login_time', now);
+                    
+                    // 로그인 시간 업데이트
+                    loginTime = now;
+                    
+                    // 경고 상태 해제
+                    sessionTimeLeft.parentElement.classList.remove('text-danger');
+                    
+                    // 성공 메시지 표시
+                    showExtendMessage('세션이 갱신되었습니다.');
+                } else {
+                    showExtendMessage('세션 연장에 실패했습니다.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('세션 연장 오류:', error);
+                showExtendMessage('세션 연장 중 오류가 발생했습니다.', 'error');
+            });
         });
     }
     
-    // 연장 성공 메시지 표시
-    function showExtendMessage(message) {
+    // 연장 성공/실패 메시지 표시
+    function showExtendMessage(message, type = 'success') {
         // 기존 메시지 제거
         const existingMessage = document.querySelector('.session-extend-message');
         if (existingMessage) {
@@ -61,11 +80,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'session-extend-message';
         messageDiv.textContent = message;
+        
+        // 타입에 따른 스타일 설정
+        const backgroundColor = type === 'error' ? '#dc3545' : '#28a745';
+        
         messageDiv.style.cssText = `
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #28a745;
+            background: ${backgroundColor};
             color: white;
             padding: 8px 16px;
             border-radius: 4px;

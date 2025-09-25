@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Laravel Sail 프로젝트 설정 스크립트 (1단계: 프로젝트 설정)
-PROJECT_NAME="backoffice"
+PROJECT_NAME="pls"
 
 echo "🚀 Laravel Sail 프로젝트 설정 중: $PROJECT_NAME"
 
@@ -59,6 +59,18 @@ composer install --no-interaction --prefer-dist --optimize-autoloader
 # 6. Docker 컨테이너 시작
 echo "🐳 Docker 컨테이너 시작 중..."
 ./vendor/bin/sail up -d
+
+# 7. Laravel 애플리케이션 키 생성 및 심볼릭 링크 설정
+echo "🔑 Laravel 애플리케이션 키 생성 중..."
+./vendor/bin/sail artisan key:generate
+
+echo "🔗 파일 저장소 심볼릭 링크 설정 중..."
+if [ -L "public/storage" ]; then
+    echo "✅ 심볼릭 링크가 이미 존재합니다."
+else
+    ./vendor/bin/sail artisan storage:link
+    echo "✅ 심볼릭 링크가 생성되었습니다."
+fi
 
 echo ""
 echo "✅ 1단계 완료: 프로젝트 설정 및 Docker 시작"

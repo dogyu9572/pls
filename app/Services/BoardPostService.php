@@ -63,6 +63,10 @@ class BoardPostService
             $query->whereDate('created_at', '<=', $request->end_date);
         }
 
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
         if ($request->filled('keyword')) {
             $this->applyKeywordSearch($query, $request->keyword, $request->search_type);
         }

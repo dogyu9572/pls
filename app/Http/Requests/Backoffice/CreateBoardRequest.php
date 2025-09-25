@@ -20,7 +20,7 @@ class CreateBoardRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|max:100',
             'slug' => 'nullable|alpha_dash|max:50',
             'description' => 'nullable|max:255',
@@ -34,14 +34,29 @@ class CreateBoardRequest extends FormRequest
             'permission_write' => 'required|in:all,member,admin',
             'permission_comment' => 'required|in:all,member,admin',
             'custom_fields' => 'nullable|array',
-            'custom_fields.*.name' => 'required|string|max:30|regex:/^[a-zA-Z0-9_]+$/',
-            'custom_fields.*.label' => 'required|string|max:50',
-            'custom_fields.*.type' => 'required|in:text,select,checkbox,radio,date,editor',
-            'custom_fields.*.max_length' => 'nullable|integer|min:1|max:255',
-            'custom_fields.*.required' => 'boolean',
-            'custom_fields.*.options' => 'nullable|string|max:500',
-            'custom_fields.*.placeholder' => 'nullable|string|max:100',
         ];
+
+        // custom_fields가 배열이고 비어있지 않은 경우에만 개별 필드 검증 규칙 추가
+        $customFields = $this->input('custom_fields');
+        
+        // custom_fields가 없거나 null인 경우 빈 배열로 처리
+        if (empty($customFields)) {
+            $customFields = [];
+        } elseif (is_string($customFields)) {
+            $customFields = json_decode($customFields, true) ?: [];
+        }
+        
+        if (!empty($customFields) && is_array($customFields)) {
+            $rules['custom_fields.*.name'] = 'required|string|max:30|regex:/^[a-zA-Z0-9_]+$/';
+            $rules['custom_fields.*.label'] = 'required|string|max:50';
+            $rules['custom_fields.*.type'] = 'required|in:text,select,checkbox,radio,date,editor';
+            $rules['custom_fields.*.max_length'] = 'nullable|integer|min:1|max:255';
+            $rules['custom_fields.*.required'] = 'boolean';
+            $rules['custom_fields.*.options'] = 'nullable|string|max:500';
+            $rules['custom_fields.*.placeholder'] = 'nullable|string|max:100';
+        }
+
+        return $rules;
     }
 
     /**

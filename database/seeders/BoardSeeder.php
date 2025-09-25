@@ -99,7 +99,7 @@ class BoardSeeder extends Seeder
                 'created_at' => '2025-09-23 13:19:47',
                 'updated_at' => '2025-09-23 14:09:29',
                 'deleted_at' => null,
-                'custom_fields_config' => '[{"name": "year", "type": "select", "label": "년도", "options": "1990\\r\\n1991", "required": false, "max_length": null, "placeholder": null}]',
+                'custom_fields_config' => null,
             ],
         ];
 

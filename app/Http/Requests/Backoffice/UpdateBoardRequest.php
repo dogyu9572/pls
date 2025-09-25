@@ -19,7 +19,7 @@ class UpdateBoardRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => 'required|max:100',
             'slug' => 'required|alpha_dash|max:50',
             'description' => 'nullable|max:255',
@@ -33,14 +33,31 @@ class UpdateBoardRequest extends FormRequest
             'permission_write' => 'required|in:all,member,admin',
             'permission_comment' => 'required|in:all,member,admin',
             'custom_fields' => 'nullable|array',
-            'custom_fields.*.name' => 'required|string|max:30|regex:/^[a-zA-Z0-9_]+$/',
-            'custom_fields.*.label' => 'required|string|max:50',
-            'custom_fields.*.type' => 'required|in:text,select,checkbox,radio,date,editor',
-            'custom_fields.*.max_length' => 'nullable|integer|min:1|max:255',
-            'custom_fields.*.required' => 'boolean',
-            'custom_fields.*.options' => 'nullable|string|max:500',
-            'custom_fields.*.placeholder' => 'nullable|string|max:100',
         ];
+
+        // custom_fields 처리 - 문자열도 허용하고 나중에 변환
+        $customFields = $this->input('custom_fields', []);
+        
+        // 문자열인 경우 배열로 변환
+        if (is_string($customFields)) {
+            $decoded = json_decode($customFields, true);
+            $customFields = is_array($decoded) ? $decoded : [];
+        }
+        
+        // 변환된 데이터를 다시 설정
+        $this->merge(['custom_fields' => $customFields]);
+        
+        if (!empty($customFields)) {
+            $rules['custom_fields.*.name'] = 'required|string|max:30|regex:/^[a-zA-Z0-9_]+$/';
+            $rules['custom_fields.*.label'] = 'required|string|max:50';
+            $rules['custom_fields.*.type'] = 'required|in:text,select,checkbox,radio,date,editor';
+            $rules['custom_fields.*.max_length'] = 'nullable|integer|min:1|max:255';
+            $rules['custom_fields.*.required'] = 'boolean';
+            $rules['custom_fields.*.options'] = 'nullable|string|max:500';
+            $rules['custom_fields.*.placeholder'] = 'nullable|string|max:100';
+        }
+
+        return $rules;
     }
 
     /**

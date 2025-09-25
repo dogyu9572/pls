@@ -102,7 +102,8 @@ class BoardController extends BaseController
     public function update(UpdateBoardRequest $request, Board $board)
     {
         try {
-            $this->boardService->updateBoard($board, $request->validated());
+            $validated = $request->validated();
+            $this->boardService->updateBoard($board, $validated);
 
             return redirect()->route('backoffice.boards.index')
                 ->with('success', '게시판이 성공적으로 업데이트되었습니다.');

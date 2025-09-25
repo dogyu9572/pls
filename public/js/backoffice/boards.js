@@ -119,13 +119,42 @@ function addCustomField() {
     `;
     
     container.insertAdjacentHTML('beforeend', fieldHtml);
+    
+    // 새 필드가 추가되면 히든 필드 제거 (하지만 기존 input은 유지)
+    const existingHidden = document.getElementById('custom_fields_hidden');
+    if (existingHidden) {
+        existingHidden.remove();
+    }
 }
 
 function removeCustomField(fieldId) {
     const fieldElement = document.getElementById(fieldId);
     if (fieldElement) {
-                fieldElement.remove();
+        // 해당 필드 내부의 input 요소들만 제거
+        const inputs = fieldElement.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => input.remove());
+        
+        // DOM 요소 제거
+        fieldElement.remove();
+        
+        // 커스텀 필드가 모두 삭제되었을 때 빈 배열을 보장하기 위해 히든 필드 추가
+        updateCustomFieldsHiddenInput();
     }
+}
+
+// 커스텀 필드 상태를 추적하는 히든 인풋 업데이트
+function updateCustomFieldsHiddenInput() {
+    const container = document.getElementById('customFieldsList');
+    if (!container) return;
+    
+    // 기존 히든 필드 제거
+    const existingHidden = document.getElementById('custom_fields_hidden');
+    if (existingHidden) {
+        existingHidden.remove();
+    }
+    
+    // 커스텀 필드가 없으면 아무것도 추가하지 않음 (서버에서 null로 처리)
+    // 빈 배열 히든 필드는 추가하지 않음
 }
 
 function moveCustomField(fieldId, direction) {
@@ -183,6 +212,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (addCustomFieldBtn) {
         addCustomFieldBtn.addEventListener('click', addCustomField);
     }
+    
+    // 페이지 로드 시 커스텀 필드 상태 확인
+    updateCustomFieldsHiddenInput();
     
     // 폼 제출 시 유효성 검사
     const boardForm = document.querySelector('form[action*="boards"]');
