@@ -20,3 +20,6 @@ yarn-error.log
 *.cache
 .DS_Store
 Thumbs.db
+
+# 시더 폴더 제외 (backoffice 저장소용)
+/database/seeders
