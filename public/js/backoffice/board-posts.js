@@ -128,21 +128,21 @@ function getBoardTypeFromUrl() {
 
 /* ===== 갤러리 스킨 전용 기능 ===== */
 
-// 썸나일 이미지 관리
+// 썸네일 이미지 관리
 class ThumbnailManager {
     constructor() {
         this.initializeEventListeners();
     }
 
     initializeEventListeners() {
-        // 썸나일 이미지 처리
+        // 썸네일 이미지 처리
         const thumbnailInput = document.getElementById('thumbnail');
         if (thumbnailInput) {
             thumbnailInput.addEventListener('change', this.handleThumbnailChange.bind(this));
         }
     }
 
-    // 썸나일 이미지 변경 처리
+    // 썸네일 이미지 변경 처리
     handleThumbnailChange(e) {
         const file = e.target.files[0];
         if (file) {
@@ -151,7 +151,7 @@ class ThumbnailManager {
                 const thumbnailPreview = document.getElementById('thumbnailPreview');
                 if (thumbnailPreview) {
                     thumbnailPreview.innerHTML = `
-                        <img src="${e.target.result}" alt="썸나일 미리보기" class="thumbnail-preview">
+                        <img src="${e.target.result}" alt="썸네일 미리보기" class="thumbnail-preview">
                     `;
                 }
             };
@@ -159,9 +159,9 @@ class ThumbnailManager {
         }
     }
 
-    // 기존 썸나일 제거
+    // 기존 썸네일 제거
     removeThumbnail() {
-        if (confirm('현재 썸나일을 제거하시겠습니까?')) {
+        if (confirm('현재 썸네일을 제거하시겠습니까?')) {
             // hidden input으로 제거 표시
             const hiddenInput = document.createElement('input');
             hiddenInput.type = 'hidden';
@@ -169,7 +169,7 @@ class ThumbnailManager {
             hiddenInput.value = '1';
             document.querySelector('form').appendChild(hiddenInput);
             
-            // 썸나일 미리보기 영역 숨기기
+            // 썸네일 미리보기 영역 숨기기
             const thumbnailPreview = document.getElementById('thumbnailPreview');
             if (thumbnailPreview) {
                 thumbnailPreview.style.display = 'none';
@@ -180,7 +180,7 @@ class ThumbnailManager {
 
 // 페이지 로드 시 갤러리 기능 초기화
 document.addEventListener('DOMContentLoaded', function() {
-    // 썸나일 매니저 초기화
+    // 썸네일 매니저 초기화
     if (document.querySelector('input[name="thumbnail"]')) {
         window.thumbnailManager = new ThumbnailManager();
     }
@@ -190,5 +190,23 @@ document.addEventListener('DOMContentLoaded', function() {
 function removeThumbnail() {
     if (window.thumbnailManager) {
         window.thumbnailManager.removeThumbnail();
+    }
+}
+
+// 기존 첨부파일 제거
+function removeExistingFile(index) {
+    if (confirm('이 첨부파일을 제거하시겠습니까?')) {
+        const fileItem = document.querySelector(`.existing-file[data-index="${index}"]`);
+        if (fileItem) {
+            // 제거 표시를 위한 hidden input 추가
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'remove_attachments[]';
+            hiddenInput.value = index;
+            document.querySelector('form').appendChild(hiddenInput);
+            
+            // 화면에서 제거
+            fileItem.remove();
+        }
     }
 }

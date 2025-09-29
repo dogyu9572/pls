@@ -31,7 +31,6 @@
             <div class="board-card-header">
                 <div class="board-page-card-title">
                     <h6>항만물류협력사관리</h6>
-                    <span class="board-page-count">총 {{ $posts->total() }}개</span>
                 </div>
             </div>
             <div class="board-card-body">
@@ -50,19 +49,10 @@
                                     value="{{ request('end_date') }}">
                             </div>
                             <div class="filter-group">
-                                <label for="search_type" class="filter-label">검색 구분</label>
-                                <select id="search_type" name="search_type" class="filter-select">
-                                    <option value="">전체</option>
-                                    <option value="title" {{ request('search_type') == 'title' ? 'selected' : '' }}>제목
-                                    </option>
-                                    <option value="content" {{ request('search_type') == 'content' ? 'selected' : '' }}>내용
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="filter-group">
-                                <label for="keyword" class="filter-label">검색어</label>
+                                <label for="keyword" class="filter-label">협력사명 검색</label>
                                 <input type="text" id="keyword" name="keyword" class="filter-input"
-                                    placeholder="검색어를 입력하세요" value="{{ request('keyword') }}">
+                                    placeholder="협력사명을 입력하세요" value="{{ request('keyword') }}">
+                                <input type="hidden" name="search_type" value="title">
                             </div>
                             <div class="filter-group">
                                 <div class="filter-buttons">
@@ -113,7 +103,7 @@
                                 @endif
                                 <th class="w5">번호</th>
                                 <th class="w10">썸네일</th>
-                                <th>제목</th>
+                                <th>협력사명</th>
                                 <th class="w10">작성자</th>
                                 <th class="w10">작성일</th>
                                 <th class="w15">관리</th>

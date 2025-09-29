@@ -4,7 +4,6 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/backoffice/boards.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backoffice/sorting.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
 @endsection
 
@@ -18,178 +17,205 @@
     <div class="board-container">
         <div class="board-page-header">
             <div class="board-page-buttons">
-                <button type="button" id="bulk-delete-btn" class="btn btn-danger">
-                    <i class="fas fa-trash"></i> 선택 삭제
-                </button>
-                <a href="{{ route('backoffice.board-posts.create', $board->slug ?? 'notice') }}" class="btn btn-success">
-                    <i class="fas fa-plus"></i> 새 게시글
-                </a>              
+                @if($posts->count() > 0)
+                    <a href="{{ route('backoffice.board-posts.edit', [$board->slug ?? 'notice', $posts->first()->id]) }}" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> 수정
+                    </a>
+                @else
+                    <a href="{{ route('backoffice.board-posts.create', $board->slug ?? 'notice') }}" class="btn btn-success">
+                        <i class="fas fa-plus"></i> 새 게시글
+                    </a>
+                @endif
             </div>
         </div>
 
         <div class="board-card">
             <div class="board-card-header">
                 <div class="board-page-card-title">
-                    <h6>사업문의내용 관리</h6>                    
+                    <h6>사업문의 관리</h6>
                 </div>
             </div>
             <div class="board-card-body">
-                <!-- 검색 필터 -->
-                <div class="board-filter">
-                    <form method="GET" action="{{ route('backoffice.board-posts.index', $board->slug ?? 'notice') }}" class="filter-form">
-                        <div class="filter-row">
-                            <div class="filter-group">
-                                <label for="start_date" class="filter-label">등록일 시작</label>
-                                <input type="date" id="start_date" name="start_date" class="filter-input"
-                                    value="{{ request('start_date') }}">
+                @if($posts->count() > 0)
+                    @php
+                        $post = $posts->first();
+                        $customFields = $post->custom_fields ? json_decode($post->custom_fields, true) : [];
+                    @endphp
+                    
+                    <!-- PDI 사업문의 섹션 -->
+                    <div class="business-inquiry-section">
+                        <h5 class="section-title">[PDI 사업문의]</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label class="info-label">TEL</label>
+                                    <div class="info-value">{{ $customFields['pdi_tel'] ?? '-' }}</div>
+                                </div>
                             </div>
-                            <div class="filter-group">
-                                <label for="end_date" class="filter-label">등록일 끝</label>
-                                <input type="date" id="end_date" name="end_date" class="filter-input"
-                                    value="{{ request('end_date') }}">
-                            </div>
-                            <div class="filter-group">
-                                <label for="search_type" class="filter-label">검색 구분</label>
-                                <select id="search_type" name="search_type" class="filter-select">
-                                    <option value="">전체</option>
-                                    <option value="title" {{ request('search_type') == 'title' ? 'selected' : '' }}>제목</option>
-                                    <option value="content" {{ request('search_type') == 'content' ? 'selected' : '' }}>내용</option>
-                                </select>
-                            </div>
-                            <div class="filter-group">
-                                <label for="keyword" class="filter-label">검색어</label>
-                                <input type="text" id="keyword" name="keyword" class="filter-input"
-                                    placeholder="검색어를 입력하세요" value="{{ request('keyword') }}">
-                            </div>
-                            <div class="filter-group">
-                                <div class="filter-buttons">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-search"></i> 검색
-                                    </button>
-                                    <a href="{{ route('backoffice.board-posts.index', $board->slug ?? 'notice') }}"
-                                        class="btn btn-secondary">
-                                        <i class="fas fa-undo"></i> 초기화
-                                    </a>
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label class="info-label">MAIL</label>
+                                    <div class="info-value">{{ $customFields['pdi_mail'] ?? '-' }}</div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-
-                <!-- 목록 개수 선택 -->
-                <div class="board-list-header">
-                    <div class="list-info">
-                        <span class="list-count">Total : {{ $posts->total() }}</span>
                     </div>
-                    <div class="list-controls">
-                        <form method="GET" action="{{ route('backoffice.board-posts.index', $board->slug ?? 'notice') }}" class="per-page-form">
-                            <input type="hidden" name="start_date" value="{{ request('start_date') }}">
-                            <input type="hidden" name="end_date" value="{{ request('end_date') }}">
-                            <input type="hidden" name="keyword" value="{{ request('keyword') }}">
-                            <input type="hidden" name="search_type" value="{{ request('search_type') }}">
-                            <label for="per_page" class="per-page-label">표시 개수:</label>
-                            <select name="per_page" id="per_page" class="per-page-select" onchange="this.form.submit()">
-                                <option value="10" {{ request('per_page', 15) == 10 ? 'selected' : '' }}>10개</option>
-                                <option value="20" {{ request('per_page', 15) == 20 ? 'selected' : '' }}>20개</option>
-                                <option value="50" {{ request('per_page', 15) == 50 ? 'selected' : '' }}>50개</option>
-                                <option value="100" {{ request('per_page', 15) == 100 ? 'selected' : '' }}>100개</option>
-                            </select>
-                        </form>
+
+                    <!-- 항만물류 사업문의 섹션 -->
+                    <div class="business-inquiry-section">
+                        <h5 class="section-title">[항만물류 사업문의]</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label class="info-label">TEL</label>
+                                    <div class="info-value">{{ $customFields['logistics_tel'] ?? '-' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label class="info-label">MAIL</label>
+                                    <div class="info-value">{{ $customFields['logistics_mail'] ?? '-' }}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="table-responsive">
-                    <table class="board-table {{ $board->enable_sorting ? 'sortable-table' : '' }}">
-                        <thead>
-                            <tr>
-                                <th class="w5 board-checkbox-column">
-                                    <input type="checkbox" id="select-all" class="form-check-input">
-                                </th>
-                                @if($board->enable_sorting)
-                                    <th class="w5">순서</th>
-                                @endif
-                                <th class="w5">번호</th>
-                                <th class="w10">썸네일</th>
-                                <th>제목</th>
-                                <th class="w10">작성자</th>
-                                <th class="w10">작성일</th>
-                                <th class="w15">관리</th>
-                            </tr>
-                        </thead>
-                        <tbody @if($board->enable_sorting) id="sortable-tbody" @endif>
-                            @forelse($posts as $post)
-                                <tr @if($board->enable_sorting) data-post-id="{{ $post->id }}" @endif>
-                                    <td>
-                                        <input type="checkbox" name="selected_posts[]" value="{{ $post->id }}" class="form-check-input post-checkbox">
-                                    </td>
-                                    @if($board->enable_sorting)
-                                        <td class="sort-handle-cell">
-                                            <i class="fas fa-grip-vertical sort-handle" title="드래그하여 순서 변경"></i>
-                                        </td>
-                                    @endif
-                                    <td>
-                                        @if ($post->is_notice)
-                                            <span class="board-notice-badge">공지</span>
-                                        @else
-                                            @php
-                                                $postNumber = $posts->total() - ($posts->currentPage() - 1) * $posts->perPage() - $loop->index;
-                                            @endphp
-                                            {{ $postNumber }}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($post->thumbnail)
-                                            <img src="{{ asset('storage/' . $post->thumbnail) }}" 
-                                                 alt="썸네일" 
-                                                 class="gallery-thumbnail-small"
-                                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                                            <i class="fas fa-image text-muted" style="display: none;"></i>
-                                        @else
-                                            <i class="fas fa-image text-muted"></i>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        {{ $post->title }}
-                                    </td>
-                                    <td>{{ $post->author_name ?? '알 수 없음' }}</td>
-                                    <td>{{ $post->created_at->format('Y-m-d') }}</td>
-                                    <td>
-                                        <div class="board-btn-group">
-                                            <a href="{{ route('backoffice.board-posts.edit', [$board->slug ?? 'notice', $post->id]) }}"
-                                                class="btn btn-primary btn-sm">
-                                                <i class="fas fa-edit"></i> 수정
-                                            </a>
-                                            <form
-                                                action="{{ route('backoffice.board-posts.destroy', [$board->slug ?? 'notice', $post->id]) }}"
-                                                method="POST" class="d-inline"
-                                                onsubmit="return confirm('정말 이 게시글을 삭제하시겠습니까?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="fas fa-trash"></i> 삭제
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="{{ $board->enable_sorting ? '8' : '7' }}" class="text-center">등록된 게시글이 없습니다.</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
+                    <!-- 특장차 사업문의 섹션 -->
+                    <div class="business-inquiry-section">
+                        <h5 class="section-title">[특장차 사업문의]</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label class="info-label">TEL</label>
+                                    <div class="info-value">{{ $customFields['special_vehicle_tel'] ?? '-' }}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info-item">
+                                    <label class="info-label">MAIL</label>
+                                    <div class="info-value">{{ $customFields['special_vehicle_mail'] ?? '-' }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 브로셔 다운로드 섹션 -->
+                        @if($post->attachments)
+                            @php
+                                $existingAttachments = json_decode($post->attachments, true);
+                            @endphp
+                            @if($existingAttachments && is_array($existingAttachments) && count($existingAttachments) > 0)
+                            <div class="brochure-section">
+                                <h6 class="brochure-title">브로셔 다운로드</h6>
+                                @foreach($existingAttachments as $attachment)
+                                <div class="brochure-file">
+                                    <i class="fas fa-file text-primary"></i>
+                                    <span class="brochure-filename">{{ $attachment['name'] }}</span>
+                                    <span class="brochure-size">({{ number_format($attachment['size'] / 1024 / 1024, 2) }}MB)</span>
+                                    <a href="{{ asset('storage/' . $attachment['path']) }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-download"></i> 다운로드
+                                    </a>
+                                </div>
+                                @endforeach
+                            </div>
+                            @endif
+                        @endif
+                    </div>
 
-                <x-pagination :paginator="$posts" />
+                    <div class="board-form-actions">
+                        <a href="{{ route('backoffice.board-posts.edit', [$board->slug ?? 'notice', $post->id]) }}" class="btn btn-primary">
+                            <i class="fas fa-edit"></i> 수정
+                        </a>
+                    </div>
+                @else
+                    <div class="empty-state">
+                        <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">등록된 사업문의 정보가 없습니다.</h5>
+                        <p class="text-muted">새 게시글을 작성하여 사업문의 정보를 등록해주세요.</p>
+                        <a href="{{ route('backoffice.board-posts.create', $board->slug ?? 'notice') }}" class="btn btn-success">
+                            <i class="fas fa-plus"></i> 새 게시글 작성
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
+
+<style>
+.business-inquiry-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.section-title {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #007bff;
+}
+
+.brochure-section {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+}
+
+.brochure-title {
+    color: #6c757d;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.brochure-file {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brochure-filename {
+    flex: 1;
+    font-weight: 500;
+}
+
+.info-item {
+    margin-bottom: 1rem;
+}
+
+.info-label {
+    display: block;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.info-value {
+    padding: 0.5rem;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.board-form-actions {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+</style>
 @endsection
 
 @section('scripts')
     <script src="{{ asset('js/backoffice/board-posts.js') }}"></script>
-    @if($board->enable_sorting)
-        <script src="{{ asset('js/backoffice/sorting.js') }}"></script>
-    @endif
 @endsection

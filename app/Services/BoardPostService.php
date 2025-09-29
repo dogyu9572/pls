@@ -150,9 +150,22 @@ class BoardPostService
      */
     private function handleThumbnail(Request $request, string $slug): ?string
     {
-        return $request->hasFile('thumbnail') 
-            ? $request->file('thumbnail')->store('thumbnails/' . $slug, 'public')
-            : null;
+        // 썸네일 제거 요청이 있는 경우
+        if ($request->has('remove_thumbnail')) {
+            return null;
+        }
+        
+        // 새 썸네일이 업로드된 경우
+        if ($request->hasFile('thumbnail')) {
+            return $request->file('thumbnail')->store('thumbnails/' . $slug, 'public');
+        }
+        
+        // 기존 썸네일이 있는 경우 보존
+        if ($request->has('existing_thumbnail')) {
+            return $request->input('existing_thumbnail');
+        }
+        
+        return null;
     }
 
     /**
@@ -160,19 +173,39 @@ class BoardPostService
      */
     private function handleAttachments(Request $request, string $slug): array
     {
-        if (!$request->hasFile('attachments')) {
-            return [];
-        }
-
         $attachments = [];
-        foreach ($request->file('attachments') as $file) {
-            $attachments[] = [
-                'name' => $file->getClientOriginalName(),
-                'path' => $file->store('uploads/' . $slug, 'public'),
-                'size' => $file->getSize(),
-                'type' => $file->getMimeType()
-            ];
+        $removeIndices = $request->input('remove_attachments', []);
+        
+        // 기존 첨부파일 보존 (제거 요청이 없는 것만)
+        if ($request->has('existing_attachments')) {
+            $existingAttachments = $request->input('existing_attachments', []);
+            foreach ($existingAttachments as $index => $attachment) {
+                // 제거 요청이 있는 인덱스는 제외
+                if (in_array($index, $removeIndices)) {
+                    continue;
+                }
+                
+                if (is_string($attachment)) {
+                    $attachment = json_decode($attachment, true);
+                }
+                if (is_array($attachment) && isset($attachment['name'], $attachment['path'])) {
+                    $attachments[] = $attachment;
+                }
+            }
         }
+        
+        // 새 첨부파일 추가
+        if ($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $file) {
+                $attachments[] = [
+                    'name' => $file->getClientOriginalName(),
+                    'path' => $file->store('uploads/' . $slug, 'public'),
+                    'size' => $file->getSize(),
+                    'type' => $file->getMimeType()
+                ];
+            }
+        }
+        
         return $attachments;
     }
 

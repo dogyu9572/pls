@@ -18,7 +18,7 @@
 
     <div class="board-card">
         <div class="board-card-header">
-            <h6>게시글 작성</h6>
+            <h6>사업문의 관리</h6>
         </div>
         <div class="board-card-body">
             @if ($errors->any())
@@ -34,191 +34,126 @@
             <form action="{{ route('backoffice.board-posts.store', $board->slug ?? 'notice') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                @if($board->isNoticeEnabled())
-                <div class="board-form-group">
-                    <div class="board-checkbox-item">
-                        <input type="checkbox" 
-                               class="board-checkbox-input" 
-                               id="is_notice" 
-                               name="is_notice" 
-                               value="1" 
-                               {{ old('is_notice') == '1' ? 'checked' : '' }}>
-                        <label for="is_notice" class="board-form-label">
-                            <i class="fas fa-bullhorn"></i> 공지글
-                        </label>
-                    </div>
-                    <small class="board-form-text">체크하면 공지글로 설정되어 최상단에 표시됩니다.</small>
+                <!-- 기본 필드들 히든 처리 -->
+                <div class="board-form-group" style="display: none;">
+                    <input type="hidden" name="title" value="사업문의">
                 </div>
-                @endif
-
-                <div class="board-form-group">
-                    <label for="category" class="board-form-label">카테고리 분류</label>
-                    <select class="board-form-control" id="category" name="category">
-                        <option value="">카테고리를 선택하세요</option>
-                        <option value="일반" {{ old('category') == '일반' ? 'selected' : '' }}>일반</option>
-                        <option value="공지" {{ old('category') == '공지' ? 'selected' : '' }}>공지</option>
-                        <option value="안내" {{ old('category') == '안내' ? 'selected' : '' }}>안내</option>
-                        <option value="이벤트" {{ old('category') == '이벤트' ? 'selected' : '' }}>이벤트</option>
-                        <option value="기타" {{ old('category') == '기타' ? 'selected' : '' }}>기타</option>
-                    </select>
+                <div class="board-form-group" style="display: none;">
+                    <input type="hidden" name="category" value="일반">
+                </div>
+                <div class="board-form-group" style="display: none;">
+                    <input type="hidden" name="content" value="내용">
                 </div>
 
-                <div class="board-form-group">
-                    <label for="title" class="board-form-label">제목 <span class="required">*</span></label>
-                    <input type="text" class="board-form-control" id="title" name="title" value="{{ old('title') }}" required>
-                </div>
-
-                <div class="board-form-group">
-                    <label for="content" class="board-form-label">내용 <span class="required">*</span></label>
-                    <textarea class="board-form-control board-form-textarea" id="content" name="content" rows="15" required>{{ old('content') }}</textarea>
-                </div>
-
-                @if($board->enable_sorting)
-                <div class="board-form-group">
-                    <label for="sort_order" class="board-form-label">정렬 순서</label>
-                    <input type="number" class="board-form-control" id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}" min="0">
-                    <small class="board-form-text">숫자가 작을수록 위에 표시됩니다. (0이면 자동 정렬)</small>
-                </div>
-                @endif
-
-                <!-- 커스텀 필드 입력 폼 -->
-                @if($board->custom_fields_config && count($board->custom_fields_config) > 0)
-                    @foreach($board->custom_fields_config as $fieldConfig)
-                        <div class="board-form-group">
-                            <label for="custom_field_{{ $fieldConfig['name'] }}" class="board-form-label">
-                                {{ $fieldConfig['label'] }}
-                                @if($fieldConfig['required'])
-                                    <span class="required">*</span>
-                                @endif
-                            </label>
-                            
-                            @if($fieldConfig['type'] === 'text')
+                <!-- PDI 사업문의 섹션 -->
+                <div class="business-inquiry-section">
+                    <h5 class="section-title">[PDI 사업문의]</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="board-form-group">
+                                <label for="custom_field_pdi_tel" class="board-form-label">TEL <span class="required">*</span></label>
                                 <input type="text" 
                                        class="board-form-control" 
-                                       id="custom_field_{{ $fieldConfig['name'] }}" 
-                                       name="custom_field_{{ $fieldConfig['name'] }}" 
-                                       value="{{ old('custom_field_' . $fieldConfig['name']) }}"
-                                       placeholder="{{ $fieldConfig['placeholder'] ?? '' }}"
-                                       @if($fieldConfig['required']) required @endif>
-                            @elseif($fieldConfig['type'] === 'select')
-                                @if($fieldConfig['options'])
-                                    <select class="board-form-control" 
-                                            id="custom_field_{{ $fieldConfig['name'] }}" 
-                                            name="custom_field_{{ $fieldConfig['name'] }}"
-                                            @if($fieldConfig['required']) required @endif>
-                                        <option value="">선택하세요</option>
-                                        @foreach(explode("\n", $fieldConfig['options']) as $option)
-                                            @php $option = trim($option); @endphp
-                                            @if(!empty($option))
-                                                <option value="{{ $option }}" {{ old('custom_field_' . $fieldConfig['name']) == $option ? 'selected' : '' }}>
-                                                    {{ $option }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                @else
-                                    <div class="board-form-text text-muted">셀렉박스는 선택 옵션이 필요합니다.</div>
-                                @endif
-                            @elseif($fieldConfig['type'] === 'checkbox')
-                                @if($fieldConfig['options'])
-                                    <div class="board-options-list board-options-horizontal">
-                                        @foreach(explode("\n", $fieldConfig['options']) as $option)
-                                            @php $option = trim($option); @endphp
-                                            @if(!empty($option))
-                                                <div class="board-option-item">
-                                                    <input type="checkbox" 
-                                                           id="option_{{ $fieldConfig['name'] }}_{{ $loop->index }}" 
-                                                           name="custom_field_{{ $fieldConfig['name'] }}[]" 
-                                                           value="{{ $option }}"
-                                                           {{ in_array($option, old('custom_field_' . $fieldConfig['name'], [])) ? 'checked' : '' }}>
-                                                    <label for="option_{{ $fieldConfig['name'] }}_{{ $loop->index }}">{{ $option }}</label>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                @else
-                                    <div class="board-checkbox-item">
-                                        <input type="checkbox" 
-                                               class="board-checkbox-input" 
-                                               id="custom_field_{{ $fieldConfig['name'] }}" 
-                                               name="custom_field_{{ $fieldConfig['name'] }}" 
-                                               value="1"
-                                               {{ old('custom_field_' . $fieldConfig['name']) == '1' ? 'checked' : '' }}>
-                                        <label for="custom_field_{{ $fieldConfig['name'] }}" class="board-form-label">
-                                            {{ $fieldConfig['label'] }}
-                                        </label>
-                                    </div>
-                                @endif
-                            @elseif($fieldConfig['type'] === 'radio')
-                                @if($fieldConfig['options'])
-                                    <div class="board-options-list board-options-horizontal">
-                                        @foreach(explode("\n", $fieldConfig['options']) as $option)
-                                            @php $option = trim($option); @endphp
-                                            @if(!empty($option))
-                                                <div class="board-option-item">
-                                                    <input type="radio" 
-                                                           id="option_{{ $fieldConfig['name'] }}_{{ $loop->index }}" 
-                                                           name="custom_field_{{ $fieldConfig['name'] }}" 
-                                                           value="{{ $option }}"
-                                                           {{ old('custom_field_' . $fieldConfig['name']) == $option ? 'checked' : '' }}
-                                                           @if($fieldConfig['required']) required @endif>
-                                                    <label for="option_{{ $fieldConfig['name'] }}_{{ $loop->index }}">{{ $option }}</label>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                @else
-                                    <div class="board-form-text text-muted">라디오 버튼은 선택 옵션이 필요합니다.</div>
-                                @endif
-                            @elseif($fieldConfig['type'] === 'date')
-                                <input type="date" 
-                                       class="board-form-control" 
-                                       id="custom_field_{{ $fieldConfig['name'] }}" 
-                                       name="custom_field_{{ $fieldConfig['name'] }}" 
-                                       value="{{ old('custom_field_' . $fieldConfig['name']) }}"
-                                       @if($fieldConfig['required']) required @endif>
-                            @elseif($fieldConfig['type'] === 'editor')
-                                <textarea class="board-form-control board-form-textarea summernote-editor" 
-                                          id="custom_field_{{ $fieldConfig['name'] }}" 
-                                          name="custom_field_{{ $fieldConfig['name'] }}" 
-                                          rows="10"
-                                          @if($fieldConfig['required']) required @endif>{{ old('custom_field_' . $fieldConfig['name']) }}</textarea>
-                            @endif
-                            
-                            @if($fieldConfig['max_length'] && in_array($fieldConfig['type'], ['text']))
-                                <small class="board-form-text">최대 {{ $fieldConfig['max_length'] }}자 (영어 기준)까지 입력 가능합니다.</small>
-                            @endif
-                        </div>
-                    @endforeach
-                @endif
-
-                <div class="board-form-group">
-                    <label for="thumbnail" class="board-form-label">썸네일 이미지</label>
-                    <div class="board-file-upload">
-                        <div class="board-file-input-wrapper">
-                            <input type="file" class="board-file-input" id="thumbnail" name="thumbnail" accept=".jpg,.jpeg,.png,.gif">
-                            <div class="board-file-input-content">
-                                <i class="fas fa-image"></i>
-                                <span class="board-file-input-text">썸네일 이미지를 선택하거나 여기로 드래그하세요</span>
-                                <span class="board-file-input-subtext">JPG, PNG, GIF 파일만 가능 (최대 5MB)</span>
+                                       id="custom_field_pdi_tel" 
+                                       name="custom_field_pdi_tel" 
+                                       value="{{ old('custom_field_pdi_tel') }}"
+                                       placeholder="전화번호를 입력하세요"
+                                       required>
                             </div>
                         </div>
-                        <div class="board-file-preview" id="thumbnailPreview"></div>
+                        <div class="col-md-6">
+                            <div class="board-form-group">
+                                <label for="custom_field_pdi_mail" class="board-form-label">MAIL <span class="required">*</span></label>
+                                <input type="email" 
+                                       class="board-form-control" 
+                                       id="custom_field_pdi_mail" 
+                                       name="custom_field_pdi_mail" 
+                                       value="{{ old('custom_field_pdi_mail') }}"
+                                       placeholder="이메일을 입력하세요"
+                                       required>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="board-form-group">
-                    <label class="board-form-label">첨부파일</label>
-                    <div class="board-file-upload">
-                        <div class="board-file-input-wrapper">
-                            <input type="file" class="board-file-input" id="attachments" name="attachments[]" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt,.zip,.rar">
-                            <div class="board-file-input-content">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <span class="board-file-input-text">파일을 선택하거나 여기로 드래그하세요</span>
-                                <span class="board-file-input-subtext">최대 5개, 각 파일 10MB 이하</span>
+                <!-- 항만물류 사업문의 섹션 -->
+                <div class="business-inquiry-section">
+                    <h5 class="section-title">[항만물류 사업문의]</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="board-form-group">
+                                <label for="custom_field_logistics_tel" class="board-form-label">TEL <span class="required">*</span></label>
+                                <input type="text" 
+                                       class="board-form-control" 
+                                       id="custom_field_logistics_tel" 
+                                       name="custom_field_logistics_tel" 
+                                       value="{{ old('custom_field_logistics_tel') }}"
+                                       placeholder="전화번호를 입력하세요"
+                                       required>
                             </div>
                         </div>
-                        <div class="board-file-preview" id="filePreview"></div>
+                        <div class="col-md-6">
+                            <div class="board-form-group">
+                                <label for="custom_field_logistics_mail" class="board-form-label">MAIL <span class="required">*</span></label>
+                                <input type="email" 
+                                       class="board-form-control" 
+                                       id="custom_field_logistics_mail" 
+                                       name="custom_field_logistics_mail" 
+                                       value="{{ old('custom_field_logistics_mail') }}"
+                                       placeholder="이메일을 입력하세요"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 특장차 사업문의 섹션 -->
+                <div class="business-inquiry-section">
+                    <h5 class="section-title">[특장차 사업문의]</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="board-form-group">
+                                <label for="custom_field_special_vehicle_tel" class="board-form-label">TEL <span class="required">*</span></label>
+                                <input type="text" 
+                                       class="board-form-control" 
+                                       id="custom_field_special_vehicle_tel" 
+                                       name="custom_field_special_vehicle_tel" 
+                                       value="{{ old('custom_field_special_vehicle_tel') }}"
+                                       placeholder="전화번호를 입력하세요"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="board-form-group">
+                                <label for="custom_field_special_vehicle_mail" class="board-form-label">MAIL <span class="required">*</span></label>
+                                <input type="email" 
+                                       class="board-form-control" 
+                                       id="custom_field_special_vehicle_mail" 
+                                       name="custom_field_special_vehicle_mail" 
+                                       value="{{ old('custom_field_special_vehicle_mail') }}"
+                                       placeholder="이메일을 입력하세요"
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 브로셔 다운로드 섹션 -->
+                    <div class="brochure-section">
+                        <h6 class="brochure-title">브로셔 다운로드</h6>
+                        <div class="board-form-group">
+                            <label class="board-form-label">첨부파일</label>
+                            <div class="board-file-upload">
+                                <div class="board-file-input-wrapper">
+                                    <input type="file" class="board-file-input" id="attachments" name="attachments[]" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt,.zip,.rar">
+                                    <div class="board-file-input-content">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span class="board-file-input-text">파일을 선택하거나 여기로 드래그하세요</span>
+                                        <span class="board-file-input-subtext">최대 5개, 각 파일 10MB 이하</span>
+                                    </div>
+                                </div>
+                                <div class="board-file-preview" id="filePreview"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -232,6 +167,43 @@
         </div>
     </div>
 </div>
+
+<style>
+.business-inquiry-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.section-title {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #007bff;
+}
+
+.brochure-section {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+}
+
+.brochure-title {
+    color: #6c757d;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.required {
+    color: #dc3545;
+    font-weight: bold;
+}
+</style>
 @endsection
 
 @section('scripts')
@@ -240,5 +212,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script src="{{ asset('js/backoffice/board-post-form.js') }}"></script>
-    <script src="{{ asset('js/backoffice/board-posts.js') }}"></script>
+    
 @endsection

@@ -31,7 +31,6 @@
             <div class="board-card-header">
                 <div class="board-page-card-title">
                     <h6>{{ $board->name ?? '게시판' }}</h6>
-                    <span class="board-page-count">총 {{ $posts->total() }}개</span>
                 </div>
             </div>
             <div class="board-card-body">

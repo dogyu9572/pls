@@ -29,7 +29,7 @@
                 $mainImageAlt = $post->image_alt ?? $post->title;
                 
                 if ($post->thumbnail) {
-                    // 1순위: 전용 썸나일 이미지
+                    // 1순위: 전용 썸네일 이미지
                     $mainImageSrc = asset('storage/' . $post->thumbnail);
                 } elseif ($post->images) {
                     // 2순위: 갤러리 이미지 중 첫 번째

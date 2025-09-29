@@ -140,6 +140,16 @@ class BoardService
             $data['enable_notice'] = false;
         }
 
+        // is_single_page 기본값 설정 (체크되지 않은 경우 false)
+        if (!isset($data['is_single_page'])) {
+            $data['is_single_page'] = false;
+        }
+
+        // enable_sorting 기본값 설정 (체크되지 않은 경우 false)
+        if (!isset($data['enable_sorting'])) {
+            $data['enable_sorting'] = false;
+        }
+
         // 커스텀 필드 설정 처리
         if (isset($data['custom_fields'])) {
             // custom_fields가 문자열로 오는 경우 배열로 변환

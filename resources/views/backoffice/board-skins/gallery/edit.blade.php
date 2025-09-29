@@ -212,6 +212,7 @@
                             </div>
                         </div>
                         @if($post->thumbnail)
+                            <input type="hidden" name="existing_thumbnail" value="{{ $post->thumbnail }}">
                             <div class="board-file-preview" id="thumbnailPreview">
                                 <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="현재 썸네일" class="thumbnail-preview">
                                 <button type="button" class="btn btn-sm btn-outline-danger mt-2" onclick="removeThumbnail()">
