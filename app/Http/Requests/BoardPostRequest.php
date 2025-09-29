@@ -26,10 +26,11 @@ class BoardPostRequest extends FormRequest
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'category' => 'nullable|string|max:50',
-            'is_notice' => 'boolean',
+            'is_notice' => 'nullable|boolean',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB
             'attachments' => 'nullable|array',
-            'attachments.*' => 'file|max:10240' // 10MB
+            'attachments.*' => 'nullable|file|max:10240', // 10MB
+            'sort_order' => 'nullable|integer|min:0'
         ];
 
         // 커스텀 필드 검증 규칙 추가
