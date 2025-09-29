@@ -142,6 +142,14 @@
     background: #ffc107;
 }
 
+.stat-banners .stat-icon {
+    background: #e83e8c;
+}
+
+.stat-popups .stat-icon {
+    background: #fd7e14;
+}
+
 .stat-info {
     flex: 1;
     min-width: 0;
@@ -245,6 +253,29 @@
     border-color: #667eea;
 }
 
+.chart-type-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e9ecef;
+    background: white;
+    color: #6c757d;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.chart-type-btn:hover {
+    background: #f8f9fa;
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.chart-type-btn.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
 .chart-container {
     padding: 1rem;
     height: 300px;
@@ -328,6 +359,34 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 0.875rem;
+    table-layout: fixed;
+}
+
+/* 게시판 현황 테이블 컬럼 너비 */
+.dashboard-table th:nth-child(1),
+.dashboard-table td:nth-child(1) {
+    width: 50%; /* 게시판명 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dashboard-table th:nth-child(2),
+.dashboard-table td:nth-child(2) {
+    width: 15%; /* 게시글 */
+    text-align: center;
+}
+
+.dashboard-table th:nth-child(3),
+.dashboard-table td:nth-child(3) {
+    width: 20%; /* 최근활동 */
+    text-align: center;
+}
+
+.dashboard-table th:nth-child(4),
+.dashboard-table td:nth-child(4) {
+    width: 15%; /* 상태 */
+    text-align: center;
 }
 
 .dashboard-table th {

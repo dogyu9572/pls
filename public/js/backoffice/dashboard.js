@@ -330,46 +330,66 @@ function initVisitorChart() {
     const ctx = document.getElementById('visitorChart');
     if (!ctx) return;
 
-    // 샘플 데이터 (실제로는 서버에서 가져와야 함)
-    const sampleData = {
-        7: {
-            labels: ['8/13', '8/14', '8/15', '8/16', '8/17', '8/18', '8/19'],
-            datasets: [
-                {
-                    label: '방문객 수',
-                    data: [89, 127, 156, 98, 143, 178, 127],
-                    borderColor: '#667eea',
-                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                    pointBackgroundColor: '#667eea',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2
-                }
-            ]
-        },
-        30: {
-            labels: ['7/20', '7/21', '7/22', '7/23', '7/24', '7/25', '7/26', '7/27', '7/28', '7/29', '7/30', '7/31', '8/1', '8/2', '8/3', '8/4', '8/5', '8/6', '8/7', '8/8', '8/9', '8/10', '8/11', '8/12', '8/13', '8/14', '8/15', '8/16', '8/17', '8/18', '8/19'],
-            datasets: [
-                {
-                    label: '방문객 수',
-                    data: [45, 52, 38, 67, 58, 72, 89, 95, 103, 87, 112, 134, 156, 142, 128, 145, 167, 189, 178, 156, 143, 167, 189, 203, 89, 127, 156, 98, 143, 178, 127],
-                    borderColor: '#667eea',
-                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                    tension: 0.4,
-                    fill: true,
-                    pointBackgroundColor: '#667eea',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2
-                }
-            ]
+    // API에서 실제 데이터 가져오기
+    fetch('/backoffice/api/statistics', {
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+            'Accept': 'application/json'
         }
-    };
+    })
+    .then(response => response.json())
+    .then(data => {
+        const chartData = {
+            daily: {
+                labels: data.daily_stats.labels,
+                datasets: [
+                    {
+                        label: '일별 방문객',
+                        data: data.daily_stats.data,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#667eea',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2
+                    }
+                ]
+            },
+            monthly: {
+                labels: data.monthly_stats.labels,
+                datasets: [
+                    {
+                        label: '월별 방문객',
+                        data: data.monthly_stats.data,
+                        borderColor: '#f093fb',
+                        backgroundColor: 'rgba(240, 147, 251, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#f093fb',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2
+                    }
+                ]
+            }
+        };
+        
+        createChart(ctx, chartData);
+    })
+    .catch(error => {
+        console.error('방문객 통계 데이터 로드 실패:', error);
+        createDefaultChart(ctx);
+    });
+}
 
-    // 차트 생성
-    const visitorChart = new Chart(ctx, {
+// 차트 생성 함수
+function createChart(ctx, chartData) {
+    if (!ctx) return;
+
+    // 차트 생성 (기본은 일별)
+    const chart = new Chart(ctx, {
         type: 'line',
-        data: sampleData[7],
+        data: chartData.daily,
         options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -410,19 +430,62 @@ function initVisitorChart() {
         }
     });
 
-    // 기간 변경 버튼 이벤트
-    document.querySelectorAll('.chart-period-btn').forEach(btn => {
+    // 타입 변경 버튼 이벤트
+    const chartContainer = ctx.closest('.grid-item');
+    chartContainer.querySelectorAll('.chart-type-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            const period = this.dataset.period;
+            const type = this.dataset.type;
             
             // 활성 버튼 변경
-            document.querySelectorAll('.chart-period-btn').forEach(b => b.classList.remove('active'));
+            chartContainer.querySelectorAll('.chart-type-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
             
             // 차트 데이터 업데이트
-            visitorChart.data = sampleData[period];
-            visitorChart.update();
+            chart.data = chartData[type];
+            chart.update();
         });
+    });
+}
+
+// 기본 차트 생성 함수
+function createDefaultChart(ctx) {
+    if (!ctx) return;
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: '데이터 없음',
+                data: [],
+                borderColor: '#ccc',
+                backgroundColor: 'rgba(204, 204, 204, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#f1f3f4'
+                    }
+                },
+                x: {
+                    grid: {
+                        color: '#f1f3f4'
+                    }
+                }
+            }
+        }
     });
 }
 

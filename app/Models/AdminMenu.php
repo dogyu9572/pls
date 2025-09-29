@@ -39,6 +39,14 @@ class AdminMenu extends Model
     }
 
     /**
+     * 이 메뉴와 연결된 게시판 관계
+     */
+    public function board()
+    {
+        return $this->belongsTo(Board::class, 'url', 'slug');
+    }
+
+    /**
      * 최상위 메뉴만 가져오기 (1차 메뉴)
      */
     public static function getMainMenus()

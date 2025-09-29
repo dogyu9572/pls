@@ -89,6 +89,19 @@ class Board extends Model
         return $this->belongsTo(BoardSkin::class, 'skin_id');
     }
 
+    /**
+     * 이 게시판과 연결된 메뉴 가져오기 (2차 메뉴에서 찾기)
+     */
+    public function getAdminMenu()
+    {
+        $searchPattern = '/backoffice/board-posts/' . $this->slug;
+        $menu = AdminMenu::where('url', $searchPattern)
+            ->whereNotNull('parent_id') // 2차 메뉴에서 찾기
+            ->first();
+            
+        return $menu;
+    }
+
 
     /**
      * 이 게시판의 게시글 수 가져오기

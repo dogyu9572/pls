@@ -26,22 +26,12 @@
 
     <!-- 통계 요약 -->
     <div class="stats-row">
-        <div class="stat-card stat-users">
-            <div class="stat-icon">
-                <i class="fas fa-users"></i>
-            </div>
-            <div class="stat-info">
-                <h3>회원</h3>
-                <p class="stat-number">{{ $totalUsers }}</p>
-            </div>
-        </div>
-
         <div class="stat-card stat-boards">
             <div class="stat-icon">
                 <i class="fas fa-clipboard-list"></i>
             </div>
             <div class="stat-info">
-                <h3>게시판</h3>
+                <h3>활성 게시판</h3>
                 <p class="stat-number">{{ $totalBoards }}</p>
             </div>
         </div>
@@ -51,100 +41,36 @@
                 <i class="fas fa-file-alt"></i>
             </div>
             <div class="stat-info">
-                <h3>게시글</h3>
+                <h3>총 게시글</h3>
                 <p class="stat-number">{{ $totalPosts ?? 0 }}</p>
             </div>
         </div>
 
-        <div class="stat-card stat-comments">
+        <div class="stat-card stat-banners">
             <div class="stat-icon">
-                <i class="fas fa-comments"></i>
+                <i class="fas fa-image"></i>
             </div>
             <div class="stat-info">
-                <h3>댓글</h3>
-                <p class="stat-number">{{ $totalComments ?? 0 }}</p>
+                <h3>활성 배너</h3>
+                <p class="stat-number">{{ $activeBanners ?? 0 }}</p>
+            </div>
+        </div>
+
+        <div class="stat-card stat-popups">
+            <div class="stat-icon">
+                <i class="fas fa-window-restore"></i>
+            </div>
+            <div class="stat-info">
+                <h3>활성 팝업</h3>
+                <p class="stat-number">{{ $activePopups ?? 0 }}</p>
             </div>
         </div>
     </div>
 
     <!-- 데이터 그리드 -->
     <div class="dashboard-grid">
-        <!-- 최근 회원가입 -->
-        <div class="grid-item grid-col-6">
-            <div class="grid-item-header">
-                <h3>최근 회원가입</h3>
-                <a href="{{ route('backoffice.users.index') }}" class="more-btn">
-                    <i class="fas fa-arrow-right"></i> 더보기
-                </a>
-            </div>
-            <div class="grid-item-body">
-                <table class="dashboard-table">
-                    <thead>
-                        <tr>
-                            <th>이름</th>
-                            <th>이메일</th>
-                            <th>가입일</th>
-                            <th>상태</th>
-                            <th>관리</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($users as $user)
-                            <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->created_at->format('Y-m-d') }}</td>
-                                <td>
-                                    <span class="table-badge badge-{{ $user->email_verified_at ? 'success' : 'warning' }}">
-                                        {{ $user->email_verified_at ? '인증' : '미인증' }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="{{ route('backoffice.users.edit', $user->id) }}" class="table-action table-action-edit">
-                                        <i class="fas fa-user-edit"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center">등록된 회원이 없습니다.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- 최근 게시글 -->
-        <div class="grid-item grid-col-6">
-            <div class="grid-item-header">
-                <h3>최근 게시글</h3>
-                <a href="{{ route('backoffice.posts.index') }}" class="more-btn">
-                    <i class="fas fa-arrow-right"></i> 더보기
-                </a>
-            </div>
-            <div class="grid-item-body">
-                <table class="dashboard-table">
-                    <thead>
-                        <tr>
-                            <th>제목</th>
-                            <th>게시판</th>
-                            <th>작성자</th>
-                            <th>등록일</th>
-                            <th>관리</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="5" class="text-center">등록된 게시글이 없습니다.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- 게시판 리스트 -->
-        <div class="grid-item grid-col-6">
+        <!-- 게시판 현황 -->
+        <div class="grid-item grid-col-12">
             <div class="grid-item-header">
                 <h3>게시판 현황</h3>
                 <a href="{{ route('backoffice.boards.index') }}" class="more-btn">
@@ -157,7 +83,6 @@
                         <tr>
                             <th>게시판명</th>
                             <th>게시글</th>
-                            <th>댓글</th>
                             <th>최근활동</th>
                             <th>상태</th>
                         </tr>
@@ -165,9 +90,13 @@
                     <tbody>
                         @forelse($boards as $board)
                             <tr>
-                                <td>{{ $board->name }}</td>
+                                <td>
+                                    <a href="{{ route('backoffice.board-posts.index', ['slug' => $board->slug]) }}" 
+                                       class="text-decoration-none text-dark fw-medium">
+                                        {{ $board->name }}
+                                    </a>
+                                </td>
                                 <td>{{ $board->getPostsCount() }}</td>
-                                <td>{{ $board->getCommentsCount() }}</td>
                                 <td>{{ $board->updated_at ? $board->updated_at->diffForHumans() : '-' }}</td>
                                 <td>
                                     <span class="table-badge badge-{{ $board->is_active ? 'success' : 'secondary' }}">
@@ -177,7 +106,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">등록된 게시판이 없습니다.</td>
+                                <td colspan="4" class="text-center">등록된 게시판이 없습니다.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -185,60 +114,6 @@
             </div>
         </div>
 
-        <!-- 최근 접속 로그 -->
-        <div class="grid-item grid-col-6">
-            <div class="grid-item-header">
-                <h3>최근 접속 로그</h3>
-                <a href="{{ route('backoffice.logs.access') }}" class="more-btn">
-                    <i class="fas fa-arrow-right"></i> 더보기
-                </a>
-            </div>
-            <div class="grid-item-body">
-                <table class="dashboard-table">
-                    <thead>
-                        <tr>
-                            <th>IP</th>
-                            <th>사용자</th>
-                            <th>접속시간</th>
-                            <th>상태</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>192.168.1.101</td>
-                            <td>관리자</td>
-                            <td>{{ now()->subMinutes(5)->format('Y-m-d H:i') }}</td>
-                            <td><span class="table-badge badge-success">성공</span></td>
-                        </tr>
-                        <tr>
-                            <td>118.235.12.45</td>
-                            <td>user@example.com</td>
-                            <td>{{ now()->subHours(1)->format('Y-m-d H:i') }}</td>
-                            <td><span class="table-badge badge-success">성공</span></td>
-                        </tr>
-                        <tr>
-                            <td>121.143.88.201</td>
-                            <td>unknown</td>
-                            <td>{{ now()->subHours(2)->format('Y-m-d H:i') }}</td>
-                            <td><span class="table-badge badge-danger">실패</span></td>
-                        </tr>
-                        <tr>
-                            <td>58.124.56.102</td>
-                            <td>member@example.com</td>
-                            <td>{{ now()->subHours(3)->format('Y-m-d H:i') }}</td>
-                            <td><span class="table-badge badge-success">성공</span></td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>211.214.110.53</td>
-                            <td>admin@example.com</td>
-                            <td>{{ now()->subHours(5)->format('Y-m-d H:i') }}</td>
-                            <td><span class="table-badge badge-success">성공</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 
     <!-- 접속 통계 그래프 -->
@@ -247,19 +122,19 @@
             <div class="grid-item-header">
                 <h3>방문객 통계</h3>
                 <div class="chart-controls">
-                    <button class="chart-period-btn active" data-period="7">7일</button>
-                    <button class="chart-period-btn" data-period="30">30일</button>
+                    <button class="chart-type-btn active" data-type="daily">일별</button>
+                    <button class="chart-type-btn" data-type="monthly">월별</button>
                 </div>
             </div>
             <div class="grid-item-body">
                 <div class="visitor-summary">
                     <div class="visitor-stat">
                         <span class="visitor-label">오늘 방문객</span>
-                        <span class="visitor-number">127</span>
+                        <span class="visitor-number">{{ $visitorStats['today_visitors'] ?? 0 }}</span>
                     </div>
                     <div class="visitor-stat">
                         <span class="visitor-label">총 방문객</span>
-                        <span class="visitor-number">15,847</span>
+                        <span class="visitor-number">{{ number_format($visitorStats['total_visitors'] ?? 0) }}</span>
                     </div>
                 </div>
                 <div class="chart-container">
