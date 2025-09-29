@@ -36,16 +36,14 @@
                 <!-- 검색 필터 -->
                 <div class="board-filter">
                     <form method="GET" action="{{ route('backoffice.board-posts.index', $board->slug ?? 'notice') }}" class="filter-form">
-                        <div class="filter-row">
+                        <div class="filter-row">                            
                             <div class="filter-group">
-                                <label for="start_date" class="filter-label">등록일 시작</label>
-                                <input type="date" id="start_date" name="start_date" class="filter-input"
-                                    value="{{ request('start_date') }}">
-                            </div>
-                            <div class="filter-group">
-                                <label for="end_date" class="filter-label">등록일 끝</label>
-                                <input type="date" id="end_date" name="end_date" class="filter-input"
-                                    value="{{ request('end_date') }}">
+                                <label for="category" class="filter-label">등록페이지</label>
+                                <select id="category" name="category" class="filter-select">
+                                    <option value="">전체</option>
+                                    <option value="국문" {{ request('category') == '국문' ? 'selected' : '' }}>국문</option>
+                                    <option value="영문" {{ request('category') == '영문' ? 'selected' : '' }}>영문</option>
+                                </select>
                             </div>
                             <div class="filter-group">
                                 <label for="search_type" class="filter-label">검색 구분</label>
@@ -59,6 +57,16 @@
                                 <label for="keyword" class="filter-label">검색어</label>
                                 <input type="text" id="keyword" name="keyword" class="filter-input"
                                     placeholder="검색어를 입력하세요" value="{{ request('keyword') }}">
+                            </div>
+                            <div class="filter-group">
+                                <label for="start_date" class="filter-label">등록일 시작</label>
+                                <input type="date" id="start_date" name="start_date" class="filter-input"
+                                    value="{{ request('start_date') }}">
+                            </div>
+                            <div class="filter-group">
+                                <label for="end_date" class="filter-label">등록일 끝</label>
+                                <input type="date" id="end_date" name="end_date" class="filter-input"
+                                    value="{{ request('end_date') }}">
                             </div>
                             <div class="filter-group">
                                 <div class="filter-buttons">
@@ -108,6 +116,7 @@
                                 </th>
                                 <th class="w5">번호</th>
                                 <th class="w10">썸네일</th>
+                                <th class="w10">등록페이지</th>
                                 <th>제목</th>
                                 <th class="w10">작성자</th>
                                 <th class="w10">조회수</th>
@@ -143,8 +152,11 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{ $post->title }}
+                                        {{ $post->category }}
                                     </td>
+                                    <td>
+                                        {{ $post->title }}
+                                    </td>                                   
                                     <td>{{ $post->author_name ?? '알 수 없음' }}</td>
                                     <td>{{ $post->view_count ?? 0 }}</td>
                                     <td>{{ $post->created_at->format('Y-m-d') }}</td>

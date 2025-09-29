@@ -61,14 +61,11 @@
                 @endif
 
                 <div class="board-form-group">
-                    <label for="category" class="board-form-label">카테고리 분류</label>
+                    <label for="category" class="board-form-label">등록페이지</label>
                     <select class="board-form-control" id="category" name="category">
                         <option value="">카테고리를 선택하세요</option>
-                        <option value="일반" {{ old('category') == '일반' ? 'selected' : '' }}>일반</option>
-                        <option value="공지" {{ old('category') == '공지' ? 'selected' : '' }}>공지</option>
-                        <option value="안내" {{ old('category') == '안내' ? 'selected' : '' }}>안내</option>
-                        <option value="이벤트" {{ old('category') == '이벤트' ? 'selected' : '' }}>이벤트</option>
-                        <option value="기타" {{ old('category') == '기타' ? 'selected' : '' }}>기타</option>
+                        <option value="국문" {{ old('category') == '국문' ? 'selected' : '' }}>국문</option>
+                        <option value="영문" {{ old('category') == '영문' ? 'selected' : '' }}>영문</option>                       
                     </select>
                 </div>
 

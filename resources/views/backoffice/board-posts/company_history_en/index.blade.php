@@ -48,19 +48,10 @@
                                 </select>
                             </div>                                                    
                             <div class="filter-group">
-                                <label for="search_type" class="filter-label">검색 구분</label>
-                                <select id="search_type" name="search_type" class="filter-select">
-                                    <option value="">전체</option>
-                                    <option value="title" {{ request('search_type') == 'title' ? 'selected' : '' }}>제목
-                                    </option>
-                                    <option value="content" {{ request('search_type') == 'content' ? 'selected' : '' }}>내용
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="filter-group">
-                                <label for="keyword" class="filter-label">검색어</label>
+                                <label for="keyword" class="filter-label">내용검색</label>
                                 <input type="text" id="keyword" name="keyword" class="filter-input"
-                                    placeholder="검색어를 입력하세요" value="{{ request('keyword') }}">
+                                    placeholder="내용을 검색하세요" value="{{ request('keyword') }}">
+                                <input type="hidden" name="search_type" value="content">
                             </div>
                             <div class="filter-group">
                                 <label for="start_date" class="filter-label">등록일 시작</label>

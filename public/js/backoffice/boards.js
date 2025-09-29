@@ -70,15 +70,15 @@ function addCustomField() {
             <div class="board-form-row">
                 <div class="board-form-col board-form-col-6">
                     <div class="board-form-group">
-                        <label class="board-form-label">필드명 <span class="required">*</span></label>
-                        <input type="text" class="board-form-control" name="custom_fields[${existingFields}][name]" placeholder="예: location" required>
+                        <label class="board-form-label">필드명</label>
+                        <input type="text" class="board-form-control" name="custom_fields[${existingFields}][name]" placeholder="예: location">
                         <small class="board-form-text">영문, 소문자, 언더스코어(_) 사용</small>
                     </div>
                 </div>
                 <div class="board-form-col board-form-col-6">
                     <div class="board-form-group">
-                        <label class="board-form-label">라벨 <span class="required">*</span></label>
-                        <input type="text" class="board-form-control" name="custom_fields[${existingFields}][label]" placeholder="예: 위치" required>
+                        <label class="board-form-label">라벨</label>
+                        <input type="text" class="board-form-control" name="custom_fields[${existingFields}][label]" placeholder="예: 위치">
                         <small class="board-form-text">사용자에게 보여질 이름</small>
                     </div>
                 </div>
@@ -86,8 +86,8 @@ function addCustomField() {
             <div class="board-form-row">
                 <div class="board-form-col board-form-col-4">
                     <div class="board-form-group">
-                        <label class="board-form-label">필드 타입 <span class="required">*</span></label>
-                        <select class="board-form-control" name="custom_fields[${existingFields}][type]" onchange="toggleFieldOptions(this, ${existingFields})" required>
+                        <label class="board-form-label">필드 타입</label>
+                        <select class="board-form-control" name="custom_fields[${existingFields}][type]" onchange="toggleFieldOptions(this, ${existingFields})">
                             <option value="">타입 선택</option>
                             <option value="text">텍스트</option>
                             <option value="select">셀렉박스</option>

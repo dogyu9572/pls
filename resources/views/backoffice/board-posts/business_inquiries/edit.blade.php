@@ -6,6 +6,7 @@
      <link rel="stylesheet" href="{{ asset('css/backoffice/summernote-custom.css') }}">
     <!-- Summernote CSS (Bootstrap 기반, 완전 무료) -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/backoffice/business-sections.css') }}">
 @endsection
 
 @section('content')
@@ -52,7 +53,7 @@
 
                 <!-- PDI 사업문의 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[PDI 사업문의]</h5>
+                    <h6 class="section-title">[PDI 사업문의]</h5>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">
@@ -83,7 +84,7 @@
 
                 <!-- 항만물류 사업문의 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[항만물류 사업문의]</h5>
+                    <h6 class="section-title">[항만물류 사업문의]</h5>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">
@@ -114,7 +115,7 @@
 
                 <!-- 특장차 사업문의 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[특장차 사업문의]</h5>
+                    <h6 class="section-title">[특장차 사업문의]</h5>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">
@@ -197,42 +198,6 @@
     </div>
 </div>
 
-<style>
-.business-inquiry-section {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-}
-
-.section-title {
-    color: #495057;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #007bff;
-}
-
-.brochure-section {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    border-radius: 6px;
-}
-
-.brochure-title {
-    color: #6c757d;
-    font-weight: 500;
-    margin-bottom: 1rem;
-}
-
-.required {
-    color: #dc3545;
-    font-weight: bold;
-}
-</style>
 @endsection
 
 @section('scripts')

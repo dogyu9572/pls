@@ -35,12 +35,14 @@
                 @csrf
                 @method('PUT')
 
+                @if($board->isNoticeEnabled())
                 <div class="board-form-group">
                     <div class="board-checkbox-item">
                         <input type="checkbox" class="board-checkbox-input" id="is_notice" name="is_notice" value="1" {{ old('is_notice', $post->is_notice) == '1' ? 'checked' : '' }}>
                         <label for="is_notice" class="board-form-label">공지 등록</label>
                     </div>                    
                 </div>
+                @endif
 
                 <div class="board-form-group">
                     <label for="category" class="board-form-label">카테고리 분류</label>

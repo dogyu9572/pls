@@ -51,27 +51,15 @@
                 </div>
                 @endif
 
-                <div class="board-form-group">
-                    <label for="category" class="board-form-label">카테고리 분류</label>
-                    <select class="board-form-control" id="category" name="category">
-                        <option value="">카테고리를 선택하세요</option>
-                        <option value="일반" {{ old('category') == '일반' ? 'selected' : '' }}>일반</option>
-                        <option value="공지" {{ old('category') == '공지' ? 'selected' : '' }}>공지</option>
-                        <option value="안내" {{ old('category') == '안내' ? 'selected' : '' }}>안내</option>
-                        <option value="이벤트" {{ old('category') == '이벤트' ? 'selected' : '' }}>이벤트</option>
-                        <option value="기타" {{ old('category') == '기타' ? 'selected' : '' }}>기타</option>
-                    </select>
+                <div class="board-form-group" style="display: none;">
+                    <input type="hidden" name="category" value="일반">
                 </div>
 
-                <div class="board-form-group">
-                    <label for="title" class="board-form-label">제목 <span class="required">*</span></label>
-                    <input type="text" class="board-form-control" id="title" name="title" value="{{ old('title') }}" required>
+                <div class="board-form-group" style="display: none;">
+                    <input type="hidden" name="title" value="채용공고">
+                    <input type="hidden" name="content" value="채용공고 내용">
                 </div>
 
-                <div class="board-form-group">
-                    <label for="content" class="board-form-label">내용 <span class="required">*</span></label>
-                    <textarea class="board-form-control board-form-textarea" id="content" name="content" rows="15" required>{{ old('content') }}</textarea>
-                </div>
 
                 @if($board->enable_sorting)
                 <div class="board-form-group">
@@ -192,19 +180,8 @@
                     @endforeach
                 @endif
 
-                <div class="board-form-group">
-                    <label class="board-form-label">첨부파일</label>
-                    <div class="board-file-upload">
-                        <div class="board-file-input-wrapper">
-                            <input type="file" class="board-file-input" id="attachments" name="attachments[]" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.xls,.xlsx,.txt,.zip,.rar">
-                            <div class="board-file-input-content">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <span class="board-file-input-text">파일을 선택하거나 여기로 드래그하세요</span>
-                                <span class="board-file-input-subtext">최대 5개, 각 파일 10MB 이하</span>
-                            </div>
-                        </div>
-                        <div class="board-file-preview" id="filePreview"></div>
-                    </div>
+                <div class="board-form-group" style="display: none;">
+                    <!-- 첨부파일 필드 히든 처리 -->
                 </div>
 
                 <div class="board-form-actions">
