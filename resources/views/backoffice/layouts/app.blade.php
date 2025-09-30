@@ -81,7 +81,7 @@
     <script src="{{ asset('js/backoffice/button-utils.js') }}"></script>
     <script src="{{ asset('js/backoffice/session-timer.js') }}"></script>
     <script src="{{ asset('js/backoffice/backoffice.js') }}"></script>
-    <script src="{{ asset('js/shared/app.js') }}"></script>
+    <script src="{{ asset('js/common/app.js') }}"></script>
 
     @yield('scripts')
     @stack('scripts')
