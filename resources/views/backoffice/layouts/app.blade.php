@@ -30,7 +30,7 @@
                         <i class="fas fa-clock"></i>
                         <span class="session-timer-text"><span id="sessionTimeLeft">--:--</span></span>
                     </span>
-                    <button class="session-extend-btn" id="sessionExtendBtn" title="30분 연장">
+                    <button class="session-extend-btn" id="sessionExtendBtn" title="120분 연장">
                         연장
                     </button></span>
                     <div class="dropdown-content">
@@ -61,6 +61,17 @@
             localStorage.removeItem('backoffice_login_time');
             @php
                 session()->forget('session_reset');
+            @endphp
+        @endif
+        
+        // 세션 연장 플래그 확인 및 localStorage 동기화
+        @if(session('session_extended'))
+            const serverLoginTime = {{ session('login_time', 0) }} * 1000;
+            if (serverLoginTime > 0) {
+                localStorage.setItem('backoffice_login_time', serverLoginTime);
+            }
+            @php
+                session()->forget('session_extended');
             @endphp
         @endif
     </script>

@@ -59,20 +59,25 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // 현재 시간으로 로그인 시간 갱신 (120분으로 리셋)
-                    const now = new Date().getTime();
-                    localStorage.setItem('backoffice_login_time', now);
+                    // 서버에서 반환된 새로운 로그인 시간 사용
+                    const newLoginTime = data.new_login_time ? data.new_login_time * 1000 : new Date().getTime();
+                    localStorage.setItem('backoffice_login_time', newLoginTime);
                     
                     // 로그인 시간 업데이트
-                    loginTime = now;
+                    loginTime = newLoginTime;
                     
                     // 경고 상태 해제
                     sessionTimeLeft.parentElement.classList.remove('text-danger');
                     
                     // 성공 메시지 표시
-                    showExtendMessage('세션이 갱신되었습니다.');
+                    showExtendMessage('세션이 성공적으로 연장되었습니다.');
+                    
+                    console.log('세션 연장 성공:', {
+                        serverTime: data.timestamp,
+                        newLoginTime: new Date(newLoginTime).toISOString()
+                    });
                 } else {
-                    showExtendMessage('세션 연장에 실패했습니다.', 'error');
+                    showExtendMessage(data.message || '세션 연장에 실패했습니다.', 'error');
                 }
             })
             .catch(error => {
