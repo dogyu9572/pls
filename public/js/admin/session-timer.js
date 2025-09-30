@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // 로그인 시점을 localStorage에서 가져오거나 새로 설정
     let loginTime = localStorage.getItem('backoffice_login_time');
     
+    // 세션 만료 시간 계산을 위한 임계값 (2시간 = 120분)
+    const maxSessionAge = sessionTimeout; // 120분 * 60초
+    
     if (!loginTime) {
         // 처음 로그인한 경우 현재 시간으로 설정
         loginTime = new Date().getTime();
@@ -25,6 +28,17 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         // 기존 로그인 시간이 있으면 숫자로 변환
         loginTime = parseInt(loginTime);
+        
+        // 이전 세션이 너무 오래된 경우 (2시간 이상) 새로 시작
+        const now = new Date().getTime();
+        const sessionAge = (now - loginTime) / 1000; // 초 단위
+        
+        if (sessionAge > maxSessionAge) {
+            // 세션이 너무 오래된 경우 localStorage 초기화 후 새로 시작
+            localStorage.removeItem('backoffice_login_time');
+            loginTime = new Date().getTime();
+            localStorage.setItem('backoffice_login_time', loginTime);
+        }
     }
 
     // 사용자 활동 감지 이벤트 목록 (mousemove 제거하여 마우스 움직임마다 갱신 방지)

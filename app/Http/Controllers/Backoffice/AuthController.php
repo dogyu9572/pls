@@ -60,6 +60,9 @@ class AuthController extends Controller
         // 세션에 로그인 시간 저장 (세션 타이머용)
         $request->session()->put('login_time', now()->timestamp);
         
+        // localStorage 초기화를 위한 플래그 설정 (프론트엔드에서 감지)
+        $request->session()->put('session_reset', true);
+        
         $request->session()->regenerate();
         
         return redirect()->intended('/backoffice');

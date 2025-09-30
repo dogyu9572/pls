@@ -55,6 +55,14 @@
             lifetime: {{ config('session.lifetime', 120) }} // 세션 타임아웃(분 단위)
         };
         window.logoutUrl = "{{ url('/backoffice/logout') }}"; // 로그아웃 URL
+        
+        // 세션 리셋 플래그 확인 및 localStorage 초기화
+        @if(session('session_reset'))
+            localStorage.removeItem('backoffice_login_time');
+            @php
+                session()->forget('session_reset');
+            @endphp
+        @endif
     </script>
     <!-- SortableJS 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
