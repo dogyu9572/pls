@@ -42,8 +42,9 @@ class HomeController extends Controller
             }
             
             return DB::table($tableName)
-                ->select('id', 'title', 'created_at', 'thumbnail')
+                ->select('id', 'title', 'created_at', 'thumbnail', 'category')
                 ->where('deleted_at', null)
+                ->where('category', '국문')
                 ->orderBy('created_at', 'desc')
                 ->limit($limit)
                 ->get()

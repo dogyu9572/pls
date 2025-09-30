@@ -57,11 +57,8 @@
                     <label for="category" class="board-form-label">카테고리 분류</label>
                     <select class="board-form-control" id="category" name="category">
                         <option value="">카테고리를 선택하세요</option>
-                        <option value="일반" {{ $post->category == '일반' ? 'selected' : '' }}>일반</option>
-                        <option value="공지" {{ $post->category == '공지' ? 'selected' : '' }}>공지</option>
-                        <option value="안내" {{ $post->category == '안내' ? 'selected' : '' }}>안내</option>
-                        <option value="이벤트" {{ $post->category == '이벤트' ? 'selected' : '' }}>이벤트</option>
-                        <option value="기타" {{ $post->category == '기타' ? 'selected' : '' }}>기타</option>
+                        <option value="국문" {{ $post->category == '국문' ? 'selected' : '' }}>국문</option>
+                        <option value="영문" {{ $post->category == '영문' ? 'selected' : '' }}>영문</option>                       
                     </select>
                 </div>
 
