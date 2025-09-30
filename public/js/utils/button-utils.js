@@ -25,6 +25,11 @@ class ButtonManager {
         const button = event.target.closest('button, .btn, [role="button"]');
         if (!button) return;
 
+        // 세션 연장 버튼은 예외 처리 (별도 로직이 있음)
+        if (button.id === 'sessionExtendBtn') {
+            return;
+        }
+
         // 이미 처리 중인 버튼인지 확인
         if (this.clickedButtons.has(button)) {
             event.preventDefault();
