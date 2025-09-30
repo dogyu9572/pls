@@ -72,10 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     // 성공 메시지 표시
                     showExtendMessage('세션이 성공적으로 연장되었습니다.');
                     
-                    console.log('세션 연장 성공:', {
-                        serverTime: data.timestamp,
-                        newLoginTime: new Date(newLoginTime).toISOString()
-                    });
                 } else {
                     showExtendMessage(data.message || '세션 연장에 실패했습니다.', 'error');
                 }

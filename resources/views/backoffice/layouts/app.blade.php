@@ -15,11 +15,11 @@
         <div class="content">
             <div class="header">
                 <!-- 모바일에서만 보이는 사이드바 토글 버튼 -->
-                <a href="#" id="sidebarToggle" class="sidebar-toggle" style="display: flex !important; align-items: center !important;">
-                    <div class="hamburger" style="width: 20px !important; height: 16px !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important;">
-                        <span style="display: block !important; width: 100% !important; height: 2px !important; background-color: #333333 !important; border-radius: 1px !important;"></span>
-                        <span style="display: block !important; width: 100% !important; height: 2px !important; background-color: #333333 !important; border-radius: 1px !important;"></span>
-                        <span style="display: block !important; width: 100% !important; height: 2px !important; background-color: #333333 !important; border-radius: 1px !important;"></span>
+                <a href="#" id="sidebarToggle" class="sidebar-toggle">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
                 </a>
                 <h2>@yield('title', '백오피스')</h2>

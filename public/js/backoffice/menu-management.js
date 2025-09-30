@@ -302,13 +302,6 @@ function handleMenuMove(evt) {
         oldParentId = null;
     }
     
-    console.log('Menu move:', {
-        menuId: menuId,
-        oldParentId: oldParentId,
-        newParentId: newParentId,
-        from: evt.from,
-        to: evt.to
-    });
     
     // 부모가 변경된 경우에만 처리
     if (newParentId !== oldParentId) {

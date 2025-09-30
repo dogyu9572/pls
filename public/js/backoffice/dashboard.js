@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 대시보드 초기화
 function initDashboard() {
-    console.log('대시보드 초기화 중...');
     
     // 통계 카드 애니메이션
     animateStatCards();
@@ -339,6 +338,17 @@ function initVisitorChart() {
     })
     .then(response => response.json())
     .then(data => {
+        // 데이터 유효성 검사
+        if (!data.daily_stats || !data.daily_stats.labels) {
+            createDefaultChart(ctx);
+            return;
+        }
+        
+        if (!data.monthly_stats || !data.monthly_stats.labels) {
+            createDefaultChart(ctx);
+            return;
+        }
+        
         const chartData = {
             daily: {
                 labels: data.daily_stats.labels,

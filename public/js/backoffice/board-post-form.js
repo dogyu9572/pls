@@ -43,7 +43,6 @@ function initSummernote() {
             });
         }, 500);
         
-        console.log('Summernote 에디터가 성공적으로 초기화되었습니다!');
     } else {
         console.error('Summernote가 로드되지 않았습니다!');
         // 폴백: 일반 textarea로 표시
@@ -81,7 +80,6 @@ function initCustomFieldEditors() {
             });
         });
         
-        console.log('커스텀 필드 에디터가 성공적으로 초기화되었습니다!');
     }
 }
 

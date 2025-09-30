@@ -87,6 +87,20 @@ document.addEventListener('DOMContentLoaded', function() {
             backdrop.classList.add('active');
             body.classList.add('sidebar-open');
             backdrop.style.display = 'block';
+            // 모바일에서만 사이드바 표시
+            if (window.innerWidth <= 768) {
+                sidebar.style.cssText = `
+                    position: fixed !important;
+                    left: 0 !important;
+                    width: 260px !important;
+                    height: 100vh !important;
+                    min-height: 200vh !important;
+                    background-color: #343a40 !important;
+                    z-index: 9999 !important;
+                    transform: translateX(0) !important;
+                    transition: transform 0.3s ease-out !important;
+                `;
+            }
         }
     }
 
@@ -98,18 +112,21 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.remove('active');
         backdrop.classList.remove('active');
         body.classList.remove('sidebar-open');
-        // 강제로 숨기기
-        sidebar.style.cssText = 'position: fixed !important; left: -280px !important; width: 260px !important; height: 100vh !important; height: 100dvh !important; min-height: 150vh !important; min-height: 150dvh !important; top: 0 !important; bottom: 0 !important; z-index: 1000 !important; background-color: #343a40 !important; transition: left 0.3s ease !important; overflow-y: auto !important;';
-        // min-height 강제 설정
-        sidebar.style.setProperty('min-height', '150vh', 'important');
-        sidebar.style.setProperty('min-height', '150dvh', 'important');
-        
-        // 백드롭 강제 숨기기
         backdrop.style.display = 'none';
-        backdrop.style.visibility = 'hidden';
-        backdrop.style.opacity = '0';
-        backdrop.style.visibility = 'hidden';
-        backdrop.style.opacity = '0';
+        // 모바일에서만 사이드바 숨기기
+        if (window.innerWidth <= 768) {
+            sidebar.style.cssText = `
+                position: fixed !important;
+                left: 0 !important;
+                width: 260px !important;
+                height: 100vh !important;
+                min-height: 200vh !important;
+                background-color: #343a40 !important;
+                z-index: 9999 !important;
+                transform: translateX(-100%) !important;
+                transition: transform 0.3s ease-in !important;
+            `;
+        }
     }
 
     // 테이블 반응형 처리 (모바일에서 테이블 헤더 라벨 추가)

@@ -71,7 +71,7 @@
 
                 <!-- 경영지원 인사총무팀 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[경영지원 인사총무팀]</h5>
+                    <h6 class="section-title">[경영지원 인사총무팀]</h6>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">
@@ -98,7 +98,7 @@
 
                 <!-- 경영지원 재무팀 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[경영지원 재무팀]</h5>
+                    <h6 class="section-title">[경영지원 재무팀]</h6>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">
@@ -125,7 +125,7 @@
 
                 <!-- 영업 PDI사업 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[영업 PDI사업]</h5>
+                    <h6 class="section-title">[영업 PDI사업]</h6>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">
@@ -166,7 +166,7 @@
 
                 <!-- 영업 하역/운송사업 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[영업 하역/운송사업]</h5>
+                    <h6 class="section-title">[영업 하역/운송사업]</h6>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">
@@ -193,7 +193,7 @@
 
                 <!-- 영업 특장차 제조사업 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[영업 특장차 제조사업]</h5>
+                    <h6 class="section-title">[영업 특장차 제조사업]</h6>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">

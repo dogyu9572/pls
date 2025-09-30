@@ -48,7 +48,7 @@
 
                 <!-- PDI 사업문의 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[PDI 사업문의]</h5>
+                    <h6 class="section-title">[PDI 사업문의]</h6>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">
@@ -79,7 +79,7 @@
 
                 <!-- 항만물류 사업문의 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[항만물류 사업문의]</h5>
+                    <h6 class="section-title">[항만물류 사업문의]</h6>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">
@@ -110,7 +110,7 @@
 
                 <!-- 특장차 사업문의 섹션 -->
                 <div class="business-inquiry-section">
-                    <h5 class="section-title">[특장차 사업문의]</h5>
+                    <h6 class="section-title">[특장차 사업문의]</h6>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="board-form-group">

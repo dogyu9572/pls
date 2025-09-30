@@ -34,6 +34,10 @@ Route::prefix('backoffice')->middleware(['backoffice'])->group(function () {
     // 대시보드
     Route::get('/', [App\Http\Controllers\Backoffice\DashboardController::class, 'index'])
         ->name('backoffice.dashboard');
+    
+    // 대시보드 API
+    Route::get('/api/statistics', [App\Http\Controllers\Backoffice\DashboardController::class, 'statistics'])
+        ->name('backoffice.api.statistics');
 
     // -------------------------------------------------------------------------
     // 시스템 관리

@@ -268,7 +268,6 @@ function initSummernote() {
             }
         });
         
-        console.log('팝업 Summernote 에디터가 성공적으로 초기화되었습니다!');
     } else {
         console.error('Summernote가 로드되지 않았습니다!');
     }

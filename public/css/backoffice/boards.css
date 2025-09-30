@@ -3,6 +3,32 @@
  * 라우팅: /backoffice/boards
  */
 
+/* 사이드바 토글 버튼 강제 표시 (모바일에서만) */
+@media (max-width: 768px) {
+    .sidebar-toggle {
+        display: flex !important;
+        align-items: center;
+    }
+    
+    /* 모바일에서 사이드바 슬라이드 효과 */
+    .sidebar {
+        position: fixed !important;
+        left: 0 !important;
+        width: 260px !important;
+        height: 100vh !important;
+        min-height: 200vh !important;
+        background-color: #343a40 !important;
+        z-index: 9999 !important;
+        transform: translateX(-100%) !important;
+        transition: transform 0.3s ease !important;
+    }
+    
+    .sidebar.active {
+        transform: translateX(0) !important;
+    }
+}
+
+
 /* 게시판 관리 헤더 */
 .board-header h1 {
     margin: 0;
