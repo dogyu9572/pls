@@ -5,10 +5,14 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\HomeController;
 
 // =============================================================================
 // 기본 라우트 파일
 // =============================================================================
+
+// 메인 페이지
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // 인증 관련 라우트
 Route::prefix('auth')->name('auth.')->group(function () {
