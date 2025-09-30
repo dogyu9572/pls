@@ -36,6 +36,8 @@ jobs:
           
           echo "=== Git Pull 실행 ==="
           git config pull.rebase false
+          git fetch origin
+          git reset --hard origin/main
           git pull origin main
           
           echo "=== Composer 설치 ==="
