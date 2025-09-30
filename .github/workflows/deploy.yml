@@ -1,0 +1,58 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          echo "=== GitHub Actions 배포 시작 ==="
+          echo "현재 시간: $(date)"
+          echo "현재 디렉토리: $(pwd)"
+          
+          cd /var/www/pls
+          echo "프로젝트 디렉토리로 이동: $(pwd)"
+          
+          echo "=== Git 상태 확인 ==="
+          git status
+          git log --oneline -3
+          
+          echo "=== Git Pull 실행 ==="
+          git config pull.rebase false
+          git pull origin main
+          
+          echo "=== Composer 설치 ==="
+          composer install --no-dev --optimize-autoloader
+          
+          echo "=== Laravel 마이그레이션 ==="
+          php artisan migrate --force
+          
+          echo "=== 캐시 최적화 ==="
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          
+          echo "=== 서비스 재시작 ==="
+          php artisan queue:restart
+          sudo systemctl reload nginx
+          
+          echo "=== 배포 완료 ==="
+          echo "최종 상태:"
+          git log --oneline -3
+          ls -la
