@@ -1,6 +1,4 @@
-/* 폰트 임포트 추가 */
-@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+/* 폰트는 base.css에서 import됨 */
 
 /*
  * ===== 백오피스 공통 CSS 클래스 사용법 =====
