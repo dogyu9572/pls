@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Backoffice;
 
 use App\Models\Setting;
 use Illuminate\Http\Request;

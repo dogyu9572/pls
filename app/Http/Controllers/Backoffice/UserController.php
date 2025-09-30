@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backoffice;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\StoreUserRequest;
-use App\Services\UserService;
+use App\Services\Backoffice\UserService;
 use App\Models\User;
 use Illuminate\Http\Request;
 

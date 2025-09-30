@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BoardPostRequest;
-use App\Services\BoardPostService;
+use App\Services\Backoffice\BoardPostService;
 use App\Models\Board;
 use Illuminate\Http\Request;
 

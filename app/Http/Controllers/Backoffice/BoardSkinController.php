@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backoffice;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBoardSkinRequest;
 use App\Http\Requests\UpdateBoardSkinRequest;
-use App\Services\BoardSkinService;
+use App\Services\Backoffice\BoardSkinService;
 use App\Models\BoardSkin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;

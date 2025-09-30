@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backoffice;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
-use App\Services\AdminService;
+use App\Services\Backoffice\AdminService;
 use App\Models\User;
 use Illuminate\Http\Request;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Backoffice;
 
 use App\Models\Board;
 use Illuminate\Support\Facades\Schema;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfileRequest;
-use App\Services\UserService;
+use App\Services\Backoffice\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

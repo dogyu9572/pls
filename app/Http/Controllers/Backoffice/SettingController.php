@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backoffice;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SettingRequest;
-use App\Services\SettingService;
+use App\Services\Backoffice\SettingService;
 use Illuminate\Http\Request;
 
 class SettingController extends BaseController

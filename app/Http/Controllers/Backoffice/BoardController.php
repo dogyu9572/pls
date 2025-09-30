@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Backoffice\CreateBoardRequest;
 use App\Http\Requests\Backoffice\UpdateBoardRequest;
 use App\Models\Board;
-use App\Services\BoardService;
-use App\Services\BoardFileGeneratorService;
+use App\Services\Backoffice\BoardService;
+use App\Services\Backoffice\BoardFileGeneratorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
