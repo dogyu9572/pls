@@ -78,10 +78,10 @@
     <!-- SortableJS 라이브러리 -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     
-    <script src="{{ asset('js/utils/button-utils.js') }}"></script>
-    <script src="{{ asset('js/admin/session-timer.js') }}"></script>
-    <script src="{{ asset('js/backoffice.js') }}"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/backoffice/button-utils.js') }}"></script>
+    <script src="{{ asset('js/backoffice/session-timer.js') }}"></script>
+    <script src="{{ asset('js/backoffice/backoffice.js') }}"></script>
+    <script src="{{ asset('js/shared/app.js') }}"></script>
 
     @yield('scripts')
     @stack('scripts')

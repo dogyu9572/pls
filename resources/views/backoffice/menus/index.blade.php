@@ -112,5 +112,5 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/menu-management.js') }}"></script>
+<script src="{{ asset('js/backoffice/menu-management.js') }}"></script>
 @endsection

@@ -120,6 +120,6 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/icon-picker.js') }}"></script>
-<script src="{{ asset('js/menu-management.js') }}"></script>
+<script src="{{ asset('js/backoffice/icon-picker.js') }}"></script>
+<script src="{{ asset('js/backoffice/menu-management.js') }}"></script>
 @endsection

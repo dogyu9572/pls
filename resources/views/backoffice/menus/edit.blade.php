@@ -140,7 +140,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/icon-picker.js') }}"></script>
+<script src="{{ asset('js/backoffice/icon-picker.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // URL 자동 완성 기능
@@ -229,5 +229,5 @@
         }
     });
 </script>
-<script src="{{ asset('js/menu-management.js') }}"></script>
+<script src="{{ asset('js/backoffice/menu-management.js') }}"></script>
 @endsection

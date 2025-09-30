@@ -228,7 +228,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/file-upload.js') }}"></script>
+<script src="{{ asset('js/frontend/file-upload.js') }}"></script>
 <script src="{{ asset('js/backoffice/settings.js') }}"></script>
 
 @endsection
