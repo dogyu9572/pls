@@ -22,6 +22,7 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
         script: |
+          set -e  # 에러 발생시 스크립트 중단
           echo "=== GitHub Actions 배포 시작 ==="
           echo "현재 시간: $(date)"
           echo "현재 디렉토리: $(pwd)"
@@ -37,8 +38,9 @@ jobs:
           echo "=== Git Pull 실행 ==="
           git config pull.rebase false
           git fetch origin
+          git checkout main
           git reset --hard origin/main
-          git pull origin main
+          echo "현재 커밋: $(git log --oneline -1)"
           
           echo "=== Composer 설치 ==="
           composer install --no-dev --optimize-autoloader
