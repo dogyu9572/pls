@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('css/session-timer.css') }}">
     @yield('styles')
 </head>
-<body>
+<body class="backoffice">
     <!-- 모바일에서 사이드바 활성화 시 표시되는 백드롭 -->
     <div class="backdrop" id="backdrop"></div>
 

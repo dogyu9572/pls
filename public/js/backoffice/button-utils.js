@@ -19,17 +19,139 @@ class ButtonManager {
     }
 
     /**
-     * 버튼 클릭 이벤트 통합 처리
+     * 버튼 클릭 이벤트 통합 처리 (스마트 버전)
      */
     handleClick(event) {
         const button = event.target.closest('button, .btn, [role="button"]');
         if (!button) return;
 
-        // 세션 연장 버튼은 예외 처리 (별도 로직이 있음)
-        if (button.id === 'sessionExtendBtn') {
+        // 예외 처리: 특정 버튼들은 ButtonManager가 개입하지 않음
+        if (this.shouldSkipButton(button)) {
             return;
         }
 
+        // 예외 처리: 백오피스 폼 버튼들은 기본 로직만 적용
+        if (this.isBackofficeFormButton(button)) {
+            this.handleBackofficeFormButton(button, event);
+            return;
+        }
+
+        // 예외 처리: 일반적인 UI 버튼들은 경량 처리
+        if (this.isUIActionButton(button)) {
+            this.handleUIActionButton(button, event);
+            return;
+        }
+
+        // 기본 처리: 중요한 액션 버튼들만 강력한 중복 방지
+        this.handleCriticalButton(button, event);
+    }
+
+    /**
+     * ButtonManager를 완전히 건너뛸 버튼들
+     */
+    shouldSkipButton(button) {
+        // 특정 ID의 버튼들
+        const skipIds = ['sessionExtendBtn', 'sidebarToggle', 'navbar-toggler'];
+        if (skipIds.includes(button.id)) {
+            return true;
+        }
+
+        // 특정 클래스의 버튼들
+        const skipClasses = ['btn-link', 'dropdown-toggle', 'close', 'modal-close'];
+        if (skipClasses.some(cls => button.classList.contains(cls))) {
+            return true;
+        }
+
+        // data-skip-button 속성이 있는 버튼들
+        if (button.hasAttribute('data-skip-button')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * 백오피스 폼 버튼인지 확인
+     */
+    isBackofficeFormButton(button) {
+        const form = button.closest('form');
+        if (!form) return false;
+
+        // 백오피스 폼인지 확인
+        const isBackofficeForm = form.closest('.backoffice') || 
+                                 form.closest('[class*="backoffice"]') ||
+                                 window.location.pathname.includes('/backoffice/');
+        
+        // 폼 제출 버튼인지 확인
+        const isSubmitButton = button.type === 'submit' || 
+                              button.classList.contains('btn-primary') ||
+                              button.classList.contains('btn-success');
+
+        return isBackofficeForm && isSubmitButton;
+    }
+
+    /**
+     * 백오피스 폼 버튼 처리 (경량 버전)
+     */
+    handleBackofficeFormButton(button, event) {
+        // 중복 제출 방지만 적용 (UI 변경 최소화)
+        if (this.clickedButtons.has(button)) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+        }
+
+        // 짧은 디바운스만 적용 (100ms)
+        if (button.dataset.lastClick) {
+            const lastClick = parseInt(button.dataset.lastClick);
+            const now = Date.now();
+            if (now - lastClick < 100) {
+                event.preventDefault();
+                event.stopPropagation();
+                return;
+            }
+        }
+
+        // 클릭 기록
+        button.dataset.lastClick = Date.now().toString();
+        this.clickedButtons.add(button);
+
+        // 100ms 후 해제
+        setTimeout(() => {
+            this.clickedButtons.delete(button);
+        }, 100);
+    }
+
+    /**
+     * UI 액션 버튼인지 확인 (드롭다운, 토글 등)
+     */
+    isUIActionButton(button) {
+        const uiClasses = ['dropdown-toggle', 'nav-link', 'btn-outline', 'btn-secondary'];
+        return uiClasses.some(cls => button.classList.contains(cls));
+    }
+
+    /**
+     * UI 액션 버튼 처리 (최소 개입)
+     */
+    handleUIActionButton(button, event) {
+        // 매우 짧은 디바운스만 적용 (50ms)
+        if (button.dataset.lastClick) {
+            const lastClick = parseInt(button.dataset.lastClick);
+            const now = Date.now();
+            if (now - lastClick < 50) {
+                event.preventDefault();
+                event.stopPropagation();
+                return;
+            }
+        }
+
+        button.dataset.lastClick = Date.now().toString();
+    }
+
+    /**
+     * 중요한 액션 버튼 처리 (강력한 중복 방지)
+     */
+    handleCriticalButton(button, event) {
         // 이미 처리 중인 버튼인지 확인
         if (this.clickedButtons.has(button)) {
             event.preventDefault();
