@@ -178,22 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 폼 제출 시 버튼 비활성화 (중복 제출 방지)
-    document.querySelectorAll('form').forEach(function(form) {
-        form.addEventListener('submit', function() {
-            const buttons = form.querySelectorAll('button[type="submit"], input[type="submit"]');
-            buttons.forEach(button => {
-                button.disabled = true;
-                button.classList.add('submitting');
-
-                if (button.tagName === 'BUTTON') {
-                    const originalText = button.innerHTML;
-                    button.setAttribute('data-original-text', originalText);
-                    button.innerHTML = '처리 중...';
-                }
-            });
-        });
-    });
+    // 폼 제출 시 버튼 비활성화는 button-utils.js에서 통합 처리
 
     // URL에 따라 해당 메뉴 활성화
     const currentPath = window.location.pathname;

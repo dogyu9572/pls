@@ -1,8 +1,8 @@
 // 메뉴 관리 관련 스크립트
 document.addEventListener('DOMContentLoaded', function() {
-    // 수정 및 삭제 버튼 클릭 이벤트 처리
+    // 수정 및 삭제 버튼 클릭 이벤트 처리 (click 이벤트로 통일)
     document.querySelectorAll('.menu-actions a, .menu-actions button').forEach(function(element) {
-        element.addEventListener('mousedown', function(e) {
+        element.addEventListener('click', function(e) {
             e.stopPropagation(); // 이벤트 전파 중지
         });
     });
