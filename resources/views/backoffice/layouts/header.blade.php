@@ -12,11 +12,11 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- 공통 CSS - 나중에 로드하여 Bootstrap 덮어쓰기 -->
-<link rel="stylesheet" href="{{ asset('css/backoffice.css') }}">
+<link rel="stylesheet" href="{{ asset('css/backoffice/main.css') }}">
 <link rel="stylesheet" href="{{ asset('css/common/buttons.css') }}">
 <link rel="stylesheet" href="{{ asset('css/common/forms.css') }}">
-<link rel="stylesheet" href="{{ asset('css/components/cards.css') }}">
-<link rel="stylesheet" href="{{ asset('css/components/alerts.css') }}">
+<link rel="stylesheet" href="{{ asset('css/common/components/cards.css') }}">
+<link rel="stylesheet" href="{{ asset('css/common/components/alerts.css') }}">
 <link rel="stylesheet" href="{{ asset('css/backoffice/backoffice-common.css') }}">
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>

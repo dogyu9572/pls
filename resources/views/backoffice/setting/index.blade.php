@@ -3,7 +3,7 @@
 @section('title', $pageTitle ?? '')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+<link rel="stylesheet" href="{{ asset('css/common/modal.css') }}">
 <link rel="stylesheet" href="{{ asset('css/backoffice/settings.css') }}">
 @endsection
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>백오피스 로그인</title>
     <link rel="stylesheet" href="{{ asset('css/backoffice.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/login.css') }}">
 </head>
 <body>
     <div class="login-container">

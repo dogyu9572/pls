@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     @include('backoffice.layouts.header')
-    <link rel="stylesheet" href="{{ asset('css/session-timer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backoffice/session-timer.css') }}">
     @yield('styles')
 </head>
 <body class="backoffice">

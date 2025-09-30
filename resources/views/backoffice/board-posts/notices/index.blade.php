@@ -3,7 +3,7 @@
 @section('title', $board->name ?? '게시판')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/common/modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backoffice/boards.css') }}">
 @endsection
 

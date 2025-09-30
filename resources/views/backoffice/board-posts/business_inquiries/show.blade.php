@@ -3,7 +3,7 @@
 @section('title', $board->name ?? '갤러리')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/common/modal.css') }}">
 @endsection
 
 @section('content')

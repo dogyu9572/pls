@@ -3,7 +3,7 @@
 @section('title', $pageTitle ?? '')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('css/board-skins.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/board-skins.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css">
 @endsection

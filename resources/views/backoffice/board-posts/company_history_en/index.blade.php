@@ -5,7 +5,7 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/backoffice/boards.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backoffice/sorting.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/common/modal.css') }}">
 @endsection
 
 @section('content')
