@@ -25,6 +25,7 @@ jobs:
           echo "=== GitHub Actions 배포 시작 ==="
           echo "현재 시간: $(date)"
           echo "현재 디렉토리: $(pwd)"
+          echo "Git 커밋: $(git log --oneline -1)"
           
           cd /var/www/pls
           echo "프로젝트 디렉토리로 이동: $(pwd)"
