@@ -11,6 +11,7 @@ use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\PrCenterController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TermsController;
 
 // =============================================================================
 // 기본 라우트 파일
@@ -53,6 +54,14 @@ Route::prefix('pr-center')->name('pr-center.')->group(function () {
 
 // Contact Us
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact-us');
+
+// Terms (약관)
+Route::prefix('terms')->name('terms.')->group(function () {
+    Route::get('/privacy-policy', [TermsController::class, 'privacyPolicy'])->name('privacy-policy');
+    Route::get('/email', [TermsController::class, 'email'])->name('email');
+    Route::get('/ethic', [TermsController::class, 'ethic'])->name('ethic');
+    Route::get('/internal-reporting', [TermsController::class, 'internalReporting'])->name('internal-reporting');
+});
 
 // 인증 관련 라우트
 Route::prefix('auth')->name('auth.')->group(function () {

@@ -153,8 +153,8 @@
 	<div class="inner">
 		<div class="flogo"><img src="{{ asset('images/logo.svg') }}" alt="logo"></div>
 		<ul class="links">
-			<li><a href="/terms/privacy_policy.php"><strong>개인정보처리방침</strong></a></li>
-			<li><a href="/terms/email.php">이메일 무단수집 거부</a></li>
+			<li><a href="{{ route('terms.privacy-policy') }}"><strong>개인정보처리방침</strong></a></li>
+			<li><a href="{{ route('terms.email') }}">이메일 무단수집 거부</a></li>
 		</ul>
 		<ul class="address">
 			<li><strong>주소</strong>경기도 평택시 포승읍 서동대로 437-100</li>
