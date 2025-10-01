@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\BoardPost;
 
 class RecruitmentController extends Controller
 {
@@ -50,11 +51,18 @@ class RecruitmentController extends Controller
      */
     public function information()
     {
+        $model = (new BoardPost)->setTableBySlug('recruitments');
+        $recruitment = $model->newQuery()->first();
+        $customFields = $recruitment ? $recruitment->getCustomFieldsArray() : [];
+
         return view('recruitment.information', [
             'gNum' => '03',
             'sNum' => '04',
             'gName' => '인재채용',
-            'sName' => '채용안내'
+            'sName' => '채용안내',
+            'recruitmentTel' => $customFields['tel'] ?? '',
+            'recruitmentMail' => $customFields['mail'] ?? '',
+            'recruitmentLink' => $customFields['link'] ?? ''
         ]);
     }
 }

@@ -67,4 +67,16 @@ class BoardPost extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * custom_fields를 안전하게 배열로 반환
+     */
+    public function getCustomFieldsArray()
+    {
+        if (!$this->custom_fields) {
+            return [];
+        }
+        
+        return is_array($this->custom_fields) ? $this->custom_fields : [];
+    }
 }

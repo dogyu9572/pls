@@ -15,28 +15,25 @@
 							<div class="dls">
 								<dl>
 									<dt>PDI1 영업부</dt>
-									<dd>여준동 부장</dd>
+									<dd>{{ $contact['pdi_manager1'] ?? '' }}</dd>
 								</dl>
 								<dl>
 									<dt>전화</dt>
-									<dd>031-684-9661</dd>
+									<dd>{{ $contact['pdi_phone1'] ?? '' }}</dd>
 								</dl>
 								<dl class="mt">
 									<dt>PDI2 영업부</dt>
-									<dd>김창호 부장</dd>
+									<dd>{{ $contact['pdi_manager2'] ?? '' }}</dd>
 								</dl>
 								<dl>
 									<dt>전화</dt>
-									<dd>031-686-9661</dd>
+									<dd>{{ $contact['pdi_phone2'] ?? '' }}</dd>
 								</dl>
 							</div>
 							<div class="email">
 								<dl>
 									<dt>E-mail</dt>
-									<dd>
-										<p>1영업부 jdyeo@plscorp.co.kr</p>
-										<p>2영업부 66852001@plscorp.co.kr</p>
-									</dd>
+									<dd>{{ $contact['pdi_email'] ?? '' }}</dd>
 								</dl>
 							</div>
 						</li>
@@ -44,17 +41,17 @@
 							<div class="dls">
 								<dl>
 									<dt>담당자</dt>
-									<dd>이승욱 매니저</dd>
+									<dd>{{ $contact['logistics_manager'] ?? '' }}</dd>
 								</dl>
 								<dl>
 									<dt>전화</dt>
-									<dd>031-684-9662</dd>
+									<dd>{{ $contact['logistics_phone'] ?? '' }}</dd>
 								</dl>
 							</div>
 							<div class="email">
 								<dl>
 									<dt>E-mail</dt>
-									<dd>swlee@plscorp.co.kr</dd>
+									<dd>{{ $contact['logistics_email'] ?? '' }}</dd>
 								</dl>
 							</div>
 						</li>
@@ -62,17 +59,17 @@
 							<div class="dls">
 								<dl>
 									<dt>담당자</dt>
-									<dd>송민호 매니저</dd>
+									<dd>{{ $contact['vehicle_manager'] ?? '' }}</dd>
 								</dl>
 								<dl>
 									<dt>전화</dt>
-									<dd>031-684-9661</dd>
+									<dd>{{ $contact['vehicle_phone'] ?? '' }}</dd>
 								</dl>
 							</div>
 							<div class="email">
 								<dl>
 									<dt>E-mail</dt>
-									<dd>mhsong@plscorp.co.kr</dd>
+									<dd>{{ $contact['vehicle_email'] ?? '' }}</dd>
 								</dl>
 							</div>
 						</li>
@@ -89,17 +86,17 @@
 							<div class="dls">
 								<dl>
 									<dt>담당자</dt>
-									<dd>박세현 매니저</dd>
+									<dd>{{ $contact['hr_manager'] ?? '' }}</dd>
 								</dl>
 								<dl>
 									<dt>전화</dt>
-									<dd>031-684-9663, 9665</dd>
+									<dd>{{ $contact['hr_phone'] ?? '' }}</dd>
 								</dl>
 							</div>
 							<div class="email">
 								<dl>
 									<dt>E-mail</dt>
-									<dd>shpark@plscorp.co.kr</dd>
+									<dd>{{ $contact['hr_email'] ?? '' }}</dd>
 								</dl>
 							</div>
 						</li>
@@ -107,17 +104,17 @@
 							<div class="dls">
 								<dl>
 									<dt>담당자</dt>
-									<dd>오주석 매니저</dd>
+									<dd>{{ $contact['finance_manager'] ?? '' }}</dd>
 								</dl>
 								<dl>
 									<dt>전화</dt>
-									<dd>031-684-9664, 9668</dd>
+									<dd>{{ $contact['finance_phone'] ?? '' }}</dd>
 								</dl>
 							</div>
 							<div class="email">
 								<dl>
 									<dt>E-mail</dt>
-									<dd>jsoh1234@plscorp.co.kr</dd>
+									<dd>{{ $contact['finance_email'] ?? '' }}</dd>
 								</dl>
 							</div>
 						</li>

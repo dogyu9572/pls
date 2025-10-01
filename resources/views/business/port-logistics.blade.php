@@ -87,9 +87,11 @@
 		</div>
 		<div class="partner_list marquee_list">
 			<div class="slide">
-				@for ($i = 1; $i <= 5; $i++)
-				<img src="{{ asset('images/img_partner' . str_pad($i, 2, '0', STR_PAD_LEFT) . '.jpg') }}" alt="image">
-				@endfor
+				@foreach($partners as $partner)
+					@if($partner->thumbnail)
+						<img src="{{ asset('storage/' . $partner->thumbnail) }}" alt="{{ $partner->title }}">
+					@endif
+				@endforeach
 			</div>
 		</div>
 	</div>
@@ -98,8 +100,8 @@
 		<div class="inner">
 			<div class="stit mb"><p>Business Contact</p><strong>사업문의</strong></div>
 			<ul>
-				<li class="i1"><div class="tt">TEL</div><p><strong>이승욱 매니저 031-684-9662</strong></p></li>
-				<li class="i2"><div class="tt">MAIL</div><p><strong>swlee@plscorp.co.kr</strong></p></li>
+				<li class="i1"><div class="tt">TEL</div><p><strong>{{ $logisticsTel }}</strong></p></li>
+				<li class="i2"><div class="tt">MAIL</div><p><strong>{{ $logisticsMail }}</strong></p></li>
 			</ul>
 		</div>
 	</div>
@@ -122,7 +124,6 @@
 		const $wrap = $('.partner_list');
 		const $slide = $wrap.find('.slide');
 		let speed = 100;
-		$slide.append($slide.html());
 		let singleWidth = 0;
 		let pos = 0;
 		let lastTime = null;
@@ -130,7 +131,7 @@
 
 		function calcWidths() {
 			const total = $slide[0].scrollWidth;
-			singleWidth = total / 2;
+			singleWidth = total;
 		}
 
 		$(window).on('load resize', function() {

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\AdminMenu;
+use App\Models\BoardPost;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Request;
@@ -42,6 +43,16 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('mainMenus', \App\Models\AdminMenu::getMainMenus());
             });
         }
+
+        // 프론트엔드 레이아웃에 Family Sites 데이터 공유
+        View::composer('layouts.app', function ($view) {
+            $model = (new BoardPost)->setTableBySlug('family_sites');
+            $familySites = $model->newQuery()              
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $view->with('familySites', $familySites);
+        });
 
         // 쿼리 로깅 활성화 (디버깅용)
         if (config('app.debug')) {

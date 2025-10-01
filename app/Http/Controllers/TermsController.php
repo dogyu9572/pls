@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\BoardPost;
 
 class TermsController extends Controller
 {
@@ -11,9 +12,13 @@ class TermsController extends Controller
      */
     public function privacyPolicy()
     {
+        $model = (new BoardPost)->setTableBySlug('privacy_policy');
+        $policy = $model->newQuery()->first();
+
         return view('terms.privacy-policy', [
             'gNum' => '00',
-            'gName' => '개인정보처리방침'
+            'gName' => '(주)피엘에스 개인정보처리방침',
+            'policy' => $policy
         ]);
     }
 
@@ -33,9 +38,13 @@ class TermsController extends Controller
      */
     public function ethic()
     {
+        $model = (new BoardPost)->setTableBySlug('business_ethics');
+        $ethic = $model->newQuery()->first();
+
         return view('terms.ethic', [
             'gNum' => '00',
-            'gName' => '피엘에스 윤리규범'
+            'gName' => '피엘에스 윤리규범',
+            'ethic' => $ethic
         ]);
     }
 
@@ -44,9 +53,14 @@ class TermsController extends Controller
      */
     public function internalReporting()
     {
+        $model = (new BoardPost)->setTableBySlug('business_ethics');
+        $ethic = $model->newQuery()->first();
+        $customFields = $ethic ? $ethic->getCustomFieldsArray() : [];
+
         return view('terms.internal-reporting', [
             'gNum' => '00',
-            'gName' => '내부신고제도 운영규정'
+            'gName' => '내부신고제도 운영규정',
+            'reportingRules' => $customFields['reporting_rules'] ?? ''
         ]);
     }
 }

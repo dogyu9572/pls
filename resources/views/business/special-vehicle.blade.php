@@ -87,10 +87,10 @@
 
 	<div class="business_contact sub_padding">
 		<div class="inner">
-			<div class="stit mb"><p>Business Contact</p><strong>사업문의</strong><a href="#this" class="btn_download flex_center">브로셔 다운로드</a></div>
+			<div class="stit mb"><p>Business Contact</p><strong>사업문의</strong>@if($brochureUrl)<a href="{{ $brochureUrl }}" class="btn_download flex_center" download>브로셔 다운로드</a>@endif</div>
 			<ul>
-				<li class="i1"><div class="tt">TEL</div><p><strong>송민호 매니저  031-684-9661</strong></p></li>
-				<li class="i2"><div class="tt">MAIL</div><p><strong>mhsong@plscorp.co.kr</strong></p></li>
+				<li class="i1"><div class="tt">TEL</div><p><strong>{{ $specialVehicleTel }}</strong></p></li>
+				<li class="i2"><div class="tt">MAIL</div><p><strong>{{ $specialVehicleMail }}</strong></p></li>
 			</ul>
 		</div>
 	</div>

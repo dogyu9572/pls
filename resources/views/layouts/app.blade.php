@@ -108,12 +108,12 @@
 	</div>
 </div>
 
-@if(isset($gNum) && $gNum !== 'main')
-<div class="sub_tit {{ $gNum == '00' ? 'bdb' : '' }}">
+@if(isset($gNum) && $gNum !== 'main' && $gNum !== '00')
+<div class="sub_tit">
 	<div class="inner">
 		<div class="title">{{ $gName ?? '' }}</div>
 		<p>고객과 함께 내일을 꿈꾸며, 새로운 삶의 가치를 창조한다.</p>
-		<div class="aside {{ $gNum == '00' ? 'hide' : '' }}">
+		<div class="aside">
 			<dl>
 				<dt><button type="button">{{ $sName ?? '' }}</button></dt>
 				<dd>
@@ -164,7 +164,17 @@
 		<dl class="family">
 			<dt><button type="button">FAMILY SITE</button></dt>
 			<dd>
-				<a href="#this">FAMILY SITE</a>
+				@foreach($familySites as $site)
+					@php
+						$customFields = $site->custom_fields;
+						if (is_string($customFields)) {
+							$customFields = json_decode($customFields, true) ?: [];
+						}
+						$siteName = $customFields['kor'] ?? '';
+						$siteUrl = $customFields['url'] ?? '#';
+					@endphp
+					<a href="{{ $siteUrl }}" target="_blank">{{ $siteName }}</a>
+				@endforeach
 			</dd>
 		</dl>
 	</div>

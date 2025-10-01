@@ -81,10 +81,10 @@
 
 	<div class="business_contact sub_padding">
 		<div class="inner">
-			<div class="stit mb"><p>Careers Contact</p><strong>채용문의</strong><a href="#this" class="btn_link flex_center">채용공고</a></div>
+			<div class="stit mb"><p>Careers Contact</p><strong>채용문의</strong>@if($recruitmentLink)<a href="{{ $recruitmentLink }}" class="btn_link flex_center" target="_blank">채용공고</a>@endif</div>
 			<ul>
-				<li class="i1"><div class="tt">TEL</div><p><strong>031-684-9665</strong></p></li>
-				<li class="i2"><div class="tt">MAIL</div><p><strong>shpark@plscorp.co.kr</strong></p></li>
+				<li class="i1"><div class="tt">TEL</div><p><strong>{{ $recruitmentTel }}</strong></p></li>
+				<li class="i2"><div class="tt">MAIL</div><p><strong>{{ $recruitmentMail }}</strong></p></li>
 			</ul>
 		</div>
 	</div>
