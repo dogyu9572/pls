@@ -24,91 +24,34 @@
 			<div class="list">
 				<div class="line"><div class="bar"></div></div>
 			
-				<div class="box">
-					<div class="point" id="year2020"></div>
-					<ul>
-						<li><div class="year">2025</div>
-							<div class="dots_list">
-								<p>PLS 태양광 발전시설 준공 (발전사업 개시)</p>
-							</div>
-							<div class="imgfit"><img src="{{ asset('images/img_history2025.jpg') }}" alt="image"></div>
-						</li>
-						<li><div class="year">2024</div>
-							<div class="dots_list">
-								<p>PDI센터 신규 증축 공사 준공(29,403㎡)</p>
-							</div>
-							<div class="imgfit"><img src="{{ asset('images/img_history2024.jpg') }}" alt="image"></div>
-						</li>
-						<li><div class="year">2023</div>
-							<div class="dots_list">
-								<p>평택항 항만배후부지 매입 (24,918 ㎡)</p>
-							</div>
-							<div class="imgfit"><img src="{{ asset('images/img_history2023.jpg') }}" alt="image"></div>
-						</li>
-					</ul>
-				</div>
-			
-				<div class="box">
-					<div class="point" id="year2010"></div>
-					<ul>
-						<li><div class="year">2019</div>
-							<div class="dots_list">
-								<p>항공기 급유차 9백만불 수출달성</p>
-								<p>PLS 사업장<span class="roboto">內</span> 주차타워 건립</p>
-							</div>
-							<div class="imgfit"><img src="{{ asset('images/img_history2019.jpg') }}" alt="image"></div>
-						</li>
-						<li><div class="year">2016</div>
-							<div class="dots_list">
-								<p>특장차 제작/수출 사업 개시</p>
-							</div>
-							<div class="imgfit"><img src="{{ asset('images/img_history2016.jpg') }}" alt="image"></div>
-						</li>
-						<li><div class="year">2014</div>
-							<div class="dots_list">
-								<p>항만물류사업 개시</p>
-							</div>
-							<div class="imgfit"><img src="{{ asset('images/img_history2014.jpg') }}" alt="image"></div>
-						</li>
-						<li><div class="year">2011</div>
-							<div class="dots_list">
-								<p>평택항 자유무역지역內 신규 PDI 센터 오픈<br/>(부지-153,167㎡, 건축 -19,302.85㎡)</p>
-							</div>
-							<div class="imgfit"><img src="{{ asset('images/img_history2011.jpg') }}" alt="image"></div>
-							<div class="dots_list">
-								<p>PLS 본사 평택 이전</p>
-							</div>
-						</li>
-					</ul>
-				</div>
-			
-				<div class="box">
-					<div class="point" id="year2000"></div>
-					<ul>
-						<li><div class="year">2009</div>
-							<div class="dots_list">
-								<p>GS글로벌 물류사업부 분할 PLS 설립 (인천항 자유무역지역)</p>
-							</div>
-						</li>
-						<li><div class="year">2004</div>
-							<div class="dots_list">
-								<p>인천북항 수입자동차 제2 PDI 센터 오픈</p>
-							</div>
-							<div class="imgfit"><img src="{{ asset('images/img_history2004.jpg') }}" alt="image"></div>
-						</li>
-					</ul>
-				</div>
-			
-				<div class="box">
-					<div class="point" id="year1990"></div>
-					<ul>
-						<li><div class="year">1993</div>
-							<div class="dots_list">
-								<p>인천항 PDI 센터 오픈 (국내 최초)</p>
-							</div>
-						</li>
-					</ul>
-				</div>
+				@foreach([2020, 2010, 2000, 1990] as $decade)
+					<div class="box">
+						<div class="point" id="year{{ $decade }}"></div>
+						<ul>
+							@if(isset($groupedByDecade[$decade]) && $groupedByDecade[$decade]->isNotEmpty())
+								@foreach($groupedByDecade[$decade] as $year => $histories)
+									@foreach($histories as $history)
+										<li>
+											<div class="year">{{ $year }}</div>
+											<div class="dots_list">
+												{!! $history->content !!}
+											</div>
+											@if($history->attachments && is_array(json_decode($history->attachments, true)) && count(json_decode($history->attachments, true)) > 0)
+												@php
+													$attachments = json_decode($history->attachments, true);
+													$firstAttachment = $attachments[0];
+												@endphp
+												<div class="imgfit">
+													<img src="{{ asset('storage/' . $firstAttachment['path']) }}" alt="image">
+												</div>
+											@endif
+										</li>
+									@endforeach
+								@endforeach
+							@endif
+						</ul>
+					</div>
+				@endforeach
 			</div>
 		</div>
 	</div>
@@ -129,8 +72,8 @@ $(window).on("scroll resize", function () {
         let id = $(this).attr("id");
 
         if (scrollTop >= pointTop - 10) {
-            $(".years.year2020 li").removeClass("on");
-            $(".years.year2020 li a[href='#" + id + "']")
+            $(".history_btm .years li").removeClass("on");
+            $(".history_btm .years li a[href='#" + id + "']")
                 .parent().addClass("on");
         }
     });

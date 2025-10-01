@@ -44,16 +44,24 @@
 	<div class="safety_health04">
 		<div class="inner">
 			<div class="iso_area">
-				<div class="box">
-					<div class="imgfit"><img src="{{ asset('images/img_safety_health_iso01.jpg') }}" alt="image"></div>
-					<div class="con">
-						<img src="{{ asset('images/icon_iso.png') }}" alt="iso">
-						<div class="tt">ISO 45001:2018 (안전/보건경영시스템)</div>
-						<p>ISO 45001 인증은 사업장에서 발생할 수 있는 각종 위험을 사전 예측 및 예방하여 궁극적으로 <br class="pc_vw">
-						기업의 이윤창출에 기여하고 조직의 안전보건을 체계적으로 관리하기 위한 요구사항을 규정한 국제표준으로, <br class="pc_vw">
-						피엘에스는 2025년 ISO 45001 인증을 취득하였습니다.</p>
+				@forelse($certifications as $certification)
+					<div class="box">
+						@if($certification->thumbnail)
+							<div class="imgfit"><img src="{{ asset('storage/' . $certification->thumbnail) }}" alt="{{ $certification->title }}"></div>
+						@endif
+						<div class="con">
+							<img src="{{ asset('images/icon_iso.png') }}" alt="iso">
+							<div class="tt">{{ $certification->title }}</div>
+							<div>{!! $certification->content !!}</div>
+						</div>
 					</div>
-				</div>
+				@empty
+					<div class="box">
+						<div class="con">
+							<p>등록된 인증서가 없습니다.</p>
+						</div>
+					</div>
+				@endforelse
 			</div>
 			<a href="mailto:dhyim69@plscorp.co.kr" class="btn_mail flex_center">안전보건 제안 채널</a>
 		</div>

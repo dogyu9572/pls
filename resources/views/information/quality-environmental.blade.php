@@ -30,26 +30,24 @@
 			</div>
 
 			<div class="iso_area">
-				<div class="box">
-					<div class="imgfit"><img src="{{ asset('images/img_quality_environmental_iso01.jpg') }}" alt="image"></div>
-					<div class="con">
-						<img src="{{ asset('images/icon_iso.png') }}" alt="iso">
-						<div class="tt">ISO 9001:2015 (품질경영시스템)</div>
-						<p>ISO 9001 인증은 모든 산업 분야 및 활동에 적용할 수 있는 품질경영시스템의 요구사항을 규정한 국제표준으로, <br class="pc_vw">
-						제품 또는 서비스의 실현 시스템이 규정된 요구사항을 충족하고 이를 유효하게 운영하고 있음을 <br class="pc_vw">
-						제3자가 객관적으로 인증해 주는 제도로 피엘에스는 2018년 ISO 9001 인증을 취득하였습니다.</p>
+				@forelse($certifications as $certification)
+					<div class="box">
+						@if($certification->thumbnail)
+							<div class="imgfit"><img src="{{ asset('storage/' . $certification->thumbnail) }}" alt="{{ $certification->title }}"></div>
+						@endif
+						<div class="con">
+							<img src="{{ asset('images/icon_iso.png') }}" alt="iso">
+							<div class="tt">{{ $certification->title }}</div>
+							<div>{!! $certification->content !!}</div>
+						</div>
 					</div>
-				</div>
-				<div class="box">
-					<div class="imgfit"><img src="{{ asset('images/img_quality_environmental_iso02.jpg') }}" alt="image"></div>
-					<div class="con">
-						<img src="{{ asset('images/icon_iso.png') }}" alt="iso">
-						<div class="tt">ISO 14001:2015 (환경경영시스템)</div>
-						<p>ISO 14001 인증은 모든 산업 분야 및 활동에 적용할 수 있는 환경경영시스템에 관한 국제규격으로, <br class="pc_vw">
-						환경경영시스템을 통해 환경측면을 체계적으로 식별, 평가, 관리 및 개선함으로써 환경위험성을 <br class="pc_vw">
-						효율적으로 관리할 수 있는 제도로 피엘에스는 2018년 ISO 14001 인증을 취득하였습니다.</p>
+				@empty
+					<div class="box">
+						<div class="con">
+							<p>등록된 인증서가 없습니다.</p>
+						</div>
 					</div>
-				</div>
+				@endforelse
 			</div>
 
 		</div>
