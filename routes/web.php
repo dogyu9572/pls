@@ -48,7 +48,9 @@ Route::prefix('recruitment')->name('recruitment.')->group(function () {
 // 홍보센터 관련 라우트
 Route::prefix('pr-center')->name('pr-center.')->group(function () {
     Route::get('/announcements', [PrCenterController::class, 'announcements'])->name('announcements');
+    Route::get('/announcements/{id}', [PrCenterController::class, 'announcementsShow'])->name('announcements.show');
     Route::get('/news', [PrCenterController::class, 'news'])->name('news');
+    Route::get('/news/{id}', [PrCenterController::class, 'newsShow'])->name('news.show');
     Route::get('/location', [PrCenterController::class, 'location'])->name('location');
 });
 
