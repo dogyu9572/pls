@@ -30,19 +30,19 @@
 				<a href="{{ route('information.ethical') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '06' ? 'on' : '' }}">윤리경영</a>
 			</div>
 		</div>
-		<div class="menu {{ isset($gNum) && $gNum == '02' ? 'on' : '' }}"><a href="/business/imported_automobiles.php">사업분야</a>
+		<div class="menu {{ isset($gNum) && $gNum == '02' ? 'on' : '' }}"><a href="{{ route('business.imported-automobiles') }}">사업분야</a>
 			<div class="snb">
-				<a href="/business/imported_automobiles.php" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">수입자동차 PDI사업</a>
-				<a href="/business/port_logistics.php" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">항만물류사업</a>
-				<a href="/business/special_vehicle.php" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">특장차 제조사업</a>
+				<a href="{{ route('business.imported-automobiles') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">수입자동차 PDI사업</a>
+				<a href="{{ route('business.port-logistics') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">항만물류사업</a>
+				<a href="{{ route('business.special-vehicle') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">특장차 제조사업</a>
 			</div>
 		</div>
-		<div class="menu {{ isset($gNum) && $gNum == '03' ? 'on' : '' }}"><a href="/recruitment/ideal_employee.php">인재채용</a>
+		<div class="menu {{ isset($gNum) && $gNum == '03' ? 'on' : '' }}"><a href="{{ route('recruitment.ideal-employee') }}">인재채용</a>
 			<div class="snb">
-				<a href="/recruitment/ideal_employee.php" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">인재상</a>
-				<a href="/recruitment/personnel.php" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">인사제도</a>
-				<a href="/recruitment/welfare.php" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">복지제도</a>
-				<a href="/recruitment/information.php" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '04' ? 'on' : '' }}">채용안내</a>
+				<a href="{{ route('recruitment.ideal-employee') }}" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">인재상</a>
+				<a href="{{ route('recruitment.personnel') }}" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">인사제도</a>
+				<a href="{{ route('recruitment.welfare') }}" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">복지제도</a>
+				<a href="{{ route('recruitment.information') }}" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '04' ? 'on' : '' }}">채용안내</a>
 			</div>
 		</div>
 		<div class="menu {{ isset($gNum) && $gNum == '04' ? 'on' : '' }}"><a href="/pr_center/announcements.php">홍보센터</a>
@@ -85,14 +85,14 @@
 					<a href="{{ route('information.safety-health') }}" class="{{ $gNum == '01' && $sNum == '05' ? 'on' : '' }}">안전/보건경영</a>
 					<a href="{{ route('information.ethical') }}" class="{{ $gNum == '01' && $sNum == '06' ? 'on' : '' }}">윤리경영</a>
 				@elseif($gNum == '02')
-					<a href="/business/imported_automobiles.php" class="{{ $gNum == '02' && $sNum == '01' ? 'on' : '' }}">수입자동차 PDI사업</a>
-					<a href="/business/port_logistics.php" class="{{ $gNum == '02' && $sNum == '02' ? 'on' : '' }}">항만물류사업</a>
-					<a href="/business/special_vehicle.php" class="{{ $gNum == '02' && $sNum == '03' ? 'on' : '' }}">특장차 제조사업</a>
+					<a href="{{ route('business.imported-automobiles') }}" class="{{ $gNum == '02' && $sNum == '01' ? 'on' : '' }}">수입자동차 PDI사업</a>
+					<a href="{{ route('business.port-logistics') }}" class="{{ $gNum == '02' && $sNum == '02' ? 'on' : '' }}">항만물류사업</a>
+					<a href="{{ route('business.special-vehicle') }}" class="{{ $gNum == '02' && $sNum == '03' ? 'on' : '' }}">특장차 제조사업</a>
 				@elseif($gNum == '03')
-					<a href="/recruitment/ideal_employee.php" class="{{ $gNum == '03' && $sNum == '01' ? 'on' : '' }}">인재상</a>
-					<a href="/recruitment/personnel.php" class="{{ $gNum == '03' && $sNum == '02' ? 'on' : '' }}">인사제도</a>
-					<a href="/recruitment/welfare.php" class="{{ $gNum == '03' && $sNum == '03' ? 'on' : '' }}">복지제도</a>
-					<a href="/recruitment/information.php" class="{{ $gNum == '03' && $sNum == '04' ? 'on' : '' }}">채용안내</a>
+					<a href="{{ route('recruitment.ideal-employee') }}" class="{{ $gNum == '03' && $sNum == '01' ? 'on' : '' }}">인재상</a>
+					<a href="{{ route('recruitment.personnel') }}" class="{{ $gNum == '03' && $sNum == '02' ? 'on' : '' }}">인사제도</a>
+					<a href="{{ route('recruitment.welfare') }}" class="{{ $gNum == '03' && $sNum == '03' ? 'on' : '' }}">복지제도</a>
+					<a href="{{ route('recruitment.information') }}" class="{{ $gNum == '03' && $sNum == '04' ? 'on' : '' }}">채용안내</a>
 				@elseif($gNum == '04')
 					<a href="/pr_center/announcements.php" class="{{ $gNum == '04' && $sNum == '01' ? 'on' : '' }}">PLS 공지</a>
 					<a href="/pr_center/news.php" class="{{ $gNum == '04' && $sNum == '02' ? 'on' : '' }}">PLS 소식</a>

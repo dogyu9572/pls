@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformationController;
+use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\RecruitmentController;
 
 // =============================================================================
 // 기본 라우트 파일
@@ -23,6 +25,21 @@ Route::prefix('information')->name('information.')->group(function () {
     Route::get('/quality-environmental', [InformationController::class, 'qualityEnvironmental'])->name('quality-environmental');
     Route::get('/safety-health', [InformationController::class, 'safetyHealth'])->name('safety-health');
     Route::get('/ethical', [InformationController::class, 'ethical'])->name('ethical');
+});
+
+// 사업분야 관련 라우트
+Route::prefix('business')->name('business.')->group(function () {
+    Route::get('/imported-automobiles', [BusinessController::class, 'importedAutomobiles'])->name('imported-automobiles');
+    Route::get('/port-logistics', [BusinessController::class, 'portLogistics'])->name('port-logistics');
+    Route::get('/special-vehicle', [BusinessController::class, 'specialVehicle'])->name('special-vehicle');
+});
+
+// 인재채용 관련 라우트
+Route::prefix('recruitment')->name('recruitment.')->group(function () {
+    Route::get('/ideal-employee', [RecruitmentController::class, 'idealEmployee'])->name('ideal-employee');
+    Route::get('/personnel', [RecruitmentController::class, 'personnel'])->name('personnel');
+    Route::get('/welfare', [RecruitmentController::class, 'welfare'])->name('welfare');
+    Route::get('/information', [RecruitmentController::class, 'information'])->name('information');
 });
 
 // 인증 관련 라우트
