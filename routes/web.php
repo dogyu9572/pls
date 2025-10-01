@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InformationController;
 
 // =============================================================================
 // 기본 라우트 파일
@@ -13,6 +14,16 @@ use App\Http\Controllers\HomeController;
 
 // 메인 페이지
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// 기업정보 관련 라우트
+Route::prefix('information')->name('information.')->group(function () {
+    Route::get('/ceo-message', [InformationController::class, 'ceoMessage'])->name('ceo-message');
+    Route::get('/about-company', [InformationController::class, 'aboutCompany'])->name('about-company');
+    Route::get('/history', [InformationController::class, 'history'])->name('history');
+    Route::get('/quality-environmental', [InformationController::class, 'qualityEnvironmental'])->name('quality-environmental');
+    Route::get('/safety-health', [InformationController::class, 'safetyHealth'])->name('safety-health');
+    Route::get('/ethical', [InformationController::class, 'ethical'])->name('ethical');
+});
 
 // 인증 관련 라우트
 Route::prefix('auth')->name('auth.')->group(function () {

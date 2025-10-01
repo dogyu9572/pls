@@ -1,110 +1,135 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', '사이트 이름')</title>
-    
-    <!-- 폰트는 CSS에서 import됨 -->
+<title>PLS Corp</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0 user-scalable=yes">
 
-    <!-- 스타일시트 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/frontend/main.css') }}">
-    @yield('styles')
+<link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon"/>
+<link rel="stylesheet" href="{{ asset('css/font.css') }}" media="all">
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}" media="all">
+<link rel="stylesheet" href="{{ asset('css/reactive.css') }}" media="all">
+
+<script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="{{ asset('js/com.js') }}"></script>
+
 </head>
 <body>
-    <header class="main-header">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url(path: '/') }}">사이트 이름</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/') }}">홈</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="boardsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                게시판
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="boardsDropdown">
-                                @foreach(\App\Models\Board::where('is_active', true)->get() as $boardItem)
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('boards.index', $boardItem->slug) }}">{{ $boardItem->name }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">로그인</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">회원가입</a>
-                            </li>
-                        @else
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {{ Auth::user()->name }}
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                    {{-- <li>
-                                        <a class="dropdown-item" href="{{ route('profile') }}">프로필</a>
-                                    </li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                            로그아웃
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </li> --}}
-                                </ul>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+<div class="blind_link"><a href="#mainContent">본문 바로가기</a></div>
 
-    <main class="main-content">
-        <div class="container py-4">
-            @yield('content')
-        </div>
-    </main>
+<div class="header {{ isset($gNum) && $gNum == 'main' ? 'main' : '' }}">
+	<a href="/" class="logo flex_center"><img src="{{ asset('images/logo.svg') }}" alt="logo"><h1>PLS Corp</h1></a>
+	<div class="gnb">
+		<div class="menu {{ isset($gNum) && $gNum == '01' ? 'on' : '' }}"><a href="{{ route('information.ceo-message') }}">기업정보</a>
+			<div class="snb">
+				<a href="{{ route('information.ceo-message') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">CEO 인사말</a>
+				<a href="{{ route('information.about-company') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">회사소개</a>
+				<a href="{{ route('information.history') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">회사연혁</a>
+				<a href="{{ route('information.quality-environmental') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '04' ? 'on' : '' }}">품질/환경경영</a>
+				<a href="{{ route('information.safety-health') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '05' ? 'on' : '' }}">안전/보건경영</a>
+				<a href="{{ route('information.ethical') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '06' ? 'on' : '' }}">윤리경영</a>
+			</div>
+		</div>
+		<div class="menu {{ isset($gNum) && $gNum == '02' ? 'on' : '' }}"><a href="/business/imported_automobiles.php">사업분야</a>
+			<div class="snb">
+				<a href="/business/imported_automobiles.php" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">수입자동차 PDI사업</a>
+				<a href="/business/port_logistics.php" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">항만물류사업</a>
+				<a href="/business/special_vehicle.php" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">특장차 제조사업</a>
+			</div>
+		</div>
+		<div class="menu {{ isset($gNum) && $gNum == '03' ? 'on' : '' }}"><a href="/recruitment/ideal_employee.php">인재채용</a>
+			<div class="snb">
+				<a href="/recruitment/ideal_employee.php" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">인재상</a>
+				<a href="/recruitment/personnel.php" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">인사제도</a>
+				<a href="/recruitment/welfare.php" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">복지제도</a>
+				<a href="/recruitment/information.php" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '04' ? 'on' : '' }}">채용안내</a>
+			</div>
+		</div>
+		<div class="menu {{ isset($gNum) && $gNum == '04' ? 'on' : '' }}"><a href="/pr_center/announcements.php">홍보센터</a>
+			<div class="snb">
+				<a href="/pr_center/announcements.php" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">PLS 공지</a>
+				<a href="/pr_center/news.php" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">PLS 소식</a>
+				<a href="/pr_center/location.php" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">오시는 길</a>
+			</div>
+		</div>
+	</div>
+	<div class="right flex_center">
+		<a href="/contact_us/" class="btn_contact">CONTACT US</a>
+		<div class="langs">
+			<a href="/" class="on">KOR</a>
+			<a href="#this">ENG</a>
+		</div>
+	</div>
+	<a href="javascript:void(0);" class="btn_menu">
+		<p class="t"></p>
+		<p class="m"></p>
+		<p class="b"></p>
+	</a>
+</div>
 
-    <footer class="main-footer bg-light mt-5 py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>&copy; {{ date('Y') }} 사이트 이름. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-end">
-                    <p>
-                        <a href="{{ url('/privacy') }}" class="text-decoration-none text-secondary me-3">개인정보처리방침</a>
-                        <a href="{{ url('/terms') }}" class="text-decoration-none text-secondary">이용약관</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+@if(isset($gNum) && $gNum !== 'main')
+<div class="sub_tit {{ $gNum == '00' ? 'bdb' : '' }}">
+	<div class="inner">
+		<div class="title">{{ $gName ?? '' }}</div>
+		<p>고객과 함께 내일을 꿈꾸며, 새로운 삶의 가치를 창조한다.</p>
+		@if($gNum !== '00')
+		<div class="aside">
+			<dl>
+				<dt><button type="button">{{ $sName ?? '' }}</button></dt>
+				<dd>
+				@if($gNum == '01')
+					<a href="{{ route('information.ceo-message') }}" class="{{ $gNum == '01' && $sNum == '01' ? 'on' : '' }}">CEO 인사말</a>
+					<a href="{{ route('information.about-company') }}" class="{{ $gNum == '01' && $sNum == '02' ? 'on' : '' }}">회사소개</a>
+					<a href="{{ route('information.history') }}" class="{{ $gNum == '01' && $sNum == '03' ? 'on' : '' }}">회사연혁</a>
+					<a href="{{ route('information.quality-environmental') }}" class="{{ $gNum == '01' && $sNum == '04' ? 'on' : '' }}">품질/환경경영</a>
+					<a href="{{ route('information.safety-health') }}" class="{{ $gNum == '01' && $sNum == '05' ? 'on' : '' }}">안전/보건경영</a>
+					<a href="{{ route('information.ethical') }}" class="{{ $gNum == '01' && $sNum == '06' ? 'on' : '' }}">윤리경영</a>
+				@elseif($gNum == '02')
+					<a href="/business/imported_automobiles.php" class="{{ $gNum == '02' && $sNum == '01' ? 'on' : '' }}">수입자동차 PDI사업</a>
+					<a href="/business/port_logistics.php" class="{{ $gNum == '02' && $sNum == '02' ? 'on' : '' }}">항만물류사업</a>
+					<a href="/business/special_vehicle.php" class="{{ $gNum == '02' && $sNum == '03' ? 'on' : '' }}">특장차 제조사업</a>
+				@elseif($gNum == '03')
+					<a href="/recruitment/ideal_employee.php" class="{{ $gNum == '03' && $sNum == '01' ? 'on' : '' }}">인재상</a>
+					<a href="/recruitment/personnel.php" class="{{ $gNum == '03' && $sNum == '02' ? 'on' : '' }}">인사제도</a>
+					<a href="/recruitment/welfare.php" class="{{ $gNum == '03' && $sNum == '03' ? 'on' : '' }}">복지제도</a>
+					<a href="/recruitment/information.php" class="{{ $gNum == '03' && $sNum == '04' ? 'on' : '' }}">채용안내</a>
+				@elseif($gNum == '04')
+					<a href="/pr_center/announcements.php" class="{{ $gNum == '04' && $sNum == '01' ? 'on' : '' }}">PLS 공지</a>
+					<a href="/pr_center/news.php" class="{{ $gNum == '04' && $sNum == '02' ? 'on' : '' }}">PLS 소식</a>
+					<a href="/pr_center/location.php" class="{{ $gNum == '04' && $sNum == '03' ? 'on' : '' }}">오시는 길</a>
+				@endif
+				</dd>
+			</dl>
+		</div>
+		@endif
+	</div>
+</div>
+@endif
 
-    <!-- 스크립트 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/common/app.js') }}"></script>
-    @stack('scripts')
+@yield('content')
+
+<div class="footer">
+	<div class="point" id="unfixed"></div>
+	<button type="button" class="gotop">TOP</button>
+	<div class="inner">
+		<div class="flogo"><img src="{{ asset('images/logo.svg') }}" alt="logo"></div>
+		<ul class="links">
+			<li><a href="/terms/privacy_policy.php"><strong>개인정보처리방침</strong></a></li>
+			<li><a href="/terms/email.php">이메일 무단수집 거부</a></li>
+		</ul>
+		<ul class="address">
+			<li><strong>주소</strong>경기도 평택시 포승읍 서동대로 437-100</li>
+			<li><strong>대표 전화</strong>031)684-9661~5</li>
+		</ul>
+		<p class="copy">Copyrightⓒ2012 by PLS. All right Reserved.</p>
+		<dl class="family">
+			<dt><button type="button">FAMILY SITE</button></dt>
+			<dd>
+				<a href="#this">FAMILY SITE</a>
+			</dd>
+		</dl>
+	</div>
+</div>
+
 </body>
 </html>
