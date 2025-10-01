@@ -45,16 +45,16 @@
 				<a href="{{ route('recruitment.information') }}" class="{{ isset($gNum) && $gNum == '03' && isset($sNum) && $sNum == '04' ? 'on' : '' }}">채용안내</a>
 			</div>
 		</div>
-		<div class="menu {{ isset($gNum) && $gNum == '04' ? 'on' : '' }}"><a href="/pr_center/announcements.php">홍보센터</a>
+		<div class="menu {{ isset($gNum) && $gNum == '04' ? 'on' : '' }}"><a href="{{ route('pr-center.announcements') }}">홍보센터</a>
 			<div class="snb">
-				<a href="/pr_center/announcements.php" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">PLS 공지</a>
-				<a href="/pr_center/news.php" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">PLS 소식</a>
-				<a href="/pr_center/location.php" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">오시는 길</a>
+				<a href="{{ route('pr-center.announcements') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">PLS 공지</a>
+				<a href="{{ route('pr-center.news') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">PLS 소식</a>
+				<a href="{{ route('pr-center.location') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">오시는 길</a>
 			</div>
 		</div>
 	</div>
 	<div class="right flex_center">
-		<a href="/contact_us/" class="btn_contact">CONTACT US</a>
+		<a href="{{ route('contact-us') }}" class="btn_contact">CONTACT US</a>
 		<div class="langs">
 			<a href="/" class="on">KOR</a>
 			<a href="#this">ENG</a>
@@ -94,9 +94,9 @@
 					<a href="{{ route('recruitment.welfare') }}" class="{{ $gNum == '03' && $sNum == '03' ? 'on' : '' }}">복지제도</a>
 					<a href="{{ route('recruitment.information') }}" class="{{ $gNum == '03' && $sNum == '04' ? 'on' : '' }}">채용안내</a>
 				@elseif($gNum == '04')
-					<a href="/pr_center/announcements.php" class="{{ $gNum == '04' && $sNum == '01' ? 'on' : '' }}">PLS 공지</a>
-					<a href="/pr_center/news.php" class="{{ $gNum == '04' && $sNum == '02' ? 'on' : '' }}">PLS 소식</a>
-					<a href="/pr_center/location.php" class="{{ $gNum == '04' && $sNum == '03' ? 'on' : '' }}">오시는 길</a>
+					<a href="{{ route('pr-center.announcements') }}" class="{{ $gNum == '04' && $sNum == '01' ? 'on' : '' }}">PLS 공지</a>
+					<a href="{{ route('pr-center.news') }}" class="{{ $gNum == '04' && $sNum == '02' ? 'on' : '' }}">PLS 소식</a>
+					<a href="{{ route('pr-center.location') }}" class="{{ $gNum == '04' && $sNum == '03' ? 'on' : '' }}">오시는 길</a>
 				@endif
 				</dd>
 			</dl>

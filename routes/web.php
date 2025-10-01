@@ -9,6 +9,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\RecruitmentController;
+use App\Http\Controllers\PrCenterController;
+use App\Http\Controllers\ContactController;
 
 // =============================================================================
 // 기본 라우트 파일
@@ -41,6 +43,16 @@ Route::prefix('recruitment')->name('recruitment.')->group(function () {
     Route::get('/welfare', [RecruitmentController::class, 'welfare'])->name('welfare');
     Route::get('/information', [RecruitmentController::class, 'information'])->name('information');
 });
+
+// 홍보센터 관련 라우트
+Route::prefix('pr-center')->name('pr-center.')->group(function () {
+    Route::get('/announcements', [PrCenterController::class, 'announcements'])->name('announcements');
+    Route::get('/news', [PrCenterController::class, 'news'])->name('news');
+    Route::get('/location', [PrCenterController::class, 'location'])->name('location');
+});
+
+// Contact Us
+Route::get('/contact-us', [ContactController::class, 'index'])->name('contact-us');
 
 // 인증 관련 라우트
 Route::prefix('auth')->name('auth.')->group(function () {
