@@ -1,0 +1,122 @@
+/* 팝업 레이어 스타일 */
+.popup-layer {
+    position: absolute;
+    z-index: 9999;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.popup-layer.hidden {
+    display: none !important;
+}
+
+/* 팝업 본문 */
+.popup-body {
+    flex: 1;
+    overflow: auto;
+    background: #fff;
+    padding: 30px 30px 20px;
+    text-align: center;
+}
+
+.popup-body img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0;
+}
+
+.popup-body a {
+    display: block;
+    line-height: 0;
+}
+
+/* 이미지 타입 팝업 (여백 제거) */
+.popup-body:has(img) {
+    padding: 0;
+}
+
+.popup-body:has(img) img {
+    width: 100%;
+    display: block;
+}
+
+/* 팝업 푸터 */
+.popup-footer {
+    background: #fff;
+    padding: 0;
+    display: flex;
+    border-top: 1px solid #eee;
+}
+
+.popup-footer label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #666;
+    user-select: none;
+    padding: 15px 10px;
+    border-right: 1px solid #eee;
+    transition: background 0.2s;
+}
+
+.popup-footer label:hover {
+    background: #f9f9f9;
+}
+
+.popup-today-close {
+    display: none;
+}
+
+.popup-footer-close-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 15px 10px;
+    font-size: 13px;
+    color: #666;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.popup-footer-close-btn:hover {
+    background: #f9f9f9;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .popup-layer {
+        width: 90% !important;
+        max-width: none !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%);
+        height: 40% !important;
+    }
+    
+    /* 레이어팝업은 모든 팝업이 동일한 크기로 */
+    .popup-layer[data-display-type="layer"] {
+        width: 90% !important;
+        max-width: none !important;
+        height: 40% !important;
+    }
+    
+    .popup-body {
+        padding: 20px 20px 15px;
+    }
+    
+    .popup-footer label,
+    .popup-footer-close-btn {
+        padding: 12px 8px;
+        font-size: 12px;
+    }
+}
+

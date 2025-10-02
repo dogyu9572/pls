@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Board;
+use App\Models\Popup;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -20,7 +22,26 @@ class HomeController extends Controller
         // notices 게시판 최신글 4개  
         $noticePosts = $this->getLatestPosts('notices', 4);
         
-        return view('home.index', compact('gNum', 'gName', 'sName', 'galleryPosts', 'noticePosts'));
+        // 활성화된 팝업 조회
+        $popups = Popup::where('is_active', true)
+            ->where(function($query) {
+                $query->where('use_period', false)
+                      ->orWhere(function($q) {
+                          $q->where('use_period', true)
+                            ->where(function($periodQuery) {
+                                $periodQuery->whereNull('start_date')
+                                           ->orWhere('start_date', '<=', now());
+                            })
+                            ->where(function($periodQuery) {
+                                $periodQuery->whereNull('end_date')
+                                           ->orWhere('end_date', '>=', now());
+                            });
+                      });
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+        return view('home.index', compact('gNum', 'gName', 'sName', 'galleryPosts', 'noticePosts', 'popups'));
     }
     
     /**
@@ -59,7 +80,7 @@ class HomeController extends Controller
                 });
                 
         } catch (\Exception $e) {
-            \Log::error("게시판 데이터 조회 오류: " . $e->getMessage());
+            Log::error("게시판 데이터 조회 오류: " . $e->getMessage());
             return collect();
         }
     }

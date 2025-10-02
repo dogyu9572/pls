@@ -18,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
             BackOfficeAuth::class,
         ]);
         
-        // 방문자 추적 미들웨어를 글로벌로 등록 (최상위에서 실행)
+        // 방문자 추적 미들웨어를 글로벌로 등록
         $middleware->append(TrackVisitor::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {

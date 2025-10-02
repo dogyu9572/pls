@@ -123,6 +123,40 @@ function togglePopupTypeSections() {
     }
 }
 
+// 팝업표시타입에 따른 UI 조정
+function togglePopupDisplayType() {
+    const displayTypeRadios = document.querySelectorAll('input[name="popup_display_type"]');
+    const positionFields = document.querySelector('.board-form-row:nth-of-type(4)'); // 위치 필드들
+    const urlFields = document.querySelector('.board-form-row:nth-of-type(5)'); // URL 필드들
+    
+    if (displayTypeRadios.length > 0) {
+        displayTypeRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'layer') {
+                    // 레이어팝업일 때는 위치 필드 숨기기
+                    if (positionFields) {
+                        positionFields.style.display = 'none';
+                    }
+                    // URL 필드는 유지 (레이어팝업도 링크 가능)
+                } else if (this.value === 'normal') {
+                    // 일반팝업일 때는 모든 필드 표시
+                    if (positionFields) {
+                        positionFields.style.display = 'block';
+                    }
+                }
+            });
+        });
+        
+        // 초기 상태 설정
+        const checkedRadio = document.querySelector('input[name="popup_display_type"]:checked');
+        if (checkedRadio && checkedRadio.value === 'layer') {
+            if (positionFields) {
+                positionFields.style.display = 'none';
+            }
+        }
+    }
+}
+
 // 이미지 미리보기 기능
 function initImagePreview() {
     const fileInput = document.getElementById('popup_image');
@@ -327,6 +361,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 팝업타입에 따른 섹션 토글
     togglePopupTypeSections();
+    
+    // 팝업표시타입에 따른 UI 조정
+    togglePopupDisplayType();
     
     // 이미지 미리보기 기능
     initImagePreview();

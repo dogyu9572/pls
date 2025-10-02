@@ -12,6 +12,7 @@ use App\Http\Controllers\RecruitmentController;
 use App\Http\Controllers\PrCenterController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TermsController;
+use App\Http\Controllers\PopupController;
 
 // =============================================================================
 // 기본 라우트 파일
@@ -64,6 +65,9 @@ Route::prefix('terms')->name('terms.')->group(function () {
     Route::get('/ethic', [TermsController::class, 'ethic'])->name('ethic');
     Route::get('/internal-reporting', [TermsController::class, 'internalReporting'])->name('internal-reporting');
 });
+
+// 팝업 표시 (일반팝업용)
+Route::get('/popup/{id}', [PopupController::class, 'show'])->name('popup.show');
 
 // 인증 관련 라우트
 Route::prefix('auth')->name('auth.')->group(function () {

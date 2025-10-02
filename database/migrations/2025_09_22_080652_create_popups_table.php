@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('url')->nullable(); // URL
             $table->enum('url_target', ['_self', '_blank'])->default('_blank'); // 새창/현재창
             $table->enum('popup_type', ['image', 'html'])->default('image'); // 팝업타입
+            $table->enum('popup_display_type', ['normal', 'layer'])->default('normal'); // 팝업표시타입 (일반팝업/레이어팝업)
             $table->string('popup_image')->nullable(); // 팝업이미지
             $table->longText('popup_content')->nullable(); // HTML 콘텐츠
             $table->boolean('is_active')->default(true); // 사용여부

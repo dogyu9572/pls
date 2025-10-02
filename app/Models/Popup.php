@@ -21,6 +21,7 @@ class Popup extends Model
         'url',
         'url_target',
         'popup_type',
+        'popup_display_type',
         'popup_image',
         'popup_content',
         'is_active',
@@ -37,6 +38,7 @@ class Popup extends Model
     protected $attributes = [
         'url_target' => '_blank',
         'popup_type' => 'image',
+        'popup_display_type' => 'normal',
     ];
 
     /**

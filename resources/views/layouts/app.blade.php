@@ -9,9 +9,11 @@
 <link rel="stylesheet" href="{{ asset('css/font.css') }}" media="all">
 <link rel="stylesheet" href="{{ asset('css/styles.css') }}" media="all">
 <link rel="stylesheet" href="{{ asset('css/reactive.css') }}" media="all">
+<link rel="stylesheet" href="{{ asset('css/popup.css') }}" media="all">
 
 <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="{{ asset('js/com.js') }}"></script>
+<script src="{{ asset('js/popup.js') }}"></script>
 
 </head>
 <body>
@@ -179,6 +181,75 @@
 		</dl>
 	</div>
 </div>
+
+@if(isset($popups) && $popups->count() > 0 && request()->routeIs('home'))
+<!-- 팝업 표시 -->
+@foreach($popups as $popup)
+    @if($popup->popup_display_type === 'normal')
+        <!-- 일반팝업 (새창) -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // 일반팝업은 새창으로 열기
+                const popupUrl = '{{ route("popup.show", $popup->id) }}';
+                // 관리자에서 설정한 위치 사용
+                const popupWidth = {{ $popup->width }};
+                const popupHeight = {{ $popup->height }};
+                const popupTop = {{ $popup->position_top ?? 100 }};
+                const popupLeft = {{ $popup->position_left ?? 100 }};
+                
+                const popupFeatures = 'width=' + popupWidth + ',height=' + popupHeight + ',left=' + popupLeft + ',top=' + popupTop + ',scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=no,status=no';
+                
+                // 쿠키 확인 함수
+                function getCookie(name) {
+                    const value = '; ' + document.cookie;
+                    const parts = value.split('; ' + name + '=');
+                    if (parts.length === 2) {
+                        return parts.pop().split(';').shift();
+                    }
+                    return null;
+                }
+                
+                // 쿠키 확인 후 팝업 열기
+                const cookieName = 'popup_hide_{{ $popup->id }}';
+                if (!getCookie(cookieName)) {
+                    window.open(popupUrl, 'popup_{{ $popup->id }}', popupFeatures);
+                }
+            });
+        </script>
+    @else
+        <!-- 레이어팝업 (오버레이) -->
+        <div class="popup-layer popup-fixed" 
+             id="popup-{{ $popup->id }}"
+             data-popup-id="{{ $popup->id }}"
+             data-display-type="layer"
+             style="position: absolute !important; width: {{ $popup->width }}px; height: auto; top: {{ $popup->position_top }}px; left: {{ $popup->position_left }}px; z-index: 99999;">
+            
+            
+            <div class="popup-body">
+                @if($popup->popup_type === 'image' && $popup->popup_image)
+                    @if($popup->url)
+                        <a href="{{ $popup->url }}" target="{{ $popup->url_target }}">
+                            <img src="{{ asset('storage/' . $popup->popup_image) }}" alt="{{ $popup->title }}">
+                        </a>
+                    @else
+                        <img src="{{ asset('storage/' . $popup->popup_image) }}" alt="{{ $popup->title }}">
+                    @endif
+                @elseif($popup->popup_type === 'html' && $popup->popup_content)
+                    {!! $popup->popup_content !!}
+                @endif
+            </div>
+            
+            <div class="popup-footer">
+                <label class="popup-today-label" data-popup-id="{{ $popup->id }}">
+                    <input type="checkbox" class="popup-today-close" data-popup-id="{{ $popup->id }}">
+                    1일 동안 보지 않음
+                </label>
+                <button type="button" class="popup-footer-close-btn" data-popup-id="{{ $popup->id }}">닫기</button>
+            </div>
+        </div>
+    @endif
+@endforeach
+@endif
 
 </body>
 </html>

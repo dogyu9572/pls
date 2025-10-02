@@ -329,33 +329,18 @@ function initVisitorChart() {
     const ctx = document.getElementById('visitorChart');
     if (!ctx) return;
 
-    // API에서 실제 데이터 가져오기
-    fetch('/backoffice/api/statistics', {
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        // 데이터 유효성 검사
-        if (!data.daily_stats || !data.daily_stats.labels) {
-            createDefaultChart(ctx);
-            return;
-        }
-        
-        if (!data.monthly_stats || !data.monthly_stats.labels) {
-            createDefaultChart(ctx);
-            return;
-        }
+    // 서버에서 전달받은 차트 데이터 사용
+    const serverChartData = window.chartData || null;
+    
+           if (serverChartData && serverChartData.daily && serverChartData.daily.labels) {
         
         const chartData = {
             daily: {
-                labels: data.daily_stats.labels,
+                labels: serverChartData.daily.labels,
                 datasets: [
                     {
                         label: '일별 방문객',
-                        data: data.daily_stats.data,
+                        data: serverChartData.daily.data,
                         borderColor: '#667eea',
                         backgroundColor: 'rgba(102, 126, 234, 0.1)',
                         tension: 0.4,
@@ -367,11 +352,11 @@ function initVisitorChart() {
                 ]
             },
             monthly: {
-                labels: data.monthly_stats.labels,
+                labels: serverChartData.monthly.labels,
                 datasets: [
                     {
                         label: '월별 방문객',
-                        data: data.monthly_stats.data,
+                        data: serverChartData.monthly.data,
                         borderColor: '#f093fb',
                         backgroundColor: 'rgba(240, 147, 251, 0.1)',
                         tension: 0.4,
@@ -385,11 +370,9 @@ function initVisitorChart() {
         };
         
         createChart(ctx, chartData);
-    })
-    .catch(error => {
-        console.error('방문객 통계 데이터 로드 실패:', error);
-        createDefaultChart(ctx);
-    });
+           } else {
+               createDefaultChart(ctx);
+           }
 }
 
 // 차트 생성 함수

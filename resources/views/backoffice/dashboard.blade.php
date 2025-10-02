@@ -148,5 +148,9 @@
 
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // 서버에서 전달받은 차트 데이터를 전역 변수로 설정
+    window.chartData = @json($chartData ?? null);
+</script>
 <script src="{{ asset('js/backoffice/dashboard.js') }}"></script>
 @endsection

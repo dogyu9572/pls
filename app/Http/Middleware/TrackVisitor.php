@@ -77,7 +77,7 @@ class TrackVisitor
         );
 
         // 단일 UPDATE 쿼리로 여러 컬럼 동시 증가
-        DB::table('daily_visitor_stats')
+        DB::table($stat->getTable())
             ->where('id', $stat->id)
             ->update([
                 'page_views' => DB::raw('page_views + 1'),

@@ -80,6 +80,7 @@ class PopupController extends Controller
             'url' => 'nullable|url',
             'url_target' => 'nullable|in:_self,_blank',
             'popup_type' => 'nullable|in:image,html',
+            'popup_display_type' => 'nullable|in:normal,layer',
             'popup_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'popup_content' => 'nullable|string',
             'is_active' => 'boolean',
