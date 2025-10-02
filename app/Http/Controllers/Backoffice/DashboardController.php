@@ -253,7 +253,8 @@ class DashboardController extends BaseController
             // 5. 최대 10개만 반환
             return $sortedBoards->take(10)->values();
         } catch (\Exception $e) {
-            dd('Error: ' . $e->getMessage());
+            \Log::error('대시보드 최근 게시판 조회 오류: ' . $e->getMessage());
+            return collect();
         }
     }
 }
