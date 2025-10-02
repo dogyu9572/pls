@@ -16,7 +16,6 @@ return new class extends Migration
             $table->date('visit_date')->unique()->comment('방문 날짜');
             $table->integer('visitor_count')->default(0)->comment('일일 방문자 수');
             $table->integer('page_views')->default(0)->comment('일일 페이지뷰 수');
-            $table->integer('unique_visitors')->default(0)->comment('일일 고유 방문자 수');
             $table->timestamps();
             
             // 인덱스

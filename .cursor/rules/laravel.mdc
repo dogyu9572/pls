@@ -83,3 +83,9 @@ rules:
   - 시더 실행: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep laravel | head -1) php artisan db:seed
   - 테이블 구조 확인: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep mysql | head -1) mysql -u $(grep DB_USERNAME .env | cut -d'=' -f2) -p$(grep DB_PASSWORD .env | cut -d'=' -f2) $(grep DB_DATABASE .env | cut -d'=' -f2) -e "DESCRIBE 테이블명;"
   - 모든 테이블 확인: wsl docker exec $(wsl docker ps --format "{{.Names}}" | grep mysql | head -1) mysql -u $(grep DB_USERNAME .env | cut -d'=' -f2) -p$(grep DB_PASSWORD .env | cut -d'=' -f2) $(grep DB_DATABASE .env | cut -d'=' -f2) -e "SHOW TABLES;"
+
+# 마이그레이션 안전 규칙 (중요!)
+- 마이그레이션 파일 수정 시 절대 migrate:reset, migrate:fresh, migrate:rollback 실행 금지
+- 기존 데이터가 있는 환경에서는 마이그레이션 파일만 수정하고 실행하지 않음
+- 마이그레이션 실행 전 반드시 사용자에게 확인 요청
+- 데이터베이스 백업 없이는 위험한 마이그레이션 명령어 사용 금지
