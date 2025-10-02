@@ -38,6 +38,7 @@
                             <!-- 이미지 제거를 위한 숨겨진 필드 -->
                             <input type="hidden" name="remove_desktop_image" id="remove_desktop_image" value="0">
                             <input type="hidden" name="remove_mobile_image" id="remove_mobile_image" value="0">
+                            <input type="hidden" name="remove_video_file" id="remove_video_file" value="0">
 
                         <!-- 1. 배너제목 -->
                         <div class="board-form-group">
@@ -136,7 +137,28 @@
                             </div>
                         </div>
 
-                        <!-- 5. 이미지 (데스크톱, 모바일) -->
+                        <!-- 5. 배너 타입 선택 -->
+                        <div class="board-form-group">
+                            <label class="board-form-label">배너 타입 <span class="required">*</span></label>
+                            <div class="board-radio-group">
+                                <div class="board-radio">
+                                    <input type="radio" id="banner_type_image" name="banner_type" value="image" 
+                                           {{ old('banner_type', $banner->banner_type) == 'image' ? 'checked' : '' }}>
+                                    <label for="banner_type_image">이미지</label>
+                                </div>
+                                <div class="board-radio">
+                                    <input type="radio" id="banner_type_video" name="banner_type" value="video" 
+                                           {{ old('banner_type', $banner->banner_type) == 'video' ? 'checked' : '' }}>
+                                    <label for="banner_type_video">영상</label>
+                                </div>
+                            </div>
+                            @error('banner_type')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- 6. 이미지 (데스크톱, 모바일) -->
+                        <div id="image_fields" class="board-form-section">
                         <div class="board-form-row">
                             <div class="board-form-col board-form-col-6">
                                 <div class="board-form-group">
@@ -194,8 +216,57 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
 
-                        <!-- 6. 사용여부, 배너순서 -->
+                        <!-- 7. 영상 업로드 -->
+                        <div id="video_fields" class="board-form-section" style="display: none;">
+                            <div class="board-form-row">
+                                <div class="board-form-col board-form-col-6">
+                                    <div class="board-form-group">
+                                        <label for="video_file" class="board-form-label">영상 파일</label>
+                                        <div class="board-file-upload">
+                                            <div class="board-file-input-wrapper">
+                                                <input type="file" class="board-file-input" 
+                                                       id="video_file" name="video_file" accept=".mp4,.avi,.mov,.wmv">
+                                                <div class="board-file-input-content">
+                                                    <i class="fas fa-video"></i>
+                                                    <span class="board-file-input-text">영상 파일을 선택하거나 여기로 드래그하세요</span>
+                                                    <span class="board-file-input-subtext">MP4, AVI, MOV, WMV 파일만 가능 (최대 10MB)</span>
+                                                </div>
+                                            </div>
+                                            <div class="board-file-preview" id="videoFilePreview">
+                                                @if($banner->video_file)
+                                                    <video controls class="thumbnail-preview">
+                                                        <source src="{{ asset('storage/' . $banner->video_file) }}" type="video/mp4">
+                                                    </video>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger mt-2" onclick="removeImagePreview('video_file', 'videoFilePreview')">
+                                                        <i class="fas fa-trash"></i> 영상 파일 제거
+                                                    </button>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        @error('video_file')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="board-form-col board-form-col-6">
+                                    <div class="board-form-group">
+                                        <label for="video_duration" class="board-form-label">재생 시간 (초)</label>
+                                        <input type="number" class="board-form-control @error('video_duration') is-invalid @enderror" 
+                                               id="video_duration" name="video_duration" value="{{ old('video_duration', $banner->video_duration) }}" 
+                                               min="1" max="300" placeholder="예: 5">
+                                        @error('video_duration')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- 8. 사용여부, 배너순서 -->
                         <div class="board-form-row">
                             <div class="board-form-col board-form-col-6">
                                 <div class="board-form-group">
@@ -242,4 +313,57 @@
 
 @section('scripts')
 <script src="{{ asset('js/backoffice/banners.js') }}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 배너 타입 토글 초기화
+    const bannerTypeRadios = document.querySelectorAll('input[name="banner_type"]');
+    const imageFields = document.getElementById('image_fields');
+    const videoFields = document.getElementById('video_fields');
+    
+    if (!bannerTypeRadios.length || !imageFields || !videoFields) {
+        return;
+    }
+    
+    // 초기 상태 설정
+    toggleBannerTypeFields();
+    
+    // 라디오 버튼 변경 이벤트
+    bannerTypeRadios.forEach(radio => {
+        radio.addEventListener('change', toggleBannerTypeFields);
+    });
+    
+    function toggleBannerTypeFields() {
+        const selectedType = document.querySelector('input[name="banner_type"]:checked')?.value;
+        
+        if (selectedType === 'video') {
+            imageFields.style.display = 'none';
+            videoFields.style.display = 'block';
+        } else {
+            imageFields.style.display = 'block';
+            videoFields.style.display = 'none';
+        }
+    }
+    
+    // 파일 제거 함수 정의
+    window.removeImagePreview = function(inputId, previewId) {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+        
+        if (input) input.value = '';
+        if (preview) preview.innerHTML = '';
+        
+        // 서버에 파일 제거 요청을 위한 숨겨진 필드 설정
+        if (inputId === 'desktop_image') {
+            const removeField = document.getElementById('remove_desktop_image');
+            if (removeField) removeField.value = '1';
+        } else if (inputId === 'mobile_image') {
+            const removeField = document.getElementById('remove_mobile_image');
+            if (removeField) removeField.value = '1';
+        } else if (inputId === 'video_file') {
+            const removeField = document.getElementById('remove_video_file');
+            if (removeField) removeField.value = '1';
+        }
+    };
+});
+</script>
 @endsection

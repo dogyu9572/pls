@@ -23,6 +23,9 @@
                     @csrf
                     @method('PUT')
                     
+                    <!-- 이미지 제거를 위한 숨겨진 필드 -->
+                    <input type="hidden" name="remove_popup_image" id="remove_popup_image" value="0">
+                    
                     <div class="board-form-row">
                         <div class="board-form-col board-form-col-12">
                             <div class="board-form-group">
@@ -172,6 +175,24 @@
                     <div class="board-form-row">
                         <div class="board-form-col board-form-col-12">
                             <div class="board-form-group">
+                                <label class="board-form-label">팝업표시타입</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="popup_display_type" value="normal" {{ old('popup_display_type', $popup->popup_display_type) == 'normal' ? 'checked' : '' }}>
+                                        <span class="radio-text">일반팝업</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="popup_display_type" value="layer" {{ old('popup_display_type', $popup->popup_display_type) == 'layer' ? 'checked' : '' }}>
+                                        <span class="radio-text">레이어팝업</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="board-form-row">
+                        <div class="board-form-col board-form-col-12">
+                            <div class="board-form-group">
                                 <label class="board-form-label">팝업타입</label>
                                 <div class="radio-group">
                                     <label class="radio-label">
@@ -194,16 +215,6 @@
                                 <div class="board-form-group">
                                     <label class="board-form-label">팝업이미지</label>
                                     
-                                    @if($popup->popup_image)
-                                        <div class="current-image">
-                                            <img src="{{ asset('storage/' . $popup->popup_image) }}" alt="현재 이미지" class="thumbnail-preview">
-                                            <button type="button" class="btn btn-sm btn-outline-danger mt-2" onclick="removeImagePreview()">
-                                                <i class="fas fa-trash"></i> 이미지 제거
-                                            </button>
-                                            <input type="hidden" name="remove_popup_image" id="remove_popup_image" value="0">
-                                        </div>
-                                    @endif
-                                    
                                     <div class="board-file-upload">
                                         <div class="board-file-input-wrapper">
                                             <input type="file" class="board-file-input" id="popup_image" name="popup_image" accept=".jpg,.jpeg,.png,.gif">
@@ -213,7 +224,17 @@
                                                 <span class="board-file-input-subtext">JPG, PNG, GIF 파일만 가능 (최대 5MB)</span>
                                             </div>
                                         </div>
-                                        <div class="board-file-preview" id="popupImagePreview"></div>
+                                        @if($popup->popup_image)
+                                            <input type="hidden" name="existing_popup_image" value="{{ $popup->popup_image }}">
+                                            <div class="board-file-preview" id="popupImagePreview">
+                                                <img src="{{ asset('storage/' . $popup->popup_image) }}" alt="현재 팝업 이미지" class="thumbnail-preview">
+                                                <button type="button" class="btn btn-sm btn-outline-danger mt-2" onclick="removeImagePreview('popup_image', 'popupImagePreview')">
+                                                    <i class="fas fa-trash"></i> 팝업 이미지 제거
+                                                </button>
+                                            </div>
+                                        @else
+                                            <div class="board-file-preview" id="popupImagePreview"></div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -288,4 +309,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script src="{{ asset('js/backoffice/popups.js') }}"></script>
+    <script src="{{ asset('js/popup.js') }}"></script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Board;
 use App\Models\Popup;
+use App\Models\Banner;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -40,8 +41,14 @@ class HomeController extends Controller
             })
             ->orderBy('created_at', 'desc')
             ->get();
+
+        // 활성화된 배너 조회
+        $banners = Banner::active()
+            ->inPeriod()
+            ->ordered()
+            ->get();
         
-        return view('home.index', compact('gNum', 'gName', 'sName', 'galleryPosts', 'noticePosts', 'popups'));
+        return view('home.index', compact('gNum', 'gName', 'sName', 'galleryPosts', 'noticePosts', 'popups', 'banners'));
     }
     
     /**

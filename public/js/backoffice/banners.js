@@ -2,6 +2,37 @@
  * 배너 관리 페이지 JavaScript
  */
 
+// 배너 타입 토글 기능
+function initBannerTypeToggle() {
+    const bannerTypeRadios = document.querySelectorAll('input[name="banner_type"]');
+    const imageFields = document.getElementById('image_fields');
+    const videoFields = document.getElementById('video_fields');
+    
+    if (!bannerTypeRadios.length || !imageFields || !videoFields) {
+        return;
+    }
+    
+    // 초기 상태 설정
+    toggleBannerTypeFields();
+    
+    // 라디오 버튼 변경 이벤트
+    bannerTypeRadios.forEach(radio => {
+        radio.addEventListener('change', toggleBannerTypeFields);
+    });
+    
+    function toggleBannerTypeFields() {
+        const selectedType = document.querySelector('input[name="banner_type"]:checked')?.value;
+        
+        if (selectedType === 'video') {
+            imageFields.style.display = 'none';
+            videoFields.style.display = 'block';
+        } else {
+            imageFields.style.display = 'block';
+            videoFields.style.display = 'none';
+        }
+    }
+}
+
 // Sortable.js 라이브러리 동적 로드
 function loadSortableLibrary() {
     return new Promise((resolve, reject) => {
@@ -22,6 +53,9 @@ function loadSortableLibrary() {
     });
 }
 document.addEventListener('DOMContentLoaded', function() {
+    // 배너 타입 토글 초기화
+    initBannerTypeToggle();
+    
     // Sortable.js 라이브러리 동적 로드
     loadSortableLibrary().then(() => {
         // 배너 드래그 앤 드롭 초기화 (배너 리스트 페이지용)
@@ -80,24 +114,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 const files = e.dataTransfer.files;
                 if (files.length > 0) {
                     const file = files[0];
-                    if (file.type.startsWith('image/')) {
+                    if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
                         input.files = files;
                         showImagePreview(file, preview, inputId, previewId);
                     } else {
-                        alert('이미지 파일만 업로드 가능합니다.');
+                        alert('이미지 또는 영상 파일만 업로드 가능합니다.');
                     }
                 }
             });
         }
     }
 
-    // 이미지 미리보기 표시
+    // 이미지/영상 미리보기 표시
     function showImagePreview(file, preview, inputId, previewId) {
         const reader = new FileReader();
         reader.onload = function(e) {
+            let mediaElement = '';
+            if (file.type.startsWith('video/')) {
+                mediaElement = `<video controls class="board-file-preview-img"><source src="${e.target.result}" type="${file.type}"></video>`;
+            } else {
+                mediaElement = `<img src="${e.target.result}" alt="미리보기" class="board-file-preview-img">`;
+            }
+            
             preview.innerHTML = `
                 <div class="board-file-preview-item">
-                    <img src="${e.target.result}" alt="미리보기" class="board-file-preview-img">
+                    ${mediaElement}
                     <div class="board-file-preview-info">
                         <span class="board-file-preview-name">${file.name}</span>
                         <span class="board-file-preview-size">${(file.size / 1024 / 1024).toFixed(2)} MB</span>
@@ -116,25 +157,31 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 모바일 이미지 미리보기 설정
     setupImagePreview('mobile_image', 'mobileImagePreview');
+    
+    // 영상 파일 미리보기 설정
+    setupImagePreview('video_file', 'videoFilePreview');
 });
 
 // 이미지 미리보기 제거 함수 (전역 함수)
-function removeImagePreview(inputId, previewId) {
+window.removeImagePreview = function(inputId, previewId) {
     const input = document.getElementById(inputId);
     const preview = document.getElementById(previewId);
     
     if (input) input.value = '';
     if (preview) preview.innerHTML = '';
     
-    // 서버에 이미지 제거 요청을 위한 숨겨진 필드 설정
+    // 서버에 파일 제거 요청을 위한 숨겨진 필드 설정
     if (inputId === 'desktop_image') {
         const removeField = document.getElementById('remove_desktop_image');
         if (removeField) removeField.value = '1';
     } else if (inputId === 'mobile_image') {
         const removeField = document.getElementById('remove_mobile_image');
         if (removeField) removeField.value = '1';
+    } else if (inputId === 'video_file') {
+        const removeField = document.getElementById('remove_video_file');
+        if (removeField) removeField.value = '1';
     }
-}
+};
 
 // 배너 드래그 앤 드롭 초기화 (배너 리스트 페이지용)
 function initBannerSortable() {

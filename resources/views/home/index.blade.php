@@ -5,18 +5,34 @@
 
 	<div class="mvisual_wrap">
 		<div class="mvisual">
-			<img src="{{ asset('images/mvisual01.jpg') }}" alt="image">
-			<div class="video">
-				<video width="100%" height="100%" autoplay muted poster="{{ asset('images/mvisual02.jpg') }}">
-					<source src="{{ asset('video/mvisual02.mp4') }}" type="video/mp4">
-					해당 브라우저에서는 영상이 나오지 않습니다.
-				</video>
-			</div>
+			@foreach($banners as $banner)
+				@if($banner->banner_type === 'image')
+					<div class="banner-slide">
+						<img src="{{ asset('storage/' . $banner->desktop_image) }}" alt="{{ $banner->title }}">
+					</div>
+				@elseif($banner->banner_type === 'video')
+					<div class="banner-slide video">
+						<video width="100%" height="100%" autoplay muted 
+							   data-duration="{{ $banner->video_duration ?? 5 }}">
+							<source src="{{ asset('storage/' . $banner->video_file) }}" type="video/mp4">
+							해당 브라우저에서는 영상이 나오지 않습니다.
+						</video>
+					</div>
+				@endif
+			@endforeach
 		</div>
 		<div class="abso_box">
 			<div class="mvisual_txt">
-				<div class="box"><p>미래의 가치를 함께 만드는</p><div class="tit"><strong>VALUE NO.1</strong><span>SOLUTION PROVIDER</span></div></div>
-				<div class="box"><!-- <p>최고의 경쟁력을 가진</p><div class="tit"><strong>VALUE NO.1</strong><span>SOLUTION PROVIDER</span></div> --></div>
+				@foreach($banners as $banner)
+					<div class="box">
+						@if($banner->sub_text)
+							<p>{{ $banner->sub_text }}</p>
+						@endif
+						@if($banner->main_text)
+							<div class="tit"><strong>{{ $banner->main_text }}</strong></div>
+						@endif
+					</div>
+				@endforeach
 			</div>
 			<div class="navi">
 				<div class="paging"></div>
@@ -222,7 +238,9 @@ $(document).ready (function () {
 			currentVideo.play().catch(() => {});
 
 			const startVideoAnimation = () => {
-				const duration = currentVideo.duration || 5;
+				// data-duration 속성에서 설정된 재생 시간 사용
+				const customDuration = currentVideo.getAttribute('data-duration');
+				const duration = customDuration ? parseInt(customDuration) : (currentVideo.duration || 5);
 				startDotAnimation(duration);
 			};
 
@@ -233,7 +251,17 @@ $(document).ready (function () {
 				currentVideo.onloadedmetadata = startVideoAnimation;
 			}
 
-			// 영상 끝나면 다음 슬라이드
+			// 영상 끝나면 다음 슬라이드 (설정된 시간이 영상 길이보다 짧으면 강제로 넘어감)
+			const customDuration = currentVideo.getAttribute('data-duration');
+			if (customDuration) {
+				const duration = parseInt(customDuration);
+				window.slideTimer = setTimeout(() => {
+					if (!$(".mvisual_wrap").hasClass("mv_pause")) {
+						$(".mvisual").slick('slickNext');
+					}
+				}, duration * 1000);
+			}
+			
 			currentVideo.onended = () => {
 				if (!$(".mvisual_wrap").hasClass("mv_pause")) {
 					$(".mvisual").slick('slickNext');

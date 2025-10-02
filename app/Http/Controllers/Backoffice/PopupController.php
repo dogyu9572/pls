@@ -46,6 +46,11 @@ class PopupController extends Controller
             $query->where('popup_type', $request->popup_type);
         }
         
+        // 팝업표시타입 필터
+        if ($request->filled('popup_display_type')) {
+            $query->where('popup_display_type', $request->popup_display_type);
+        }
+        
         // 목록 개수 설정
         $perPage = $request->get('per_page', 10);
         $perPage = in_array($perPage, [10, 20, 50, 100]) ? $perPage : 10;
@@ -83,6 +88,7 @@ class PopupController extends Controller
             'popup_display_type' => 'nullable|in:normal,layer',
             'popup_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'popup_content' => 'nullable|string',
+            'remove_popup_image' => 'nullable|boolean',
             'is_active' => 'boolean',
             'sort_order' => 'nullable|integer|min:0',
         ]);
@@ -133,6 +139,8 @@ class PopupController extends Controller
      */
     public function update(Request $request, Popup $popup)
     {
+        \Log::info('팝업 수정 요청 시작', ['popup_id' => $popup->id, 'request_data' => $request->all()]);
+        
         $request->validate([
             'title' => 'required|string|max:255',
             'use_period' => 'boolean',
@@ -145,8 +153,10 @@ class PopupController extends Controller
             'url' => 'nullable|url',
             'url_target' => 'nullable|in:_self,_blank',
             'popup_type' => 'nullable|in:image,html',
+            'popup_display_type' => 'nullable|in:normal,layer',
             'popup_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'popup_content' => 'nullable|string',
+            'remove_popup_image' => 'nullable|boolean',
             'is_active' => 'boolean',
             'sort_order' => 'nullable|integer|min:0',
         ]);
@@ -163,11 +173,15 @@ class PopupController extends Controller
         }
         
         // 이미지 제거 처리
+        \Log::info('remove_popup_image 값:', ['value' => $request->remove_popup_image, 'has' => $request->has('remove_popup_image')]);
         if ($request->has('remove_popup_image') && $request->remove_popup_image) {
+            \Log::info('이미지 제거 처리 시작');
             if ($popup->popup_image) {
                 Storage::disk('public')->delete($popup->popup_image);
+                \Log::info('기존 이미지 파일 삭제됨:', ['path' => $popup->popup_image]);
             }
             $data['popup_image'] = null;
+            \Log::info('popup_image를 null로 설정');
         }
         
         // 기본값 설정

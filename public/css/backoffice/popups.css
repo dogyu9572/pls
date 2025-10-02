@@ -240,6 +240,7 @@
 }
 
 .popup-type,
+.popup-display-type,
 .popup-size,
 .popup-position,
 .popup-status,
@@ -251,6 +252,11 @@
     border-radius: 4px;
     background-color: #f8f9fa;
     color: #6c757d;
+}
+
+.popup-display-type {
+    background-color: #e3f2fd;
+    color: #1976d2;
 }
 
 .popup-status.active {

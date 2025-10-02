@@ -50,6 +50,14 @@
                                 </select>
                             </div>
                             <div class="filter-group">
+                                <label for="popup_display_type" class="filter-label">표시타입</label>
+                                <select id="popup_display_type" name="popup_display_type" class="filter-select">
+                                    <option value="">전체</option>
+                                    <option value="normal" {{ request('popup_display_type') == 'normal' ? 'selected' : '' }}>일반팝업</option>
+                                    <option value="layer" {{ request('popup_display_type') == 'layer' ? 'selected' : '' }}>레이어팝업</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
                                 <label for="start_date" class="filter-label">게시기간</label>
                                 <div class="date-range">
                                     <input type="date" id="start_date" name="start_date" class="filter-input"
@@ -135,6 +143,7 @@
                                         <h6 class="popup-title">{{ $popup->title }}</h6>
                                         <div class="popup-meta">
                                             <span class="popup-type">{{ $popup->popup_type === 'image' ? '이미지' : 'HTML' }}</span>
+                                            <span class="popup-display-type">{{ $popup->popup_display_type === 'normal' ? '일반팝업' : '레이어팝업' }}</span>
                                             <span class="popup-size">{{ $popup->width }}x{{ $popup->height }}px</span>
                                             <span class="popup-position">위치: {{ $popup->position_top }}, {{ $popup->position_left }}</span>
                                         </div>

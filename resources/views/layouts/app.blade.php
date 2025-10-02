@@ -218,11 +218,15 @@
         </script>
     @else
         <!-- 레이어팝업 (오버레이) -->
+        @php
+            $cookieName = 'popup_hide_' . $popup->id;
+            $isHidden = isset($_COOKIE[$cookieName]) && $_COOKIE[$cookieName] === '1';
+        @endphp
         <div class="popup-layer popup-fixed" 
              id="popup-{{ $popup->id }}"
              data-popup-id="{{ $popup->id }}"
              data-display-type="layer"
-             style="position: absolute !important; width: {{ $popup->width }}px; height: auto; top: {{ $popup->position_top }}px; left: {{ $popup->position_left }}px; z-index: 99999;">
+             style="position: absolute !important; width: {{ $popup->width }}px; height: auto; top: {{ $popup->position_top }}px; left: {{ $popup->position_left }}px; z-index: 99999; {{ $isHidden ? 'display: none;' : '' }}">
             
             
             <div class="popup-body">
@@ -250,6 +254,9 @@
     @endif
 @endforeach
 @endif
+
+<!-- 팝업 JavaScript -->
+<script src="{{ asset('js/popup.js') }}"></script>
 
 </body>
 </html>

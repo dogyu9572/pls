@@ -121,13 +121,32 @@
                             </div>
                             <div class="banner-info">
                                 <div class="banner-preview">
-                                    @if($banner->desktop_image)
-                                        <img src="{{ asset('storage/' . $banner->desktop_image) }}" alt="{{ $banner->title }}" class="banner-image">
-                                    @else
-                                        <div class="no-image">
-                                            <i class="fas fa-image"></i>
-                                            <span>이미지 없음</span>
+                                    @if($banner->banner_type === 'video')
+                                        @if($banner->video_file)
+                                            <video class="banner-video-thumbnail" muted>
+                                                <source src="{{ asset('storage/' . $banner->video_file) }}" type="video/mp4">
+                                            </video>
+                                        @else
+                                            <div class="no-image">
+                                                <i class="fas fa-video"></i>
+                                                <span>영상 없음</span>
+                                            </div>
+                                        @endif
+                                        <div class="video-overlay">
+                                            <i class="fas fa-play"></i>
+                                            @if($banner->video_duration)
+                                                <span class="video-duration">{{ $banner->video_duration }}초</span>
+                                            @endif
                                         </div>
+                                    @else
+                                        @if($banner->desktop_image)
+                                            <img src="{{ asset('storage/' . $banner->desktop_image) }}" alt="{{ $banner->title }}" class="banner-image">
+                                        @else
+                                            <div class="no-image">
+                                                <i class="fas fa-image"></i>
+                                                <span>이미지 없음</span>
+                                            </div>
+                                        @endif
                                     @endif
                                 </div>
                                 <div class="banner-details">
@@ -142,6 +161,9 @@
                                         <span class="banner-status {{ $banner->is_active ? 'active' : 'inactive' }}">
                                             {{ $banner->is_active ? '사용' : '숨김' }}
                                         </span>
+                                        <span class="banner-type {{ $banner->banner_type === 'video' ? 'video' : 'image' }}">
+                                            {{ $banner->banner_type === 'video' ? '영상' : '이미지' }}
+                                        </span>                                       
                                         <span class="banner-order">순서: {{ $banner->sort_order }}</span>
                                         @if($banner->use_period && $banner->start_date && $banner->end_date)
                                             <span class="banner-period">

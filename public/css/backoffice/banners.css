@@ -423,8 +423,8 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .board-file-preview-img {
-    width: 60px;
-    height: 60px;
+    width: 300px;
+    height: 200px;
     object-fit: cover;
     border-radius: 6px;
     margin-right: 15px;
@@ -561,4 +561,107 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
         flex-direction: column;
         gap: 8px;
     }
+}
+
+/* 영상 배너 스타일 */
+.banner-video-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* 폼 미리보기 영상 크기 조정 */
+.board-file-preview .banner-video-thumbnail {
+    width: 300px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: 4px;
+    pointer-events: none; /* 클릭 이벤트를 차단하지 않음 */
+}
+
+/* 배너 리스트에서 썸네일 영역에만 오버레이 표시 */
+.banner-preview {
+    position: relative;
+}
+
+.banner-item .video-overlay {
+    display: flex;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* 폼 미리보기와 홈페이지에서 오버레이 표시 */
+.board-file-preview .video-overlay,
+.mvisual .video-overlay {
+    display: flex;
+}
+
+.board-file-preview .banner-preview:hover .video-overlay,
+.mvisual .banner-preview:hover .video-overlay {
+    opacity: 1;
+}
+
+.video-overlay i {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.video-duration {
+    color: white;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* 배너 타입 표시 */
+.banner-type {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.banner-type.image {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.banner-type.video {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+}
+
+.banner-duration {
+    color: #666;
+    font-size: 12px;
+}
+
+
+/* 폼 섹션 토글 */
+.board-form-section {
+    transition: all 0.3s ease;
 }

@@ -182,7 +182,6 @@
                                         <span class="radio-text">레이어팝업</span>
                                     </label>
                                 </div>
-                                <small class="form-text text-muted">*일반팝업: 새창으로 열림, 레이어팝업: 현재 페이지에 오버레이로 표시</small>
                             </div>
                         </div>
                     </div>

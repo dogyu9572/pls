@@ -76,10 +76,17 @@ class BannerController extends Controller
             'desktop_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'mobile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video_url' => 'nullable|url',
+            'banner_type' => 'required|in:image,video',
+            'video_file' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10240',
+            'video_duration' => 'nullable|integer|min:1|max:300',
             'sort_order' => 'nullable|integer|min:0',
         ]);
 
-        $data = $request->all();
+        $data = $request->only([
+            'title', 'main_text', 'sub_text', 'url', 'url_target',
+            'start_date', 'end_date', 'use_period', 'is_active',
+            'banner_type', 'video_duration', 'sort_order'
+        ]);
         
         // 이미지 업로드 처리
         if ($request->hasFile('desktop_image')) {
@@ -89,6 +96,12 @@ class BannerController extends Controller
         if ($request->hasFile('mobile_image')) {
             $data['mobile_image'] = $request->file('mobile_image')->store('banners', 'public');
         }
+
+        // 영상 파일 업로드 처리
+        if ($request->hasFile('video_file')) {
+            $data['video_file'] = $request->file('video_file')->store('banners/videos', 'public');
+        }
+
 
         Banner::create($data);
 
@@ -130,10 +143,17 @@ class BannerController extends Controller
             'desktop_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'mobile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video_url' => 'nullable|url',
+            'banner_type' => 'required|in:image,video',
+            'video_file' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10240',
+            'video_duration' => 'nullable|integer|min:1|max:300',
             'sort_order' => 'nullable|integer|min:0',
         ]);
 
-        $data = $request->all();
+        $data = $request->only([
+            'title', 'main_text', 'sub_text', 'url', 'url_target',
+            'start_date', 'end_date', 'use_period', 'is_active',
+            'banner_type', 'video_duration', 'sort_order'
+        ]);
         
         // 이미지 제거 처리
         if ($request->input('remove_desktop_image') == '1') {
@@ -167,6 +187,25 @@ class BannerController extends Controller
             $data['mobile_image'] = $request->file('mobile_image')->store('banners', 'public');
         }
 
+        // 영상 파일 제거 처리
+        if ($request->input('remove_video_file') == '1') {
+            if ($banner->video_file) {
+                Storage::disk('public')->delete($banner->video_file);
+            }
+            $data['video_file'] = null;
+        }
+
+
+        // 영상 파일 업로드 처리
+        if ($request->hasFile('video_file')) {
+            // 기존 영상 파일 삭제
+            if ($banner->video_file) {
+                Storage::disk('public')->delete($banner->video_file);
+            }
+            $data['video_file'] = $request->file('video_file')->store('banners/videos', 'public');
+        }
+
+
         $banner->update($data);
 
         return redirect()->route('backoffice.banners.index')
@@ -184,6 +223,11 @@ class BannerController extends Controller
         }
         if ($banner->mobile_image) {
             Storage::disk('public')->delete($banner->mobile_image);
+        }
+
+        // 영상 파일 삭제
+        if ($banner->video_file) {
+            Storage::disk('public')->delete($banner->video_file);
         }
 
         $banner->delete();

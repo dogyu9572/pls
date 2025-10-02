@@ -25,6 +25,10 @@ return new class extends Migration
             $table->string('desktop_image')->nullable(); // 데스크톱 이미지
             $table->string('mobile_image')->nullable(); // 모바일 이미지
             $table->string('video_url')->nullable(); // 영상 URL
+            $table->enum('banner_type', ['image', 'video'])->default('image')->comment('배너 타입 (이미지/영상)');
+            $table->string('video_file')->nullable()->comment('영상 파일 경로');
+            $table->integer('video_duration')->nullable()->comment('영상 재생 시간(초)');
+            $table->string('video_poster')->nullable()->comment('영상 썸네일 이미지');
             $table->integer('sort_order')->default(0); // 배너순서
             $table->timestamps();
             $table->softDeletes(); // 소프트 삭제

@@ -22,6 +22,10 @@ class Banner extends Model
         'desktop_image',
         'mobile_image',
         'video_url',
+        'banner_type',
+        'video_file',
+        'video_duration',
+        'video_poster',
         'sort_order',
     ];
 
@@ -30,10 +34,12 @@ class Banner extends Model
         'is_active' => 'boolean',
         'start_date' => 'datetime',
         'end_date' => 'datetime',
+        'video_duration' => 'integer',
     ];
 
     protected $attributes = [
         'url_target' => '_self',
+        'banner_type' => 'image',
     ];
 
     /**
