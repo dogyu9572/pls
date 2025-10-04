@@ -52,20 +52,20 @@ class AdminMenuController extends BaseController
     /**
      * 메뉴 수정 폼 표시
      */
-    public function edit(AdminMenu $menu)
+    public function edit(AdminMenu $admin_menu)
     {
         $menus = AdminMenu::whereNull('parent_id')
-            ->where('id', '!=', $menu->id)
+            ->where('id', '!=', $admin_menu->id)
             ->orderBy('order')
-            ->get();
+            ->get();            
 
-        return $this->view('backoffice.menus.edit', compact('menu', 'menus'));
+        return $this->view('backoffice.menus.edit', compact('admin_menu', 'menus'));
     }
 
     /**
      * 메뉴 업데이트
      */
-    public function update(Request $request, AdminMenu $menu)
+    public function update(Request $request, AdminMenu $admin_menu)
     {
         $validated = $request->validate([
             'parent_id' => 'nullable|exists:admin_menus,id',
@@ -79,7 +79,7 @@ class AdminMenuController extends BaseController
         // is_active가 제출되지 않았으면 false로 설정
         $validated['is_active'] = $request->has('is_active');
 
-        $menu->update($validated);
+        $admin_menu->update($validated);
 
         return redirect()->route('backoffice.admin-menus.index')
             ->with('success', '메뉴가 성공적으로 수정되었습니다.');
@@ -88,9 +88,9 @@ class AdminMenuController extends BaseController
     /**
      * 메뉴 삭제
      */
-    public function destroy(AdminMenu $menu)
+    public function destroy(AdminMenu $admin_menu)
     {
-        $menu->delete();
+        $admin_menu->delete();
 
         return redirect()->route('backoffice.admin-menus.index')
             ->with('success', '메뉴가 성공적으로 삭제되었습니다.');
