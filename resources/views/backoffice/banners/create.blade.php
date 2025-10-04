@@ -211,7 +211,7 @@
                                                 <div class="board-file-input-content">
                                                     <i class="fas fa-video"></i>
                                                     <span class="board-file-input-text">영상 파일을 선택하거나 여기로 드래그하세요</span>
-                                                    <span class="board-file-input-subtext">MP4, AVI, MOV, WMV 파일만 가능 (최대 10MB)</span>
+                                                    <span class="board-file-input-subtext">MP4, AVI, MOV, WMV 파일만 가능 (최대 50MB)</span>
                                                 </div>
                                             </div>
                                             <div class="board-file-preview" id="videoFilePreview"></div>

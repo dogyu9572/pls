@@ -77,7 +77,7 @@ class BannerController extends Controller
             'mobile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video_url' => 'nullable|url',
             'banner_type' => 'required|in:image,video',
-            'video_file' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10240',
+            'video_file' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:51200',
             'video_duration' => 'nullable|integer|min:1|max:300',
             'sort_order' => 'nullable|integer|min:0',
         ]);
@@ -144,7 +144,7 @@ class BannerController extends Controller
             'mobile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video_url' => 'nullable|url',
             'banner_type' => 'required|in:image,video',
-            'video_file' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:10240',
+            'video_file' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:51200',
             'video_duration' => 'nullable|integer|min:1|max:300',
             'sort_order' => 'nullable|integer|min:0',
         ]);
