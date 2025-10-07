@@ -281,4 +281,94 @@ Route::prefix('information')->name('information.')->group(function () {
 - **기능**: 뉴스, 갤러리, 공지사항 등 게시글 관리
 - **지원 기능**: 썸네일, 첨부파일, 카테고리
 
+## 🚀 프로젝트 관리 및 배포 가이드
+
+### 📋 권장 개발 워크플로우
+- **로컬에서 작업 후 GitHub 자동 배포를 통한 배포를 권장합니다**
+- **GitHub Actions를 통한 자동 배포가 설정되어 있습니다**
+
+### 🔄 자동 배포 사용 방법
+
+#### 1. 로컬 개발 환경 설정
+```bash
+# 1. 프로젝트 클론
+git clone [저장소 URL]
+cd pls
+
+# 2. 의존성 설치
+composer install
+npm install
+
+# 3. 환경 설정
+cp .env.example .env
+php artisan key:generate
+```
+
+#### 2. 개발 워크플로우
+```bash
+# 1. 최신 코드 가져오기
+git pull origin main
+
+# 2. 새 브랜치 생성 (작업명으로)
+git checkout -b feature/작업명
+
+# 3. 파일 수정 후 커밋
+git add .
+git commit -m "feat: 작업 내용 설명"
+
+# 4. GitHub에 푸시
+git push origin feature/작업명
+
+# 5. GitHub에서 Pull Request 생성
+# 6. PR 승인 후 main 브랜치에 머지
+# 7. 자동으로 운영서버에 배포됨
+```
+
+### ⚠️ 운영서버 직접 수정 시 대응 방법
+
+#### 상황: 다른 팀원이 운영서버에서 직접 파일을 수정한 경우
+
+##### 1. 운영서버에서 Git 커밋 (권장)
+```bash
+# SSH로 운영서버 접속
+ssh user@서버주소
+
+# 운영서버에서 변경사항을 Git에 반영
+cd /path/to/project
+git add .
+git commit -m "feat: 운영서버에서 수정된 내용"
+git push origin main
+```
+
+##### 2. 로컬에서 작업하기 전
+```bash
+# 로컬에서 최신 코드 받기
+git pull origin main
+
+# 그 다음에 작업 시작
+git checkout -b feature/내작업
+```
+
+##### 3. Git 충돌 발생 시 해결
+```bash
+# 충돌 파일 확인
+git status
+
+# 충돌 파일을 수동으로 해결
+# <<<<<<< HEAD (내 변경사항)
+# ======= (운영서버 변경사항)
+# >>>>>>> 운영서버버전
+
+# 충돌 해결 후
+git add .
+git commit -m "resolve: 충돌 해결"
+git push origin main
+```
+
+### 💡 권장사항
+- **가능하면 로컬에서 작업 후 자동 배포 사용**
+- **운영서버 직접 수정 시 반드시 Git에 커밋**
+- **작업 시작 전에 항상 `git pull origin main`으로 최신 상태 확인**
+- **팀 전체가 Git 사용법을 익히는 것이 최선**
+
 **프로젝트 버전**: Laravel 12.x
