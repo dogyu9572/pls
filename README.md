@@ -409,6 +409,10 @@ git push origin main
 
 **routes/web.php**
 ```php
+// Laravel 6 (퍼블리셔 환경)
+Route::get('/information/about-company', 'InformationController@aboutCompany');
+
+// Laravel 12 (개발자가 변환)
 Route::get('/information/about-company', [InformationController::class, 'aboutCompany']);
 ```
 
