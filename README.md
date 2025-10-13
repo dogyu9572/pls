@@ -372,3 +372,73 @@ git push origin main
 - **팀 전체가 Git 사용법을 익히는 것이 최선**
 
 **프로젝트 버전**: Laravel 12.x
+
+---
+
+## 📐 퍼블리셔 작업 가이드 (Laravel)
+
+### 작업 위치
+
+**1. CSS 파일**
+- 위치: `/public/css/styles.css`
+- 기존 `/pub/css/` → 변경 `/public/css/`
+
+**2. JS 파일**
+- 위치: `/public/js/com.js`
+- 기존 `/pub/js/` → 변경 `/public/js/`
+
+**3. 이미지 파일**
+- 위치: `/public/images/`
+- 기존 `/pub/images/` → 변경 `/public/images/`
+
+**4. HTML 파일 (Blade)**
+- 위치: `/resources/views/폴더명/파일명.blade.php`
+- 예시: `/resources/views/information/about-company.blade.php`
+- 확장자: `.blade.php` 필수
+
+**5. 경로 표기**
+- HTML 안에서: `/images/logo.jpg` (기존 `/pub/` 제거)
+
+---
+
+### 페이지 확인 방법
+
+**⚠️ 중요: Laravel은 HTML 파일만 만들어도 바로 접속 안 됨**
+
+#### 라우트 + 컨트롤러 설정 필요
+
+**routes/web.php**
+```php
+Route::get('/information/about-company', [InformationController::class, 'aboutCompany']);
+```
+
+**app/Http/Controllers/InformationController.php**
+```php
+public function aboutCompany()
+{
+    return view('information.about-company', [
+        'gNum' => '01',
+        'sNum' => '02',
+    ]);
+}
+```
+
+→ 위 설정 완료하면 `http://localhost/information/about-company` 접속 가능
+
+---
+
+### 작업 순서
+
+```
+1. 라우트/컨트롤러 세팅
+   - routes/web.php
+   - app/Http/Controllers/InformationController.php
+   
+2. Blade 파일 작업
+   - /resources/views/information/about-company.blade.php
+   - /public/css/styles.css
+   - /public/js/about-company.js
+   - /public/images/
+   
+3. 브라우저 확인
+```
