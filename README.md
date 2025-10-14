@@ -397,4 +397,4 @@ git push origin main
 - **작업 시작 전에 항상 `git pull origin main`으로 최신 상태 확인**
 - **팀 전체가 Git 사용법을 익히는 것이 최선**
 
-**프로젝트 버전**: Laravel 8.x
+**프로젝트 버전**: Laravel 12.x
