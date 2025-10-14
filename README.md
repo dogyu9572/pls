@@ -22,10 +22,7 @@ pls/
 
 ---
 
-## 📐 퍼블리셔 작업 가이드
-
-> **대상**: 기획자, 퍼블리셔, 디자이너  
-> **목적**: Laravel 기술 지식 없이도 페이지 수정 및 작업 가능
+## 📐 퍼블리싱 작업 가이드
 
 ### 1. 파일 구조
 
@@ -93,7 +90,6 @@ http://localhost/information/about-company
 **⚠️ 중요: HTML 파일만 만들어도 바로 접속 안 됨**
 
 - HTML 파일을 만들어도 라우트 설정 없이는 페이지 접속 불가
-- 개발자에게 라우트 추가 요청 필요
 - 라우트 파일 위치: `routes/web.php` (프론트엔드), `routes/backoffice.php` (관리자)
 
 ### 4. Blade 템플릿 기본 문법
@@ -125,21 +121,10 @@ http://localhost/information/about-company
 @endsection
 ```
 
-#### 조건문/반복문
-```blade
-@if($조건)
-    ...
-@endif
-
-@foreach($배열 as $항목)
-    {{ $항목 }}
-@endforeach
-```
-
 ### 5. 작업 순서
 
 ```
-1. 개발자에게 라우트/컨트롤러 세팅 요청
+1. 라우트/컨트롤러 세팅 요청
    - routes/web.php
    - app/Http/Controllers/해당컨트롤러.php
    
@@ -154,20 +139,9 @@ http://localhost/information/about-company
 
 ---
 
-## 🎯 Laravel Blade 핵심 문법 (개발자용)
+## 🎯 Laravel Blade 핵심 문법
 
-> **대상**: 개발자  
-> **목적**: Laravel Blade 템플릿 엔진의 상세 문법 및 활용법
-
-### 1. 기본 출력
-```blade
-{{ $변수명 }}                    {{-- 변수 출력 (HTML 이스케이프) --}}
-{!! $변수명 !!}                  {{-- 변수 출력 (HTML 허용) --}}
-{{ $name ?? '기본값' }}          {{-- 기본값 설정 --}}
-{{-- 주석 --}}
-```
-
-### 2. 조건문
+### 1. 조건문
 ```blade
 @if($조건) ... @endif
 @if($조건) ... @else ... @endif
@@ -176,36 +150,21 @@ http://localhost/information/about-company
 @empty($배열) ... @endempty      {{-- 배열 비어있는지 확인 --}}
 ```
 
-### 3. 반복문
+### 2. 반복문
 ```blade
 @foreach($배열 as $항목) ... @endforeach
 @forelse($배열 as $항목) ... @empty ... @endforelse
 @for($i=0; $i<10; $i++) ... @endfor
 ```
 
-### 4. 파일 포함
+### 3. 파일 포함
 ```blade
 @include('components.header')     {{-- 헤더/푸터 포함 --}}
 @include('components.footer')
 @include('components.sidebar', ['data' => $data])  {{-- 데이터 전달 --}}
 ```
 
-### 5. 에셋 파일 연결
-```blade
-{{ asset('css/styles.css') }}    {{-- CSS/JS/이미지 --}}
-{{ asset('storage/' . $image) }} {{-- 업로드 파일 --}}
-<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-<script src="{{ asset('js/app.js') }}"></script>
-```
-
-### 6. 라우트 연결
-```blade
-{{ route('home') }}              {{-- 라우트 URL --}}
-{{ route('posts.show', $id) }}   {{-- 파라미터 있는 라우트 --}}
-<a href="{{ route('home') }}">홈</a>
-```
-
-### 7. 레이아웃 상속
+### 4. 레이아웃 상속 (고급)
 ```blade
 {{-- 페이지에서 레이아웃 상속 --}}
 @extends('layouts.app')          {{-- 레이아웃 상속 --}}
@@ -249,7 +208,7 @@ http://localhost/information/about-company
 - **페이지 내용**: `resources/views/각페이지.blade.php`
 - **컴포넌트**: `resources/views/components/pagination.blade.php` (페이지네이션 등)
 
-### 8. 폼과 CSRF
+### 5. 폼과 CSRF
 ```blade
 <form method="POST" action="{{ route('store') }}">
     @csrf                        {{-- CSRF 토큰 필수 --}}
@@ -258,25 +217,24 @@ http://localhost/information/about-company
 </form>
 ```
 
-### 9. 에러 처리
+### 6. 에러 처리
 ```blade
 @error('field') {{ $message }} @enderror
 @if($errors->any()) ... @endif
 <input value="{{ old('name') }}">  {{-- 이전 입력값 --}}
 ```
 
-### 10. 유용한 헬퍼
+### 7. 유용한 헬퍼
 ```blade
 {{ $date->format('Y-m-d') }}     {{-- 날짜 포맷 --}}
 {{ Str::limit($text, 100) }}     {{-- 텍스트 자르기 --}}
 {{ number_format($price) }}      {{-- 숫자 포맷 --}}
 ```
 
-### 11. 라우트 작성 방법 (Laravel 8+)
+### 8. 라우트 작성 방법
 
 **routes/web.php**
 ```php
-// Laravel 8+ (배열 방식으로 변환 필요)
 Route::get('/information/about-company', [InformationController::class, 'aboutCompany']);
 ```
 
