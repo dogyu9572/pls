@@ -20,9 +20,16 @@ pls/
 └── database/              # 데이터베이스 관련 파일들
 ```
 
-## 🎨 퍼블리싱 작업 가이드
+---
 
-### 1. CSS 파일 구조
+## 📐 퍼블리셔 작업 가이드
+
+> **대상**: 기획자, 퍼블리셔, 디자이너  
+> **목적**: Laravel 기술 지식 없이도 페이지 수정 및 작업 가능
+
+### 1. 파일 구조
+
+#### CSS 파일
 ```
 public/css/
 ├── styles.css            # 메인 스타일시트 (PC 버전)
@@ -35,7 +42,7 @@ public/css/
 └── frontend/             # 프론트엔드 전용 스타일
 ```
 
-### 2. JavaScript 파일 구조
+#### JavaScript 파일
 ```
 public/js/
 ├── com.js                # 공통 JavaScript
@@ -47,7 +54,7 @@ public/js/
 └── frontend/             # 프론트엔드 전용 스크립트
 ```
 
-### 3. 이미지 파일 구조
+#### 이미지 파일
 ```
 public/images/
 ├── logo.svg              # 로고 파일
@@ -57,40 +64,16 @@ public/images/
 └── bg_*.jpg              # 배경 이미지들
 ```
 
-## 📄 페이지별 템플릿 구조
+### 2. 파일 찾기
 
-### 1. 메인 페이지
-- **파일 위치**: `resources/views/home/index.blade.php`
-- **설명**: 메인 배너, 비즈니스 소개, 뉴스, 공지사항 등
-
-### 2. 기업정보 페이지들
-- **디렉토리**: `resources/views/information/`
-- **포함 페이지**: CEO 인사말, 회사소개, 회사연혁, 품질/환경경영
-
-### 3. 사업영역 페이지들
-- **디렉토리**: `resources/views/business/`
-- **포함 페이지**: 수입자동차 PDI, 항만물류, 특장차 제조
-
-### 4. PR 센터 페이지들
-- **디렉토리**: `resources/views/pr-center/`
-- **포함 페이지**: 뉴스, 갤러리, 공지사항
-
-### 5. 관리자 페이지들
-- **디렉토리**: `resources/views/backoffice/`
-- **포함 페이지**: 대시보드, 배너 관리, 메뉴 관리, 게시판 관리
-
-## 🛠️ Laravel 파일 경로 찾기 가이드
-
-#### 1. URL 패턴 분석
+#### URL로 파일 위치 찾기
 ```
 http://localhost/information/about-company
 ↓
-URL 구조: /{카테고리}/{페이지명}
-↓
-파일 위치: resources/views/{카테고리}/{페이지명}.blade.php
+파일 위치: resources/views/information/about-company.blade.php
 ```
 
-#### 2. 실제 예시
+#### 실제 예시
 | URL | 수정할 파일 위치 |
 |-----|------------------|
 | `http://localhost/` | `resources/views/home/index.blade.php` |
@@ -99,62 +82,82 @@ URL 구조: /{카테고리}/{페이지명}
 | `http://localhost/pr-center/news` | `resources/views/pr-center/news.blade.php` |
 | `http://localhost/contact` | `resources/views/contact/index.blade.php` |
 
-#### 3. 라우트 파일에서 확인하는 방법
-```php
-{{-- routes/web.php 또는 routes/backoffice.php 파일 열기 --}}
-
-{{-- 예시: routes/web.php --}}
-Route::get('/information/about-company', [InformationController::class, 'aboutCompany'])
-    ->name('information.about-company');
-
-{{-- URL 패턴: /information/about-company --}}
-{{-- 컨트롤러: InformationController@aboutCompany --}}
-{{-- 라우트명: information.about-company --}}
-{{-- 파일 위치: resources/views/information/about-company.blade.php --}}
-```
-
-#### 4. 라우트 파일 읽는 방법
-```php
-{{-- 기본 패턴 --}}
-Route::get('/경로', [컨트롤러::class, '메서드'])->name('라우트명');
-
-{{-- 실제 프로젝트 예시 (routes/web.php) --}}
-Route::get('/', [HomeController::class, 'index'])->name('home');
-{{-- URL: / → 파일: resources/views/home/index.blade.php --}}
-
-{{-- 그룹 라우트 (공통 경로) --}}
-Route::prefix('information')->name('information.')->group(function () {
-    Route::get('/about-company', [InformationController::class, 'aboutCompany'])->name('about-company');
-    Route::get('/ceo-message', [InformationController::class, 'ceoMessage'])->name('ceo-message');
-    Route::get('/history', [InformationController::class, 'history'])->name('history');
-});
-{{-- 결과: /information/about-company, /information/ceo-message, /information/history --}}
-
-```
-
-#### 5. 라우트 파일 위치
-- **프론트엔드 라우트**: `routes/web.php`
-- **관리자 라우트**: `routes/backoffice.php`
-- **API 라우트**: `routes/api.php`
-
-### 🎯 Laravel 특화 수정 포인트
-
-### 🔍 파일 찾기
-
-#### 1. 공통 레이아웃 파일
+#### 공통 파일 위치
 - **헤더/푸터**: `resources/views/layouts/app.blade.php`
-- **CSS/JS 연결**: `resources/views/layouts/app.blade.php` 상단
-
-#### 2. CSS/JS 파일 위치
 - **메인 CSS**: `public/css/styles.css` (PC)
 - **반응형 CSS**: `public/css/reactive.css` (모바일)
 - **공통 JS**: `public/js/com.js`
 
-#### 3. 이미지 파일 위치
-- **정적 이미지**: `public/images/`
-- **업로드 이미지**: `public/storage/`
+### 3. 페이지 접속 방법
 
-## 🎯 Laravel Blade 핵심 문법
+**⚠️ 중요: HTML 파일만 만들어도 바로 접속 안 됨**
+
+- HTML 파일을 만들어도 라우트 설정 없이는 페이지 접속 불가
+- 개발자에게 라우트 추가 요청 필요
+- 라우트 파일 위치: `routes/web.php` (프론트엔드), `routes/backoffice.php` (관리자)
+
+### 4. Blade 템플릿 기본 문법
+
+#### 변수 출력
+```blade
+{{ $변수명 }}                    {{-- 변수 출력 --}}
+{{ $name ?? '기본값' }}          {{-- 기본값 설정 --}}
+{{-- 주석 --}}
+```
+
+#### CSS/JS/이미지 연결
+```blade
+<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+<script src="{{ asset('js/com.js') }}"></script>
+<img src="{{ asset('images/logo.svg') }}" alt="로고">
+```
+
+#### 링크 연결
+```blade
+<a href="{{ route('home') }}">홈</a>
+```
+
+#### 레이아웃 상속
+```blade
+@extends('layouts.app')          {{-- 레이아웃 상속 --}}
+@section('content')
+    ... 페이지 내용 ...
+@endsection
+```
+
+#### 조건문/반복문
+```blade
+@if($조건)
+    ...
+@endif
+
+@foreach($배열 as $항목)
+    {{ $항목 }}
+@endforeach
+```
+
+### 5. 작업 순서
+
+```
+1. 개발자에게 라우트/컨트롤러 세팅 요청
+   - routes/web.php
+   - app/Http/Controllers/해당컨트롤러.php
+   
+2. Blade 파일 작업
+   - resources/views/폴더명/파일명.blade.php
+   - public/css/styles.css
+   - public/js/파일명.js
+   - public/images/
+   
+3. 브라우저 확인
+```
+
+---
+
+## 🎯 Laravel Blade 핵심 문법 (개발자용)
+
+> **대상**: 개발자  
+> **목적**: Laravel Blade 템플릿 엔진의 상세 문법 및 활용법
 
 ### 1. 기본 출력
 ```blade
@@ -269,6 +272,27 @@ Route::prefix('information')->name('information.')->group(function () {
 {{ number_format($price) }}      {{-- 숫자 포맷 --}}
 ```
 
+### 11. 라우트 작성 방법 (Laravel 8+)
+
+**routes/web.php**
+```php
+// Laravel 8+ (배열 방식으로 변환 필요)
+Route::get('/information/about-company', [InformationController::class, 'aboutCompany']);
+```
+
+**app/Http/Controllers/InformationController.php**
+```php
+public function aboutCompany()
+{
+    return view('information.about-company', [
+        'gNum' => '01',
+        'sNum' => '02',
+    ]);
+}
+```
+
+---
+
 ## 🔧 관리자 페이지 가이드
 
 ### 1. 메뉴 관리
@@ -280,6 +304,8 @@ Route::prefix('information')->name('information.')->group(function () {
 - **경로**: `/backoffice/board-posts`
 - **기능**: 뉴스, 갤러리, 공지사항 등 게시글 관리
 - **지원 기능**: 썸네일, 첨부파일, 카테고리
+
+---
 
 ## 🚀 프로젝트 관리 및 배포 가이드
 
@@ -371,78 +397,4 @@ git push origin main
 - **작업 시작 전에 항상 `git pull origin main`으로 최신 상태 확인**
 - **팀 전체가 Git 사용법을 익히는 것이 최선**
 
-**프로젝트 버전**: Laravel 12.x
-
----
-
-## 📐 퍼블리셔 작업 가이드 (Laravel)
-
-### 작업 위치
-
-**1. CSS 파일**
-- 위치: `/public/css/styles.css`
-- 기존 `/pub/css/` → 변경 `/public/css/`
-
-**2. JS 파일**
-- 위치: `/public/js/com.js`
-- 기존 `/pub/js/` → 변경 `/public/js/`
-
-**3. 이미지 파일**
-- 위치: `/public/images/`
-- 기존 `/pub/images/` → 변경 `/public/images/`
-
-**4. HTML 파일 (Blade)**
-- 위치: `/resources/views/폴더명/파일명.blade.php`
-- 예시: `/resources/views/information/about-company.blade.php`
-- 확장자: `.blade.php` 필수
-
-**5. 경로 표기**
-- HTML 안에서: `/images/logo.jpg` (기존 `/pub/` 제거)
-
----
-
-### 페이지 확인 방법
-
-**⚠️ 중요: Laravel은 HTML 파일만 만들어도 바로 접속 안 됨**
-
-#### 라우트 + 컨트롤러 설정 필요
-
-**routes/web.php**
-```php
-// Laravel 6 (퍼블리셔 환경)
-Route::get('/information/about-company', 'InformationController@aboutCompany');
-
-// Laravel 12 (개발자가 변환)
-Route::get('/information/about-company', [InformationController::class, 'aboutCompany']);
-```
-
-**app/Http/Controllers/InformationController.php**
-```php
-public function aboutCompany()
-{
-    return view('information.about-company', [
-        'gNum' => '01',
-        'sNum' => '02',
-    ]);
-}
-```
-
-→ 위 설정 완료하면 `http://localhost/information/about-company` 접속 가능
-
----
-
-### 작업 순서
-
-```
-1. 라우트/컨트롤러 세팅
-   - routes/web.php
-   - app/Http/Controllers/InformationController.php
-   
-2. Blade 파일 작업
-   - /resources/views/information/about-company.blade.php
-   - /public/css/styles.css
-   - /public/js/about-company.js
-   - /public/images/
-   
-3. 브라우저 확인
-```
+**프로젝트 버전**: Laravel 8.x
