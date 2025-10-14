@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title'); // 배너제목
             $table->string('main_text')->nullable(); // 메인텍스트
             $table->string('sub_text')->nullable(); // 서브텍스트
+            $table->string('sub_text2')->nullable(); // 서브텍스트2
             $table->string('url')->nullable(); // URL
             $table->enum('url_target', ['_self', '_blank'])->default('_self'); // 현재창/새창
             $table->datetime('start_date')->nullable(); // 게시 시작일

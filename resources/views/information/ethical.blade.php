@@ -47,7 +47,7 @@
 			<div class="btns flex_center">
 				<a href="{{ route('terms.ethic') }}" class="btn_line flex_center">피엘에스 윤리규범</a>
 				<a href="{{ route('terms.internal-reporting') }}" class="btn_line flex_center">내부신고제도 운영규정</a>
-				<a href="mailto:ethics@plscorp.co.kr" class="btn_mail flex_center">PLS 제보하기</a>
+				<a href="mailto:{{ $reportingEmail }}" class="btn_mail flex_center">PLS 제보하기</a>
 			</div>
 		</div>
 	</div>

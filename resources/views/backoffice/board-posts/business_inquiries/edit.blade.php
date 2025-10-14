@@ -70,12 +70,12 @@
                         <div class="col-md-6">
                             <div class="board-form-group">
                                 <label for="custom_field_pdi_mail" class="board-form-label">MAIL <span class="required">*</span></label>
-                                <input type="email" 
+                                <input type="text" 
                                        class="board-form-control" 
                                        id="custom_field_pdi_mail" 
                                        name="custom_field_pdi_mail" 
                                        value="{{ old('custom_field_pdi_mail', $customFields['pdi_mail'] ?? '') }}"
-                                       placeholder="이메일을 입력하세요"
+                                       placeholder="이메일을 입력하세요 (예: jdyeo@plscorp.co.kr | 66852001@plscorp.co.kr)"
                                        required>
                             </div>
                         </div>
@@ -101,12 +101,12 @@
                         <div class="col-md-6">
                             <div class="board-form-group">
                                 <label for="custom_field_logistics_mail" class="board-form-label">MAIL <span class="required">*</span></label>
-                                <input type="email" 
+                                <input type="text" 
                                        class="board-form-control" 
                                        id="custom_field_logistics_mail" 
                                        name="custom_field_logistics_mail" 
                                        value="{{ old('custom_field_logistics_mail', $customFields['logistics_mail'] ?? '') }}"
-                                       placeholder="이메일을 입력하세요"
+                                       placeholder="이메일을 입력하세요 (예: jdyeo@plscorp.co.kr | 66852001@plscorp.co.kr)"
                                        required>
                             </div>
                         </div>
@@ -132,12 +132,12 @@
                         <div class="col-md-6">
                             <div class="board-form-group">
                                 <label for="custom_field_special_vehicle_mail" class="board-form-label">MAIL <span class="required">*</span></label>
-                                <input type="email" 
+                                <input type="text" 
                                        class="board-form-control" 
                                        id="custom_field_special_vehicle_mail" 
                                        name="custom_field_special_vehicle_mail" 
                                        value="{{ old('custom_field_special_vehicle_mail', $customFields['special_vehicle_mail'] ?? '') }}"
-                                       placeholder="이메일을 입력하세요"
+                                       placeholder="이메일을 입력하세요 (예: jdyeo@plscorp.co.kr | 66852001@plscorp.co.kr)"
                                        required>
                             </div>
                         </div>

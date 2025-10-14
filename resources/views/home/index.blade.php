@@ -28,9 +28,14 @@
 						@if($banner->sub_text)
 							<p>{{ $banner->sub_text }}</p>
 						@endif
-						@if($banner->main_text)
-							<div class="tit"><strong>{{ $banner->main_text }}</strong></div>
-						@endif
+						<div class="tit">
+							@if($banner->main_text)
+								<strong>{{ $banner->main_text }}</strong>
+							@endif
+							@if($banner->sub_text2)
+								<span>{{ $banner->sub_text2 }}</span>
+							@endif
+						</div>
 					</div>
 				@endforeach
 			</div>
@@ -110,7 +115,7 @@
 
 	<div class="mcon mcon03 slide_arrow_type1">
 		<div class="inner">
-			<div class="mtit"><span>News</span><div class="tit">PLS의 다양한 소식을 <br/>빠르게 전달드립니다.</div><a href="{{ route('backoffice.board-posts.index', 'gallerys') }}" class="btn_more line">VIEW MORE</a></div>
+			<div class="mtit"><span>News</span><div class="tit">PLS의 다양한 소식을 <br/>빠르게 전달드립니다.</div><a href="{{ route('pr-center.news') }}" class="btn_more line">VIEW MORE</a></div>
 			<div class="mc03_slide slide_area">
 				@forelse($galleryPosts as $post)
 				<a href="{{ $post->url }}" class="box">
@@ -146,7 +151,7 @@
 
 	<div class="mcon mcon04">
 		<div class="inner">
-			<div class="mtit"><span>News</span><div class="tit">PLS의 <strong>공지사항</strong>을 <br/>확인하세요.</div><a href="{{ route('backoffice.board-posts.index', 'notices') }}" class="btn_more line">VIEW MORE</a></div>
+			<div class="mtit"><span>News</span><div class="tit">PLS의 <strong>공지사항</strong>을 <br/>확인하세요.</div><a href="{{ route('pr-center.announcements') }}" class="btn_more line">VIEW MORE</a></div>
 			<div class="list">
 				@forelse($noticePosts as $post)
 				<a href="{{ $post->url }}"><p>{{ $post->title }}</p><span class="date">{{ \Carbon\Carbon::parse($post->created_at)->format('Y.m.d') }}</span></a>

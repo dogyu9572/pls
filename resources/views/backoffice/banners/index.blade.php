@@ -150,13 +150,7 @@
                                     @endif
                                 </div>
                                 <div class="banner-details">
-                                    <h6 class="banner-title">{{ $banner->title }}</h6>
-                                    @if($banner->main_text)
-                                        <p class="banner-main-text">{{ $banner->main_text }}</p>
-                                    @endif
-                                    @if($banner->sub_text)
-                                        <p class="banner-sub-text">{{ $banner->sub_text }}</p>
-                                    @endif
+                                    <h6 class="banner-title">{{ $banner->title }}</h6>                                   
                                     <div class="banner-meta">
                                         <span class="banner-status {{ $banner->is_active ? 'active' : 'inactive' }}">
                                             {{ $banner->is_active ? '사용' : '숨김' }}

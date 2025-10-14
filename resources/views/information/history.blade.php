@@ -36,10 +36,9 @@
 											<div class="dots_list">
 												{!! $history->content !!}
 											</div>
-											@if($history->attachments && is_array(json_decode($history->attachments, true)) && count(json_decode($history->attachments, true)) > 0)
+											@if($history->attachments && is_array($history->attachments) && count($history->attachments) > 0)
 												@php
-													$attachments = json_decode($history->attachments, true);
-													$firstAttachment = $attachments[0];
+													$firstAttachment = $history->attachments[0];
 												@endphp
 												<div class="imgfit">
 													<img src="{{ asset('storage/' . $firstAttachment['path']) }}" alt="image">

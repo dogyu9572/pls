@@ -27,9 +27,13 @@ class TermsController extends Controller
      */
     public function email()
     {
+        $model = (new BoardPost)->setTableBySlug('email_rejection');
+        $emailRejection = $model->newQuery()->first();
+
         return view('terms.email', [
             'gNum' => '00',
-            'gName' => '이메일 무단수집 거부'
+            'gName' => '이메일 무단수집 거부',
+            'emailRejection' => $emailRejection
         ]);
     }
 

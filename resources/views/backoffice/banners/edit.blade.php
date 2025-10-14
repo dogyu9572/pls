@@ -50,11 +50,11 @@
                             @enderror
                         </div>
 
-                        <!-- 2. 메인텍스트, 서브텍스트 -->
+                        <!-- 2. 메인텍스트, 서브텍스트, 서브텍스트2 -->
                         <div class="board-form-row">
-                            <div class="board-form-col board-form-col-6">
+                            <div class="board-form-col board-form-col-4">
                                 <div class="board-form-group">
-                                    <label for="main_text" class="board-form-label">메인텍스트</label>
+                                    <label for="main_text" class="board-form-label">텍스트1</label>
                                     <input type="text" class="board-form-control @error('main_text') is-invalid @enderror" 
                                            id="main_text" name="main_text" value="{{ old('main_text', $banner->main_text) }}">
                                     @error('main_text')
@@ -63,12 +63,23 @@
                                 </div>
                             </div>
 
-                            <div class="board-form-col board-form-col-6">
+                            <div class="board-form-col board-form-col-4">
                                 <div class="board-form-group">
-                                    <label for="sub_text" class="board-form-label">서브텍스트</label>
+                                    <label for="sub_text" class="board-form-label">텍스트2</label>
                                     <input type="text" class="board-form-control @error('sub_text') is-invalid @enderror" 
                                            id="sub_text" name="sub_text" value="{{ old('sub_text', $banner->sub_text) }}">
                                     @error('sub_text')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="board-form-col board-form-col-4">
+                                <div class="board-form-group">
+                                    <label for="sub_text2" class="board-form-label">텍스트3</label>
+                                    <input type="text" class="board-form-control @error('sub_text2') is-invalid @enderror" 
+                                           id="sub_text2" name="sub_text2" value="{{ old('sub_text2', $banner->sub_text2) }}">
+                                    @error('sub_text2')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -143,12 +154,12 @@
                             <div class="board-radio-group">
                                 <div class="board-radio">
                                     <input type="radio" id="banner_type_image" name="banner_type" value="image" 
-                                           {{ old('banner_type', $banner->banner_type) == 'image' ? 'checked' : '' }}>
+                                           {{ old('banner_type', $banner->banner_type ?: 'image') == 'image' ? 'checked' : '' }}>
                                     <label for="banner_type_image">이미지</label>
                                 </div>
                                 <div class="board-radio">
                                     <input type="radio" id="banner_type_video" name="banner_type" value="video" 
-                                           {{ old('banner_type', $banner->banner_type) == 'video' ? 'checked' : '' }}>
+                                           {{ old('banner_type', $banner->banner_type ?: 'image') == 'video' ? 'checked' : '' }}>
                                     <label for="banner_type_video">영상</label>
                                 </div>
                             </div>
@@ -313,57 +324,4 @@
 
 @section('scripts')
 <script src="{{ asset('js/backoffice/banners.js') }}"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // 배너 타입 토글 초기화
-    const bannerTypeRadios = document.querySelectorAll('input[name="banner_type"]');
-    const imageFields = document.getElementById('image_fields');
-    const videoFields = document.getElementById('video_fields');
-    
-    if (!bannerTypeRadios.length || !imageFields || !videoFields) {
-        return;
-    }
-    
-    // 초기 상태 설정
-    toggleBannerTypeFields();
-    
-    // 라디오 버튼 변경 이벤트
-    bannerTypeRadios.forEach(radio => {
-        radio.addEventListener('change', toggleBannerTypeFields);
-    });
-    
-    function toggleBannerTypeFields() {
-        const selectedType = document.querySelector('input[name="banner_type"]:checked')?.value;
-        
-        if (selectedType === 'video') {
-            imageFields.style.display = 'none';
-            videoFields.style.display = 'block';
-        } else {
-            imageFields.style.display = 'block';
-            videoFields.style.display = 'none';
-        }
-    }
-    
-    // 파일 제거 함수 정의
-    window.removeImagePreview = function(inputId, previewId) {
-        const input = document.getElementById(inputId);
-        const preview = document.getElementById(previewId);
-        
-        if (input) input.value = '';
-        if (preview) preview.innerHTML = '';
-        
-        // 서버에 파일 제거 요청을 위한 숨겨진 필드 설정
-        if (inputId === 'desktop_image') {
-            const removeField = document.getElementById('remove_desktop_image');
-            if (removeField) removeField.value = '1';
-        } else if (inputId === 'mobile_image') {
-            const removeField = document.getElementById('remove_mobile_image');
-            if (removeField) removeField.value = '1';
-        } else if (inputId === 'video_file') {
-            const removeField = document.getElementById('remove_video_file');
-            if (removeField) removeField.value = '1';
-        }
-    };
-});
-</script>
 @endsection

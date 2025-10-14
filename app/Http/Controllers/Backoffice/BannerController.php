@@ -22,10 +22,22 @@ class BannerController extends Controller
         }
         
         // 게시기간 필터
-        if ($request->filled('start_date') && $request->filled('end_date')) {
-            $query->where('use_period', true)
-                  ->where('start_date', '>=', $request->start_date)
-                  ->where('end_date', '<=', $request->end_date);
+        if ($request->filled('start_date') || $request->filled('end_date')) {
+            $query->where('use_period', true);
+            
+            // 시작일만 입력: 해당 날짜 이후에 시작하는 배너
+            if ($request->filled('start_date') && !$request->filled('end_date')) {
+                $query->where('start_date', '>=', $request->start_date);
+            }
+            // 종료일만 입력: 해당 날짜 이전에 종료하는 배너
+            elseif (!$request->filled('start_date') && $request->filled('end_date')) {
+                $query->where('end_date', '<=', $request->end_date);
+            }
+            // 둘 다 입력: 검색 기간과 게시기간이 겹치는 배너
+            elseif ($request->filled('start_date') && $request->filled('end_date')) {
+                $query->where('start_date', '<=', $request->end_date)
+                      ->where('end_date', '>=', $request->start_date);
+            }
         }
         
         // 등록일 필터
@@ -67,6 +79,7 @@ class BannerController extends Controller
             'title' => 'required|string|max:255',
             'main_text' => 'nullable|string|max:255',
             'sub_text' => 'nullable|string|max:255',
+            'sub_text2' => 'nullable|string|max:255',
             'url' => 'nullable|url',
             'url_target' => 'nullable|in:_self,_blank',
             'start_date' => 'nullable|date',
@@ -83,10 +96,24 @@ class BannerController extends Controller
         ]);
 
         $data = $request->only([
-            'title', 'main_text', 'sub_text', 'url', 'url_target',
-            'start_date', 'end_date', 'use_period', 'is_active',
+            'title', 'main_text', 'sub_text', 'sub_text2', 'url', 'url_target',
+            'start_date', 'end_date', 'is_active',
             'banner_type', 'video_duration', 'sort_order'
         ]);
+        
+        // 체크박스 처리
+        $data['use_period'] = $request->has('use_period') ? true : false;
+        
+        // 게시기간 사용하지 않으면 날짜 데이터 제거
+        if (!$data['use_period']) {
+            $data['start_date'] = null;
+            $data['end_date'] = null;
+        }
+        
+        // 배너 타입 기본값 설정
+        if (empty($data['banner_type'])) {
+            $data['banner_type'] = 'image';
+        }
         
         // 이미지 업로드 처리
         if ($request->hasFile('desktop_image')) {
@@ -134,6 +161,7 @@ class BannerController extends Controller
             'title' => 'required|string|max:255',
             'main_text' => 'nullable|string|max:255',
             'sub_text' => 'nullable|string|max:255',
+            'sub_text2' => 'nullable|string|max:255',
             'url' => 'nullable|url',
             'url_target' => 'nullable|in:_self,_blank',
             'start_date' => 'nullable|date',
@@ -150,10 +178,24 @@ class BannerController extends Controller
         ]);
 
         $data = $request->only([
-            'title', 'main_text', 'sub_text', 'url', 'url_target',
-            'start_date', 'end_date', 'use_period', 'is_active',
+            'title', 'main_text', 'sub_text', 'sub_text2', 'url', 'url_target',
+            'start_date', 'end_date', 'is_active',
             'banner_type', 'video_duration', 'sort_order'
         ]);
+        
+        // 체크박스 처리
+        $data['use_period'] = $request->has('use_period') ? true : false;
+        
+        // 게시기간 사용하지 않으면 날짜 데이터 제거
+        if (!$data['use_period']) {
+            $data['start_date'] = null;
+            $data['end_date'] = null;
+        }
+        
+        // 배너 타입 기본값 설정
+        if (empty($data['banner_type'])) {
+            $data['banner_type'] = 'image';
+        }
         
         // 이미지 제거 처리
         if ($request->input('remove_desktop_image') == '1') {

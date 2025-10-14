@@ -119,11 +119,16 @@ class InformationController extends Controller
      */
     public function ethical()
     {
+        $model = (new BoardPost)->setTableBySlug('business_ethics');
+        $ethics = $model->newQuery()->first();
+        $customFields = $ethics ? $ethics->getCustomFieldsArray() : [];
+
         return view('information.ethical', [
             'gNum' => '01',
             'sNum' => '06',
             'gName' => '기업정보',
-            'sName' => '윤리경영'
+            'sName' => '윤리경영',
+            'reportingEmail' => $customFields['email'] ?? ''
         ]);
     }
 }

@@ -13,6 +13,7 @@ class Banner extends Model
         'title',
         'main_text',
         'sub_text',
+        'sub_text2',
         'url',
         'url_target',
         'start_date',

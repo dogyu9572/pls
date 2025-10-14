@@ -65,11 +65,13 @@
 		</div>
 		<div class="partner_list marquee_list">
 			<div class="slide">
-				@foreach($brands as $brand)
-					@if($brand->thumbnail)
-						<img src="{{ asset('storage/' . $brand->thumbnail) }}" alt="{{ $brand->title }}">
-					@endif
-				@endforeach
+				@for($i = 0; $i < 3; $i++)
+					@foreach($brands as $brand)
+						@if($brand->thumbnail)
+							<img src="{{ asset('storage/' . $brand->thumbnail) }}" alt="{{ $brand->title }}">
+						@endif
+					@endforeach
+				@endfor
 			</div>
 		</div>
 	</div>
@@ -128,8 +130,9 @@
 		let paused = false;
 
 		function calcWidths() {
+			// 전체 너비의 1/3을 계산 (데이터가 3번 복제되어 있으므로)
 			const total = $slide[0].scrollWidth;
-			singleWidth = total;
+			singleWidth = total / 3;
 		}
 
 		$(window).on('load resize', function() {
@@ -146,8 +149,9 @@
 
 			if (!paused && singleWidth > 0) {
 				pos -= speed * dt;
+				// 1/3 지점에 도달하면 처음으로 리셋
 				if (Math.abs(pos) >= singleWidth) {
-					pos += singleWidth;
+					pos = 0;
 				}
 				$slide.css('transform', 'translateX(' + Math.round(pos) + 'px)');
 			}
