@@ -92,6 +92,26 @@ http://localhost/information/about-company
 - HTML 파일을 만들어도 라우트 설정 없이는 페이지 접속 불가
 - 라우트 파일 위치: `routes/web.php` (프론트엔드), `routes/backoffice.php` (관리자)
 
+#### 라우트 설정 예시
+
+**routes/web.php**
+```php
+Route::get('/information/about-company', [InformationController::class, 'aboutCompany']);
+```
+
+**app/Http/Controllers/InformationController.php**
+```php
+public function aboutCompany()
+{
+    return view('information.about-company', [
+        'gNum' => '01',
+        'sNum' => '02',
+    ]);
+}
+```
+
+→ 위 설정 완료하면 `http://localhost/information/about-company` 접속 가능
+
 ### 4. Blade 템플릿 기본 문법
 
 #### 변수 출력
@@ -229,24 +249,6 @@ http://localhost/information/about-company
 {{ $date->format('Y-m-d') }}     {{-- 날짜 포맷 --}}
 {{ Str::limit($text, 100) }}     {{-- 텍스트 자르기 --}}
 {{ number_format($price) }}      {{-- 숫자 포맷 --}}
-```
-
-### 8. 라우트 작성 방법
-
-**routes/web.php**
-```php
-Route::get('/information/about-company', [InformationController::class, 'aboutCompany']);
-```
-
-**app/Http/Controllers/InformationController.php**
-```php
-public function aboutCompany()
-{
-    return view('information.about-company', [
-        'gNum' => '01',
-        'sNum' => '02',
-    ]);
-}
 ```
 
 ---
