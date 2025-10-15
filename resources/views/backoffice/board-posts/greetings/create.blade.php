@@ -44,8 +44,8 @@
                 @if($board->enable_sorting)
                 <div class="board-form-group">
                     <label for="sort_order" class="board-form-label">정렬 순서</label>
-                    <input type="number" class="board-form-control" id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}" min="0">
-                    <small class="board-form-text">숫자가 작을수록 위에 표시됩니다. (0이면 자동 정렬)</small>
+                    <input type="number" class="board-form-control" id="sort_order" name="sort_order" value="{{ old('sort_order', $nextSortOrder ?? 1) }}" min="0">
+                    <small class="board-form-text">숫자가 클수록 위에 표시됩니다. (0이면 자동으로 최상단에 등록)</small>
                 </div>
                 @endif
 

@@ -15,24 +15,25 @@
 		<div class="point" id="start"></div>
 		<div class="point" id="end"></div>
 		<div class="inner">
-			<ul class="years year2020">
-				<li class="on"><a href="#year2020">2020</a></li>
-				<li><a href="#year2010">2010</a></li>
-				<li><a href="#year2000">2000</a></li>
-				<li><a href="#year1990">1990</a></li>
+			@if(!empty($availableDecades))
+			<ul class="years year{{ $availableDecades[0] ?? 2020 }}">
+				@foreach($availableDecades as $index => $decade)
+				<li class="{{ $index === 0 ? 'on' : '' }}"><a href="#year{{ $decade }}">{{ $decade }}</a></li>
+				@endforeach
 			</ul>
+			@endif
 			<div class="list">
 				<div class="line"><div class="bar"></div></div>
 			
-				@foreach([2020, 2010, 2000, 1990] as $decade)
+				@foreach($availableDecades as $decade)
 					<div class="box">
 						<div class="point" id="year{{ $decade }}"></div>
 						<ul>
 							@if(isset($groupedByDecade[$decade]) && $groupedByDecade[$decade]->isNotEmpty())
 								@foreach($groupedByDecade[$decade] as $year => $histories)
-									@foreach($histories as $history)
-										<li>
-											<div class="year">{{ $year }}</div>
+									<li>
+										<div class="year">{{ $year }}</div>
+										@foreach($histories as $history)
 											<div class="dots_list">
 												{!! $history->content !!}
 											</div>
@@ -44,8 +45,8 @@
 													<img src="{{ asset('storage/' . $firstAttachment['path']) }}" alt="image">
 												</div>
 											@endif
-										</li>
-									@endforeach
+										@endforeach
+									</li>
 								@endforeach
 							@endif
 						</ul>

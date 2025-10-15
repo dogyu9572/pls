@@ -20,11 +20,7 @@
 			@forelse($posts as $post)
 			<a href="{{ route('pr-center.news.show', $post->id) }}" class="{{ $post->is_new ? 'new' : '' }}">
 				<span class="imgfit">
-					@if($post->thumbnail)
-						<img src="{{ asset('storage/' . $post->thumbnail) }}" alt="{{ $post->title }}">
-					@else
-						<img src="{{ asset('images/img_news_sample.jpg') }}" alt="{{ $post->title }}">
-					@endif
+					<img src="{{ $post->thumbnail ? asset('storage/' . $post->thumbnail) : asset('images/default.jpg') }}" alt="{{ $post->title }}">
 				</span>
 				<span class="txt">
 					<p>{{ Str::limit($post->title, 50) }}</p>

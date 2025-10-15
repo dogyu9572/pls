@@ -131,15 +131,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($post->thumbnail)
-                                            <img src="{{ asset('storage/' . $post->thumbnail) }}" 
-                                                 alt="썸네일" 
-                                                 class="gallery-thumbnail-small"
-                                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
-                                            <i class="fas fa-image text-muted" style="display: none;"></i>
-                                        @else
-                                            <i class="fas fa-image text-muted"></i>
-                                        @endif
+                                        <img src="{{ $post->thumbnail ? asset('storage/' . $post->thumbnail) : asset('images/default.jpg') }}" 
+                                             alt="썸네일" 
+                                             class="gallery-thumbnail-small">
                                     </td>
                                     <td>
                                         {{ $post->title }}

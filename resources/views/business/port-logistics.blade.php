@@ -89,9 +89,7 @@
 			<div class="slide">
 				@for($i = 0; $i < 3; $i++)
 					@foreach($partners as $partner)
-						@if($partner->thumbnail)
-							<img src="{{ asset('storage/' . $partner->thumbnail) }}" alt="{{ $partner->title }}">
-						@endif
+						<img src="{{ $partner->thumbnail ? asset('storage/' . $partner->thumbnail) : asset('images/default.jpg') }}" alt="{{ $partner->title }}">
 					@endforeach
 				@endfor
 			</div>

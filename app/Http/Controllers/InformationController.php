@@ -50,14 +50,33 @@ class InformationController extends Controller
             ->orderBy('category', 'desc')
             ->get();
 
-        // 10년 단위 범위로 그룹화 (하드코딩된 범위 사용)
-        $decadeRanges = [
-            2020 => ['start' => 2020, 'end' => 2029],
-            2010 => ['start' => 2010, 'end' => 2019],
-            2000 => ['start' => 2000, 'end' => 2009],
-            1990 => ['start' => 1990, 'end' => 1999],
-        ];
+        // 실제 데이터가 있는 연도 범위 확인
+        if ($histories->isEmpty()) {
+            return view('information.history', [
+                'gNum' => '01',
+                'sNum' => '03',
+                'gName' => '기업정보',
+                'sName' => '회사연혁',
+                'groupedByDecade' => [],
+                'availableDecades' => []
+            ]);
+        }
 
+        // 게시글의 연도를 10년 단위로 변환하여 수집
+        $decades = $histories->map(function($item) {
+            return floor($item->category / 10) * 10;
+        })->unique()->sort()->reverse()->values();
+
+        // 10년 단위 범위 동적 생성
+        $decadeRanges = [];
+        foreach ($decades as $decade) {
+            $decadeRanges[$decade] = [
+                'start' => $decade,
+                'end' => $decade + 9
+            ];
+        }
+
+        // 10년 단위로 그룹화
         $groupedByDecade = [];
         foreach ($decadeRanges as $decade => $range) {
             $groupedByDecade[$decade] = $histories->filter(function($item) use ($range) {
@@ -70,7 +89,8 @@ class InformationController extends Controller
             'sNum' => '03',
             'gName' => '기업정보',
             'sName' => '회사연혁',
-            'groupedByDecade' => $groupedByDecade
+            'groupedByDecade' => $groupedByDecade,
+            'availableDecades' => $decades->toArray()
         ]);
     }
 

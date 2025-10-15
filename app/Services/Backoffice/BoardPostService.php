@@ -17,6 +17,15 @@ class BoardPostService
     }
 
     /**
+     * 다음 순서 번호 조회
+     */
+    public function getNextSortOrder(string $slug): int
+    {
+        $maxSortOrder = DB::table($this->getTableName($slug))->max('sort_order') ?? 0;
+        return $maxSortOrder + 1;
+    }
+
+    /**
      * 게시글 목록 조회
      */
     public function getPosts(string $slug, Request $request)
@@ -119,6 +128,13 @@ class BoardPostService
      */
     private function preparePostData(array $validated, Request $request, string $slug, $board): array
     {
+        // sort_order 설정: 사용자가 직접 입력한 값이 있으면 사용, 없으면 최대값 +1
+        $sortOrder = $request->input('sort_order', 0);
+        if ($sortOrder == 0) {
+            $maxSortOrder = DB::table($this->getTableName($slug))->max('sort_order') ?? 0;
+            $sortOrder = $maxSortOrder + 1;
+        }
+        
         return [
             'user_id' => null,
             'author_name' => '관리자',
@@ -130,7 +146,7 @@ class BoardPostService
             'attachments' => json_encode($this->handleAttachments($request, $slug)),
             'custom_fields' => $this->getCustomFieldsJson($request, $board),
             'view_count' => 0,
-            'sort_order' => $request->input('sort_order', 0),
+            'sort_order' => $sortOrder,
             'created_at' => now(),
             'updated_at' => now()
         ];

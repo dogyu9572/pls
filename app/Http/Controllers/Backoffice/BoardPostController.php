@@ -60,8 +60,11 @@ class BoardPostController extends Controller
             }
         }
         
+        // 다음 순서 번호 조회
+        $nextSortOrder = $this->boardPostService->getNextSortOrder($slug);
+        
         // 자동 생성된 뷰 사용
-        return view("backoffice.board-posts.{$slug}.create", compact('board'));
+        return view("backoffice.board-posts.{$slug}.create", compact('board', 'nextSortOrder'));
     }
 
     /**

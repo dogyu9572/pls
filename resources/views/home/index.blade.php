@@ -120,11 +120,7 @@
 				@forelse($galleryPosts as $post)
 				<a href="{{ $post->url }}" class="box">
 					<span class="imgfit">
-						@if($post->thumbnail)
-							<img src="{{ asset('storage/' . $post->thumbnail) }}" alt="{{ $post->title }}">
-						@else
-							<img src="{{ asset('images/img_mc03_sample.jpg') }}" alt="{{ $post->title }}">
-						@endif
+						<img src="{{ $post->thumbnail ? asset('storage/' . $post->thumbnail) : asset('images/default.jpg') }}" alt="{{ $post->title }}">
 					</span>
 					<span class="txt">
 						<p>{{ $post->title }}</p>

@@ -32,9 +32,7 @@
 			<div class="iso_area">
 				@forelse($certifications as $certification)
 					<div class="box">
-						@if($certification->thumbnail)
-							<div class="imgfit"><img src="{{ asset('storage/' . $certification->thumbnail) }}" alt="{{ $certification->title }}"></div>
-						@endif
+						<div class="imgfit"><img src="{{ $certification->thumbnail ? asset('storage/' . $certification->thumbnail) : asset('images/default.jpg') }}" alt="{{ $certification->title }}"></div>
 						<div class="con">
 							<img src="{{ asset('images/icon_iso.png') }}" alt="iso">
 							<div class="tt">{{ $certification->title }}</div>
