@@ -8,7 +8,14 @@
 			@foreach($banners as $banner)
 				@if($banner->banner_type === 'image')
 					<div class="banner-slide">
-						<img src="{{ asset('storage/' . $banner->desktop_image) }}" alt="{{ $banner->title }}">
+						<img src="{{ asset('storage/' . $banner->desktop_image) }}" 
+							 alt="{{ $banner->title }}" 
+							 class="banner-desktop-image">
+						@if($banner->mobile_image)
+							<img src="{{ asset('storage/' . $banner->mobile_image) }}" 
+								 alt="{{ $banner->title }}" 
+								 class="banner-mobile-image">
+						@endif
 					</div>
 				@elseif($banner->banner_type === 'video')
 					<div class="banner-slide video">

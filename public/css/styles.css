@@ -742,3 +742,11 @@
 	.terms_box .dots_list p {font-size:inherit; color:inherit; line-height:inherit;}
 	.terms_box .pl {padding-left:24px;}
 	.terms_box .pl li {padding-left:20px; text-indent:-20px;}
+
+/* 배너 반응형 이미지 */
+	.banner-slide .banner-mobile-image {display:none !important;}
+	.banner-slide .banner-desktop-image {display:block !important;}
+	@media screen and (max-width:768px) {
+		.banner-slide .banner-desktop-image {display:none !important;}
+		.banner-slide .banner-mobile-image {display:block !important;}
+	}
