@@ -29,12 +29,6 @@ class UpdateAdminRequest extends FormRequest
         }
 
         return [
-            'login_id' => [
-                'nullable',
-                'string',
-                'max:255',
-                Rule::unique('users')->ignore($adminId)
-            ],
             'name' => 'required|string|max:255',
             'email' => [
                 'required',
