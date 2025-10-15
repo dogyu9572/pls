@@ -207,10 +207,11 @@
 	.mcon02 {position:relative; z-index:2; height:350vh; overflow:hidden;}
 	/* .mcon02:before {content:""; position:absolute; top:100vh; left:0; width:100%; height:calc(100% - 100vh); background:#fff;} */
 	.mcon02 .positionbox {opacity:0; display:flex; flex-direction:column;}
-	.mcon02 .box {position:relative; width:100vw; height:100vh;}
+	.mcon02 .box {position:relative; width:100vw; height:100vh; pointer-events:none;}
 	.mcon02 .box .inbox {position:absolute; top:0; left:0; width:100%; height:100vh; background:no-repeat 50% 50% / cover; transition:.5s;}
 	.mcon02 .box.i2 .inbox,
 	.mcon02 .box.i3 .inbox {transform:translateX(100%) scale(1);}
+	.mcon02 .box.start {pointer-events:auto;}
 	.mcon02 .box.start .inbox {transform:translateX(0) scale(1);}
 	.mcon02 .box .inner {position:relative; height:100%; display:flex; align-items:flex-end; padding-bottom:130px;}
 	.mcon02 .box .txt {position:relative; display:flex; flex-direction:column; color:#fff; width:100%; opacity:0; transition:.2s linear;}
