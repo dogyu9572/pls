@@ -51,23 +51,30 @@ class AppServiceProvider extends ServiceProvider
                 } elseif ($user) {
                     // 일반 관리자는 권한 있는 메뉴만 표시
                     $accessibleMenuIds = $user->accessibleMenus()->pluck('admin_menus.id')->toArray();
+                    
+                    // 부모 메뉴 가져오기 (자식 메뉴는 eager loading하지 않음)
                     $mainMenus = \App\Models\AdminMenu::whereNull('parent_id')
                         ->where('is_active', true)
                         ->orderBy('order')
                         ->get()
                         ->filter(function ($menu) use ($accessibleMenuIds) {
-                            // 메뉴 자체에 권한이 있거나, 자식 메뉴 중 하나라도 권한이 있으면 표시
-                            if (in_array($menu->id, $accessibleMenuIds)) {
-                                return true;
-                            }
-                            // 자식 메뉴 필터링
-                            if ($menu->children && $menu->children->count() > 0) {
-                                $menu->children = $menu->children->filter(function ($child) use ($accessibleMenuIds) {
+                            // 부모 메뉴 자체에 권한이 있는지 확인
+                            $hasParentPermission = in_array($menu->id, $accessibleMenuIds);
+                            
+                            // 권한이 있는 자식 메뉴만 필터링하여 로드
+                            $filteredChildren = \App\Models\AdminMenu::where('parent_id', $menu->id)
+                                ->where('is_active', true)
+                                ->orderBy('order')
+                                ->get()
+                                ->filter(function ($child) use ($accessibleMenuIds) {
                                     return in_array($child->id, $accessibleMenuIds);
                                 });
-                                return $menu->children->count() > 0;
-                            }
-                            return false;
+                            
+                            // 자식 메뉴를 필터링된 것으로 교체
+                            $menu->setRelation('children', $filteredChildren);
+                            
+                            // 부모 메뉴 권한이 있거나, 권한 있는 자식 메뉴가 하나라도 있으면 표시
+                            return $hasParentPermission || $filteredChildren->count() > 0;
                         });
                 } else {
                     $mainMenus = collect();
