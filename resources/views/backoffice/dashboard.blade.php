@@ -14,10 +14,7 @@
             <p>{{ auth()->user()->name ?? '관리자' }}님, 환영합니다!</p>
             <p>{{ date('Y년 m월 d일') }} 백오피스 대시보드 현황입니다.</p>
         </div>
-        <div class="dashboard-actions">
-            <a href="{{ route('backoffice.setting.index') }}" class="dashboard-action-btn">
-                <i class="fas fa-cog"></i> 환경설정
-            </a>
+        <div class="dashboard-actions">           
             <a href="{{ url('/') }}" target="_blank" class="dashboard-action-btn">
                 <i class="fas fa-home"></i> 사이트 방문
             </a>
