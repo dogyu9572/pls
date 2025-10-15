@@ -184,6 +184,9 @@
 @section('scripts')
     <script src="{{ asset('js/backoffice/board-posts.js') }}"></script>
     @if($board->enable_sorting)
+        <script>
+            window.currentBoardSlug = '{{ $board->slug }}';
+        </script>
         <script src="{{ asset('js/backoffice/sorting.js') }}"></script>
     @endif
 @endsection

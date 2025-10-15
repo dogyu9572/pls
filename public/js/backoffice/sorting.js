@@ -112,7 +112,10 @@ class BoardSorting {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
-                body: JSON.stringify({ updates })
+                body: JSON.stringify({ 
+                    updates,
+                    board_slug: window.currentBoardSlug || null
+                })
             });
 
             if (!response.ok) {

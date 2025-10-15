@@ -7,6 +7,7 @@ use App\Http\Requests\BoardPostRequest;
 use App\Services\Backoffice\BoardPostService;
 use App\Models\Board;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class BoardPostController extends Controller
 {
@@ -212,23 +213,41 @@ class BoardPostController extends Controller
         $request->validate([
             'updates' => 'required|array',
             'updates.*.post_id' => 'required|integer',
-            'updates.*.sort_order' => 'required|integer|min:0'
+            'updates.*.sort_order' => 'required|integer|min:0',
+            'board_slug' => 'nullable|string'
         ]);
 
         try {
             $updates = $request->input('updates');
+            $boardSlug = $request->input('board_slug');
             
-            // 게시판별로 그룹화
+            // board_slug가 전송된 경우 해당 게시판에만 업데이트
+            if ($boardSlug) {
+                $tableName = 'board_' . $boardSlug;
+                
+                foreach ($updates as $update) {
+                    $affected = \DB::table($tableName)
+                        ->where('id', $update['post_id'])
+                        ->update(['sort_order' => $update['sort_order']]);
+                }
+                
+                return response()->json([
+                    'success' => true,
+                    'message' => '정렬 순서가 저장되었습니다.'
+                ]);
+            }
+            
+            // board_slug가 없는 경우 기존 방식 (모든 테이블 검색)
             $boardGroups = [];
             foreach ($updates as $update) {
                 $postId = $update['post_id'];
                 $sortOrder = $update['sort_order'];
                 
                 // 게시글 ID로 게시판 찾기 (동적 테이블에서 직접 찾기)
-                $boardSlug = $this->findBoardSlugByPostId($postId);
+                $foundSlug = $this->findBoardSlugByPostId($postId);
                 
-                if ($boardSlug) {
-                    $boardGroups[$boardSlug][] = [
+                if ($foundSlug) {
+                    $boardGroups[$foundSlug][] = [
                         'post_id' => $postId,
                         'sort_order' => $sortOrder
                     ];
