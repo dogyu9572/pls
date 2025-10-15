@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,7 +42,38 @@ class AppServiceProvider extends ServiceProvider
                 
                 // 사이드바 데이터 추가 (모든 페이지에서 공통 사용)
                 $view->with('siteTitle', \App\Models\Setting::getValue('site_title', '관리자'));
-                $view->with('mainMenus', \App\Models\AdminMenu::getMainMenus());
+                
+                // 사용자 권한에 따른 메뉴 필터링
+                $user = Auth::user();
+                if ($user && $user->isSuperAdmin()) {
+                    // 슈퍼 관리자는 모든 메뉴 표시
+                    $mainMenus = \App\Models\AdminMenu::getMainMenus();
+                } elseif ($user) {
+                    // 일반 관리자는 권한 있는 메뉴만 표시
+                    $accessibleMenuIds = $user->accessibleMenus()->pluck('id')->toArray();
+                    $mainMenus = \App\Models\AdminMenu::whereNull('parent_id')
+                        ->where('is_active', true)
+                        ->orderBy('order')
+                        ->get()
+                        ->filter(function ($menu) use ($accessibleMenuIds) {
+                            // 메뉴 자체에 권한이 있거나, 자식 메뉴 중 하나라도 권한이 있으면 표시
+                            if (in_array($menu->id, $accessibleMenuIds)) {
+                                return true;
+                            }
+                            // 자식 메뉴 필터링
+                            if ($menu->children && $menu->children->count() > 0) {
+                                $menu->children = $menu->children->filter(function ($child) use ($accessibleMenuIds) {
+                                    return in_array($child->id, $accessibleMenuIds);
+                                });
+                                return $menu->children->count() > 0;
+                            }
+                            return false;
+                        });
+                } else {
+                    $mainMenus = collect();
+                }
+                
+                $view->with('mainMenus', $mainMenus);
             });
         }
 
