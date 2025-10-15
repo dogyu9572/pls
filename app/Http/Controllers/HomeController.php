@@ -77,12 +77,19 @@ class HomeController extends Controller
                 ->limit($limit)
                 ->get()
                 ->map(function ($post) use ($boardSlug) {
+                    // 게시판 슬러그에 따라 사용자용 라우트 설정
+                    $url = match ($boardSlug) {
+                        'gallerys' => route('pr-center.news.show', $post->id),
+                        'notices' => route('pr-center.announcements.show', $post->id),
+                        default => route('backoffice.board-posts.show', [$boardSlug, $post->id])
+                    };
+                    
                     return (object) [
                         'id' => $post->id,
                         'title' => $post->title,
                         'created_at' => $post->created_at,
                         'thumbnail' => $post->thumbnail,
-                        'url' => route('backoffice.board-posts.show', [$boardSlug, $post->id])
+                        'url' => $url
                     ];
                 });
                 
