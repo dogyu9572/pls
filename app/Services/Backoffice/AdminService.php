@@ -126,6 +126,10 @@ class AdminService
             return;
         }
 
+        // 모든 메뉴 ID 가져오기
+        $allMenuIds = AdminMenu::where('is_active', true)->pluck('id')->toArray();
+        
+        // 전송된 권한 처리
         foreach ($permissions as $menuId => $granted) {
             UserMenuPermission::updateOrCreate(
                 [
@@ -136,6 +140,16 @@ class AdminService
                     'granted' => (bool) $granted
                 ]
             );
+        }
+        
+        // 전송되지 않은 메뉴는 권한 제거 (체크 해제된 경우)
+        $submittedMenuIds = array_keys($permissions);
+        $removedMenuIds = array_diff($allMenuIds, $submittedMenuIds);
+        
+        if (!empty($removedMenuIds)) {
+            UserMenuPermission::where('user_id', $userId)
+                ->whereIn('menu_id', $removedMenuIds)
+                ->update(['granted' => false]);
         }
     }
 

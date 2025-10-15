@@ -116,7 +116,7 @@ class User extends Authenticatable
      */
     public function accessibleMenus()
     {
-        return $this->belongsToMany(AdminMenu::class, 'user_menu_permissions')
+        return $this->belongsToMany(AdminMenu::class, 'user_menu_permissions', 'user_id', 'menu_id')
             ->wherePivot('granted', true)
             ->withPivot('granted')
             ->withTimestamps();

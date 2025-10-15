@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
                     $mainMenus = \App\Models\AdminMenu::getMainMenus();
                 } elseif ($user) {
                     // 일반 관리자는 권한 있는 메뉴만 표시
-                    $accessibleMenuIds = $user->accessibleMenus()->pluck('id')->toArray();
+                    $accessibleMenuIds = $user->accessibleMenus()->pluck('admin_menus.id')->toArray();
                     $mainMenus = \App\Models\AdminMenu::whereNull('parent_id')
                         ->where('is_active', true)
                         ->orderBy('order')

@@ -139,7 +139,7 @@ class AdminMenu extends Model
      */
     public function authorizedUsers()
     {
-        return $this->belongsToMany(User::class, 'user_menu_permissions')
+        return $this->belongsToMany(User::class, 'user_menu_permissions', 'menu_id', 'user_id')
             ->wherePivot('granted', true)
             ->withPivot('granted')
             ->withTimestamps();
