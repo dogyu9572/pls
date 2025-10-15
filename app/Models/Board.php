@@ -110,7 +110,9 @@ class Board extends Model
     {
         try {
             $tableName = 'board_' . $this->slug;
-            return \Illuminate\Support\Facades\DB::table($tableName)->count();
+            return \Illuminate\Support\Facades\DB::table($tableName)
+                ->whereNull('deleted_at')
+                ->count();
         } catch (\Exception $e) {
             return 0;
         }

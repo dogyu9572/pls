@@ -168,7 +168,9 @@ class DashboardController extends BaseController
         foreach ($boards as $board) {
             $tableName = 'board_' . $board->slug;
             try {
-                $count = DB::table($tableName)->count();
+                $count = DB::table($tableName)
+                    ->whereNull('deleted_at')
+                    ->count();
                 $totalPosts += $count;
             } catch (\Exception $e) {
                 // 테이블이 존재하지 않는 경우 무시
@@ -187,6 +189,7 @@ class DashboardController extends BaseController
     {
         try {
             return DB::table('banners')
+                ->whereNull('deleted_at')
                 ->where('is_active', true)
                 ->where(function($query) {
                     $query->whereNull('start_date')
@@ -209,6 +212,7 @@ class DashboardController extends BaseController
     {
         try {
             return DB::table('popups')
+                ->whereNull('deleted_at')
                 ->where('is_active', true)
                 ->where(function($query) {
                     $query->whereNull('start_date')
