@@ -85,7 +85,7 @@
 							<div class="cate">Business</div>
 							<div class="tit">수입자동차 PDI 사업</div>
 							<p>국내 수입자동차 PDI 선도기업으로 평택항 자유무역지역의 자동차 물류 인프라와 <br class="pc_vw">자체 개발한 PDI 운영관리 플랫폼을 기반으로 차량 진단 및 점검부터 보관·운송까지 <br class="pc_vw">One-Stop PDI Service를 제공하고 있습니다.</p>
-							<a href="#this" class="btn_more">VIEW MORE</a>
+							<a href="{{ route('business.imported-automobiles') }}" class="btn_more">VIEW MORE</a>
 						</div>
 					</div>
 				</div>
@@ -97,7 +97,7 @@
 							<div class="cate">Business</div>
 							<div class="tit">항만물류사업</div>
 							<p>평택항을 거점으로 GS그룹 발전사에 납품되는 Bio-mass 발전연료에 대한 <br class="pc_vw">항만물류업무(하역·보관·운송)를 수행하고 있습니다.</p>
-							<a href="#this" class="btn_more">VIEW MORE</a>
+							<a href="{{ route('business.port-logistics') }}" class="btn_more">VIEW MORE</a>
 						</div>
 					</div>
 				</div>
@@ -109,7 +109,7 @@
 							<div class="cate">Business</div>
 							<div class="tit">특장차 제조사업</div>
 							<p>2016년 중동 지역에 항공기 급유차를 수출한 것을 시작으로, <br class="pc_vw">지속적인 신규 시장 개척을 통해 글로벌 경쟁력을 확대해 나가고자 합니다.</p>
-							<a href="#this" class="btn_more">VIEW MORE</a>
+							<a href="{{ route('business.special-vehicle') }}" class="btn_more">VIEW MORE</a>
 						</div>
 					</div>
 				</div>
