@@ -66,6 +66,7 @@ class AdminService
     public function createAdmin(array $data): User
     {
         $adminData = [
+            'login_id' => $data['login_id'] ?? null,
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
