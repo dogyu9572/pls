@@ -31,6 +31,7 @@ return new class extends Migration
             $table->integer('video_duration')->nullable()->comment('영상 재생 시간(초)');
             $table->string('video_poster')->nullable()->comment('영상 썸네일 이미지');
             $table->integer('sort_order')->default(0); // 배너순서
+            $table->enum('language', ['ko', 'en'])->default('ko')->comment('배너 언어 (ko: 국문, en: 영문)');
             $table->timestamps();
             $table->softDeletes(); // 소프트 삭제
         });

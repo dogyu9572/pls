@@ -28,6 +28,7 @@ class Banner extends Model
         'video_duration',
         'video_poster',
         'sort_order',
+        'language',
     ];
 
     protected $casts = [
@@ -72,6 +73,22 @@ class Banner extends Model
      */
     public function scopeOrdered($query)
     {
-        return $query->orderBy('sort_order', 'desc')->orderBy('created_at', 'desc');
+        return $query->orderBy('sort_order', 'asc')->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * 국문 배너만 조회하는 스코프
+     */
+    public function scopeShowKorean($query)
+    {
+        return $query->where('language', 'ko');
+    }
+
+    /**
+     * 영문 배너만 조회하는 스코프
+     */
+    public function scopeShowEnglish($query)
+    {
+        return $query->where('language', 'en');
     }
 }

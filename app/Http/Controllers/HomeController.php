@@ -42,11 +42,20 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // 활성화된 배너 조회
+        // 활성화된 배너 조회 (언어별)
+        $currentLanguage = $this->getCurrentLanguage();
         $banners = Banner::active()
             ->inPeriod()
-            ->ordered()
-            ->get();
+            ->ordered();
+            
+        // 언어별 필터링
+        if ($currentLanguage === 'en') {
+            $banners = $banners->showEnglish();
+        } else {
+            $banners = $banners->showKorean();
+        }
+        
+        $banners = $banners->get();
         
         return view('home.index', compact('gNum', 'gName', 'sName', 'galleryPosts', 'noticePosts', 'popups', 'banners'));
     }
@@ -89,6 +98,26 @@ class HomeController extends Controller
             ->get();
         
         return view('home.eng_index', compact('gNum', 'gName', 'sName', 'galleryPosts', 'noticePosts', 'popups', 'banners'));
+    }
+    
+    /**
+     * 현재 언어를 감지합니다.
+     */
+    private function getCurrentLanguage()
+    {
+        // URL 경로에서 언어 감지 (예: /en/...)
+        $path = request()->path();
+        if (str_starts_with($path, 'en/') || str_starts_with($path, 'en')) {
+            return 'en';
+        }
+        
+        // 세션에서 언어 설정 확인
+        if (session('locale') === 'en') {
+            return 'en';
+        }
+        
+        // 기본값은 한국어
+        return 'ko';
     }
     
     /**

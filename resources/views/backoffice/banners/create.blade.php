@@ -44,7 +44,21 @@
                             @enderror
                         </div>
 
-                        <!-- 2. 메인텍스트, 서브텍스트, 서브텍스트2 -->
+                        <!-- 2. 언어 선택 -->
+                        <div class="board-form-group">
+                            <label for="language" class="board-form-label">언어 <span class="required">*</span></label>
+                            <select class="board-form-control @error('language') is-invalid @enderror" 
+                                    id="language" name="language" required>
+                                <option value="">언어를 선택하세요</option>
+                                <option value="ko" {{ old('language', 'ko') == 'ko' ? 'selected' : '' }}>국문</option>
+                                <option value="en" {{ old('language') == 'en' ? 'selected' : '' }}>영문</option>
+                            </select>
+                            @error('language')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- 3. 메인텍스트, 서브텍스트, 서브텍스트2 -->
                         <div class="board-form-row">
                             <div class="board-form-col board-form-col-4">
                                 <div class="board-form-group">
@@ -271,14 +285,13 @@
                                     <label for="sort_order" class="board-form-label">배너순서</label>
                                     <input type="number" class="board-form-control @error('sort_order') is-invalid @enderror" 
                                            id="sort_order" name="sort_order" value="{{ old('sort_order', 0) }}" min="0">
-                                    <small class="board-form-text">*숫자가 높을수록 상위에 노출됩니다.</small>
+                                    <small class="board-form-text">*숫자가 낮을수록 상위에 노출됩니다.</small>
                                     @error('sort_order')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="board-form-actions">
                             <button type="submit" class="btn btn-primary">

@@ -93,12 +93,13 @@ class BannerController extends Controller
             'video_file' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:51200',
             'video_duration' => 'nullable|integer|min:1|max:300',
             'sort_order' => 'nullable|integer|min:0',
+            'language' => 'required|in:ko,en',
         ]);
 
         $data = $request->only([
             'title', 'main_text', 'sub_text', 'sub_text2', 'url', 'url_target',
             'start_date', 'end_date', 'is_active',
-            'banner_type', 'video_duration', 'sort_order'
+            'banner_type', 'video_duration', 'sort_order', 'language'
         ]);
         
         // 체크박스 처리
@@ -175,12 +176,13 @@ class BannerController extends Controller
             'video_file' => 'nullable|file|mimes:mp4,avi,mov,wmv|max:51200',
             'video_duration' => 'nullable|integer|min:1|max:300',
             'sort_order' => 'nullable|integer|min:0',
+            'language' => 'required|in:ko,en',
         ]);
 
         $data = $request->only([
             'title', 'main_text', 'sub_text', 'sub_text2', 'url', 'url_target',
             'start_date', 'end_date', 'is_active',
-            'banner_type', 'video_duration', 'sort_order'
+            'banner_type', 'video_duration', 'sort_order', 'language'
         ]);
         
         // 체크박스 처리
