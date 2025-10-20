@@ -68,10 +68,12 @@ class BusinessController extends Controller
         $customFields = $inquiry ? $inquiry->getCustomFieldsArray() : [];
 
         $brochureUrl = '';
+        $brochureFileName = '';
         if ($inquiry && $inquiry->attachments) {
             $attachments = is_array($inquiry->attachments) ? $inquiry->attachments : [];
             if (!empty($attachments) && isset($attachments[0]['path'])) {
                 $brochureUrl = asset('storage/' . $attachments[0]['path']);
+                $brochureFileName = $attachments[0]['name'] ?? 'brochure.pdf';
             }
         }
 
@@ -82,7 +84,8 @@ class BusinessController extends Controller
             'sName' => '특장차 제조사업',
             'specialVehicleTel' => $customFields['special_vehicle_tel'] ?? '',
             'specialVehicleMail' => $customFields['special_vehicle_mail'] ?? '',
-            'brochureUrl' => $brochureUrl
+            'brochureUrl' => $brochureUrl,
+            'brochureFileName' => $brochureFileName
         ]);
     }
 }

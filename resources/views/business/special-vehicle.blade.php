@@ -87,7 +87,7 @@
 
 	<div class="business_contact sub_padding">
 		<div class="inner">
-			<div class="stit mb"><p>Business Contact</p><strong>사업문의</strong>@if($brochureUrl)<a href="{{ $brochureUrl }}" class="btn_download flex_center" download>브로셔 다운로드</a>@endif</div>
+			<div class="stit mb"><p>Business Contact</p><strong>사업문의</strong>@if($brochureUrl)<a href="{{ $brochureUrl }}" class="btn_download flex_center" download="{{ $brochureFileName ?? 'brochure.pdf' }}">브로셔 다운로드</a>@endif</div>
 			<ul>
 				<li class="i1"><div class="tt">TEL</div><p><strong>{{ $specialVehicleTel }}</strong></p></li>
 				<li class="i2"><div class="tt">MAIL</div><p><strong>{{ $specialVehicleMail }}</strong></p></li>
