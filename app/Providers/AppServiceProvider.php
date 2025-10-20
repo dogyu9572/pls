@@ -85,7 +85,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         // 프론트엔드 레이아웃에 Family Sites 및 팝업 데이터 공유
-        View::composer('layouts.app', function ($view) {
+        View::composer(['layouts.app', 'layouts.app_eng'], function ($view) {
             $model = (new BoardPost)->setTableBySlug('family_sites');
             $familySites = $model->newQuery()              
                 ->orderBy('created_at', 'desc')
