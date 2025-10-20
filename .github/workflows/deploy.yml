@@ -35,27 +35,26 @@ jobs:
           git status
           git log --oneline -3
           
-          echo "=== 실서버 변경사항 체크 (임시 비활성화) ==="
-          # 임시로 실서버 변경사항 체크 비활성화
-          # if [ -n "$(git status --porcelain)" ]; then
-          #   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          #   echo "❌ 배포 중단: 실서버에 커밋되지 않은 변경사항 발견!"
-          #   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          #   echo ""
-          #   echo "📋 변경된 파일 목록:"
-          #   git status --short
-          #   echo ""
-          #   echo "💡 해결 방법:"
-          #   echo "  1. 실서버 SSH 접속"
-          #   echo "  2. cd /var/www/pls"
-          #   echo "  3. git add ."
-          #   echo "  4. git commit -m '실서버 직접 수정 반영'"
-          #   echo "  5. git push origin main"
-          #   echo "  6. GitHub에서 배포 재실행"
-          #   echo ""
-          #   exit 1
-          # fi
-          echo "⚠️ 실서버 변경사항 체크 임시 비활성화 - 배포 진행"
+          echo "=== 실서버 변경사항 체크 ==="
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "❌ 배포 중단: 실서버에 커밋되지 않은 변경사항 발견!"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo ""
+            echo "📋 변경된 파일 목록:"
+            git status --short
+            echo ""
+            echo "💡 해결 방법:"
+            echo "  1. 실서버 SSH 접속"
+            echo "  2. cd /var/www/pls"
+            echo "  3. git add ."
+            echo "  4. git commit -m '실서버 직접 수정 반영'"
+            echo "  5. git push origin main"
+            echo "  6. GitHub에서 배포 재실행"
+            echo ""
+            exit 1
+          fi
+          echo "✅ 실서버 클린 상태 확인 - 배포 진행"
           
           echo "=== Git Pull 실행 ==="
           git config pull.rebase false
