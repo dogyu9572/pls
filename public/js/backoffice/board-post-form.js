@@ -73,6 +73,60 @@ function initSummernote() {
             
         }, 1000);
         
+        // Summernote 모달 문제 해결 - modal-backdrop 즉시 제거
+        setTimeout(function() {
+            // modal-backdrop 즉시 제거 및 모달 스타일 적용
+            setInterval(function() {
+                // modal-backdrop 즉시 제거
+                $('.modal-backdrop').remove();
+                
+                $('.note-modal').each(function() {
+                    const $modal = $(this);
+                    if ($modal.is(':visible')) {
+                        $modal.css({
+                            'z-index': '999999',
+                            'position': 'fixed',
+                            'top': '0',
+                            'left': '0',
+                            'width': '100%',
+                            'height': '100%',
+                            'background-color': 'rgba(0, 0, 0, 0.5)',
+                            'pointer-events': 'auto'
+                        });
+                        
+                        $modal.find('.modal-dialog').css({
+                            'z-index': '1000000',
+                            'position': 'relative',
+                            'margin': '50px auto',
+                            'pointer-events': 'auto'
+                        });
+                        
+                        $modal.find('.modal-content').css({
+                            'z-index': '1000001',
+                            'pointer-events': 'auto',
+                            'position': 'relative'
+                        });
+                        
+                        // 모달 내부 모든 요소에 클릭 이벤트 강제 활성화
+                        $modal.find('*').css('pointer-events', 'auto');
+                    }
+                });
+            }, 10);
+        }, 100);
+        
+        // Bootstrap 모달 이벤트에서 modal-backdrop만 제거
+        $(document).on('show.bs.modal', '.note-modal', function(e) {
+            // modal-backdrop만 제거, 모달은 정상 동작
+            setTimeout(function() {
+                $('.modal-backdrop').remove();
+            }, 10);
+        });
+        
+        $(document).on('shown.bs.modal', '.note-modal', function(e) {
+            // modal-backdrop만 제거, 모달은 정상 동작
+            $('.modal-backdrop').remove();
+        });
+        
     } else {
         console.error('Summernote가 로드되지 않았습니다!');
         // 폴백: 일반 textarea로 표시

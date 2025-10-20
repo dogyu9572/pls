@@ -215,15 +215,47 @@
 
 /* 드롭다운 메뉴가 다른 요소에 가려지지 않도록 */
 .note-dropdown-menu {
-    z-index: 9999 !important;
+    z-index: 9998 !important;
     position: absolute !important;
 }
 
-/* 모달과 드롭다운 충돌 방지 */
-.modal {
-    z-index: 1050 !important;
+/* Summernote 모달 완전 분리 */
+.note-modal {
+    z-index: 999999 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
-.note-dropdown-menu {
-    z-index: 1060 !important;
+.note-modal .modal-dialog {
+    z-index: 1000000 !important;
+    position: relative !important;
+    margin: 50px auto !important;
+    pointer-events: auto !important;
+}
+
+.note-modal .modal-content {
+    z-index: 1000001 !important;
+    pointer-events: auto !important;
+    position: relative !important;
+}
+
+/* modal-backdrop 숨김 처리 */
+.modal-backdrop {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
+}
+
+.modal-backdrop.show {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: -1 !important;
+    pointer-events: none !important;
 }
