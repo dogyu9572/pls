@@ -175,6 +175,7 @@
 	.mtit {position:relative; margin-bottom:60px;}
 	.mtit span {display:block; font-size:20px; color:#3055A6; font-weight:500; line-height:24px; margin-bottom:20px;}
 	.mtit .tit {font-size:52px; color:#222; font-weight:700; line-height:1.4;}
+	.mtit.pr .tit {padding-right:250px;}
 	.mtit .tit strong {color:#15269D;}
 	.mcon_point_area {position:relative;}
 	.mcon_point_area #point_mc01 {top:-60px;}

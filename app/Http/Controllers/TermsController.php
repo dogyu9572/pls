@@ -64,7 +64,8 @@ class TermsController extends Controller
         return view('terms.internal-reporting', [
             'gNum' => '00',
             'gName' => '내부신고제도 운영규정',
-            'reportingRules' => $customFields['reporting_rules'] ?? ''
+            'reportingRules' => $customFields['reporting_rules'] ?? '',
+            'enactmentDate' => $customFields['enactment_date'] ?? ''
         ]);
     }
 }

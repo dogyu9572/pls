@@ -4,7 +4,7 @@
 <div id="mainContent" class="container g{{ $gNum }} s{{ $sNum ?? '' }} no_aside">
 	<div class="inner">
 
-		<div class="term_tit"><strong>{{ $gName }}</strong><div class="date">제정 2023.12.01</div></div>
+		<div class="term_tit"><strong>{{ $gName }}</strong><div class="date">제정 {{ $enactmentDate }}</div></div>
 
 		@if($reportingRules)
 			{!! $reportingRules !!}

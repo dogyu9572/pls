@@ -7,24 +7,51 @@
 		<div class="mvisual">
 			@foreach($banners as $banner)
 				@if($banner->banner_type === 'image')
-					<div class="banner-slide">
-						<img src="{{ asset('storage/' . $banner->desktop_image) }}" 
-							 alt="{{ $banner->title }}" 
-							 class="banner-desktop-image">
-						@if($banner->mobile_image)
-							<img src="{{ asset('storage/' . $banner->mobile_image) }}" 
+					@if($banner->url)
+						<a href="{{ $banner->url }}" target="_blank" class="banner-link">
+							<div class="banner-slide banner-clickable">
+								<img src="{{ asset('storage/' . $banner->desktop_image) }}" 
+									 alt="{{ $banner->title }}" 
+									 class="banner-desktop-image">
+								@if($banner->mobile_image)
+									<img src="{{ asset('storage/' . $banner->mobile_image) }}" 
+										 alt="{{ $banner->title }}" 
+										 class="banner-mobile-image">
+								@endif
+							</div>
+						</a>
+					@else
+						<div class="banner-slide">
+							<img src="{{ asset('storage/' . $banner->desktop_image) }}" 
 								 alt="{{ $banner->title }}" 
-								 class="banner-mobile-image">
-						@endif
-					</div>
+								 class="banner-desktop-image">
+							@if($banner->mobile_image)
+								<img src="{{ asset('storage/' . $banner->mobile_image) }}" 
+									 alt="{{ $banner->title }}" 
+									 class="banner-mobile-image">
+							@endif
+						</div>
+					@endif
 				@elseif($banner->banner_type === 'video')
-					<div class="banner-slide video">
-						<video width="100%" height="100%" autoplay muted 
-							   data-duration="{{ $banner->video_duration ?? 5 }}">
-							<source src="{{ asset('storage/' . $banner->video_file) }}" type="video/mp4">
-							해당 브라우저에서는 영상이 나오지 않습니다.
-						</video>
-					</div>
+					@if($banner->url)
+						<a href="{{ $banner->url }}" target="_blank" class="banner-link">
+							<div class="banner-slide video banner-clickable">
+								<video width="100%" height="100%" autoplay muted 
+									   data-duration="{{ $banner->video_duration ?? 5 }}">
+									<source src="{{ asset('storage/' . $banner->video_file) }}" type="video/mp4">
+									해당 브라우저에서는 영상이 나오지 않습니다.
+								</video>
+							</div>
+						</a>
+					@else
+						<div class="banner-slide video">
+							<video width="100%" height="100%" autoplay muted 
+								   data-duration="{{ $banner->video_duration ?? 5 }}">
+								<source src="{{ asset('storage/' . $banner->video_file) }}" type="video/mp4">
+								해당 브라우저에서는 영상이 나오지 않습니다.
+							</video>
+						</div>
+					@endif
 				@endif
 			@endforeach
 		</div>
@@ -473,7 +500,41 @@ $(document).ready (function () {
 	$(".mcon05 a.btn2").hover(function(){
 		$(".mcon05 .bgbox").addClass("bg2").removeClass("bg1");
 	});
+
 });
 //]]>
 </script>
+
+<style>
+/* 클릭 가능한 배너 스타일 */
+.banner-link {
+	display: block;
+	text-decoration: none;
+}
+
+.banner-link:hover {
+	text-decoration: none;
+}
+
+.banner-clickable {
+	cursor: pointer;
+}
+
+/* abso_box 영역 클릭 통과시키기 */
+.abso_box {
+	pointer-events: none;
+}
+
+.abso_box * {
+	pointer-events: none;
+}
+
+/* 네비게이션 버튼들은 클릭 가능하게 */
+.abso_box .navi,
+.abso_box .navi *,
+.abso_box .paging,
+.abso_box .paging * {
+	pointer-events: auto;
+}
+</style>
 @endsection

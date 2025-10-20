@@ -19,7 +19,7 @@
 
 </head>
 <body>
-<div class="blind_link"><a href="#mainContent">본문 바로가기</a></div>
+<div class="blind_link"><a href="#mainContent">Skip to content</a></div>
 
 <div class="header {{ isset($gNum) && $gNum == 'main' ? 'main' : '' }}">
 	<a href="/" class="logo flex_center"><img src="{{ asset('images/logo.svg') }}" alt="logo"><h1>PLS Corp</h1></a>
@@ -52,8 +52,8 @@
 	<div class="right flex_center">
 		<a href="{{ route('contact-us') }}" class="btn_contact">CONTACT US</a>
 		<div class="langs">
-			<a href="/" class="on">KOR</a>
-			<a href="#this">ENG</a>
+			<a href="/">KOR</a>
+			<a href="/eng/" class="on">ENG</a>
 		</div>
 	</div>
 	<a href="javascript:void(0);" class="btn_menu">
@@ -99,7 +99,7 @@
 <div class="sub_tit">
 	<div class="inner">
 		<div class="title">{{ $gName ?? '' }}</div>
-		<p>고객과 함께 내일을 꿈꾸며, 새로운 삶의 가치를 창조한다.</p>
+		<p>Creating new values for life, together with our customers for a better tomorrow.</p>
 		<div class="aside">
 			<dl>
 				<dt><button type="button">{{ $sName ?? '' }}</button></dt>
@@ -135,12 +135,12 @@
 	<div class="inner">
 		<div class="flogo"><img src="{{ asset('images/logo.svg') }}" alt="logo"></div>
 		<ul class="links">
-			<li><a href="{{ route('terms.privacy-policy') }}"><strong>개인정보처리방침</strong></a></li>
-			<li><a href="{{ route('terms.email') }}">이메일 무단수집 거부</a></li>
+			<li><a href="{{ route('terms.privacy-policy') }}"><strong>Privacy Policy</strong></a></li>
+			<li><a href="{{ route('terms.email') }}">Email Collection Refusal</a></li>
 		</ul>
 		<ul class="address">
-			<li><strong>주소</strong>경기도 평택시 포승읍 서동대로 437-100</li>
-			<li><strong>대표 전화</strong>031)684-9661~5</li>
+			<li><strong>Address</strong>437-100 Seodong-daero, Poseung-eup, Pyeongtaek-si, Gyeonggi-do, Republic of Korea</li>
+			<li><strong>Tel</strong>+82-31-684-9661~5</li>
 		</ul>
 		<p class="copy">Copyrightⓒ2012 by PLS. All right Reserved.</p>
 		<dl class="family">
@@ -226,9 +226,9 @@
             <div class="popup-footer">
                 <label class="popup-today-label" data-popup-id="{{ $popup->id }}">
                     <input type="checkbox" class="popup-today-close" data-popup-id="{{ $popup->id }}">
-                    1일 동안 보지 않음
+                    Not seen for 1 day
                 </label>
-                <button type="button" class="popup-footer-close-btn" data-popup-id="{{ $popup->id }}">닫기</button>
+                <button type="button" class="popup-footer-close-btn" data-popup-id="{{ $popup->id }}">Close</button>
             </div>
         </div>
     @endif

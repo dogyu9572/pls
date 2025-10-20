@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="mainContent" class="container g{{ $gNum }} s{{ $sNum }} no_aside">
+<div id="mainContent" class="container g{{ $gNum }} s{{ $sNum }}">
 	<div class="inner">
 
 		<div class="board_view">

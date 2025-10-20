@@ -123,6 +123,19 @@
     position: absolute !important;
 }
 
+/* Summernote tooltip 완전 비활성화 */
+.note-tooltip,
+.note-popover,
+.note-toolbar .note-btn[title]:hover::after,
+.note-toolbar .note-btn[title]:hover::before,
+.note-toolbar .note-btn[data-original-title]:hover::after,
+.note-toolbar .note-btn[data-original-title]:hover::before {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 .note-dropdown-menu .note-btn {
     background: white !important;
     color: #495057 !important;

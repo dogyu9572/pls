@@ -801,6 +801,7 @@
 	.mtit {margin-bottom:40px;}
 	.mtit span {font-size:16px; line-height:24px; margin-bottom:12px;}
 	.mtit .tit {font-size:28px;}
+	.mtit.pr .tit {padding-right:0;}
 	.mtit .tit br {display:none;}
 	.mcon_point_area #point_mc01 {top:-40px;}
 /* mcon01 */

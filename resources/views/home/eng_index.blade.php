@@ -22,7 +22,7 @@
 						<video width="100%" height="100%" autoplay muted 
 							   data-duration="{{ $banner->video_duration ?? 5 }}">
 							<source src="{{ asset('storage/' . $banner->video_file) }}" type="video/mp4">
-							해당 브라우저에서는 영상이 나오지 않습니다.
+							The video does not play in this browser.
 						</video>
 					</div>
 				@endif
@@ -48,10 +48,10 @@
 			</div>
 			<div class="navi">
 				<div class="paging"></div>
-				<button type="button" class="arrow prev">이전</button>
-				<button type="button" class="arrow next">다음</button>
-				<button type="button" class="papl pause on">정지</button>
-				<button type="button" class="papl play">재생</button>
+				<button type="button" class="arrow prev">Prev</button>
+				<button type="button" class="arrow next">Next</button>
+				<button type="button" class="papl pause on">Pause</button>
+				<button type="button" class="papl play">Play</button>
 			</div>
 		</div>
 		<div class="scroll"><i></i><span>SCROLL DOWN</span></div>
@@ -64,11 +64,11 @@
 	<div class="mcon mcon01">
 		<div class="positionbox">
 			<div class="inner">
-				<div class="mtit"><span>Business</span><div class="tit">PLS는 <strong>수입자동차 PDI 사업, 항만물류사업, <br/>특장차 제조업</strong>을 영위하고 있습니다.</div></div>
+				<div class="mtit"><span>Business</span><div class="tit">PLS specializes in <br class="pc_vw"><strong>import automobile PDI services, port logistics,<br/>and special-purpose vehicle manufacturing.</strong></div></div>
 				<div class="flex before">
-					<div class="box i2"><div class="inbox"><div class="tit">항만물류사업</div></div></div>
-					<div class="box i1"><div class="inbox"><div class="tit">수입자동차 PDI 사업</div></div></div>
-					<div class="box i3"><div class="inbox"><div class="tit">특장차 제조사업</div></div></div>
+					<div class="box i2"><div class="inbox"><div class="tit">Port Logistics Business</div></div></div>
+					<div class="box i1"><div class="inbox"><div class="tit">Imported Vehicle PDI Business</div></div></div>
+					<div class="box i3"><div class="inbox"><div class="tit">Special Vehicle Manufacturing Business</div></div></div>
 				</div>
 			</div>
 		</div>
@@ -83,8 +83,8 @@
 					<div class="inner">
 						<div class="txt">
 							<div class="cate">Business</div>
-							<div class="tit">수입자동차 PDI 사업</div>
-							<p>국내 수입자동차 PDI 선도기업으로 평택항 자유무역지역의 자동차 물류 인프라와 <br class="pc_vw">자체 개발한 PDI 운영관리 플랫폼을 기반으로 차량 진단 및 점검부터 보관·운송까지 <br class="pc_vw">One-Stop PDI Service를 제공하고 있습니다.</p>
+							<div class="tit">Imported Vehicle PDI Business</div>
+							<p>As a leading PDI (Pre-Delivery Inspection) company for imported vehicles in Korea, PLS provides One-Stop PDI Services  from vehicle inspection and diagnostics to storage and transportation based on the automotive logistics infrastructure of the Pyeongtaek Port Free Trade Zone and our proprietary PDI operation</p>
 							<a href="{{ route('business.imported-automobiles') }}" class="btn_more">VIEW MORE</a>
 						</div>
 					</div>
@@ -95,8 +95,8 @@
 					<div class="inner">
 						<div class="txt">
 							<div class="cate">Business</div>
-							<div class="tit">항만물류사업</div>
-							<p>평택항을 거점으로 GS그룹 발전사에 납품되는 Bio-mass 발전연료에 대한 <br class="pc_vw">항만물류업무(하역·보관·운송)를 수행하고 있습니다.</p>
+							<div class="tit">Port Logistics Business</div>
+							<p>Based in Pyeongtaek Port, PLS handles port logistics operations  including unloading, storage, and transportation for biomass power generation fuel supplied to GS Group power plants.</p>
 							<a href="{{ route('business.port-logistics') }}" class="btn_more">VIEW MORE</a>
 						</div>
 					</div>
@@ -107,8 +107,8 @@
 					<div class="inner">
 						<div class="txt">
 							<div class="cate">Business</div>
-							<div class="tit">특장차 제조사업</div>
-							<p>2016년 중동 지역에 항공기 급유차를 수출한 것을 시작으로, <br class="pc_vw">지속적인 신규 시장 개척을 통해 글로벌 경쟁력을 확대해 나가고자 합니다.</p>
+							<div class="tit">Special Vehicle Manufacturing Business</div>
+							<p>Since exporting aircraft refueling trucks to the Middle East in 2016, PLS has continued to expand its global competitiveness through ongoing development of new markets and product innovations.</p>
 							<a href="{{ route('business.special-vehicle') }}" class="btn_more">VIEW MORE</a>
 						</div>
 					</div>
@@ -122,7 +122,7 @@
 
 	<div class="mcon mcon03 slide_arrow_type1">
 		<div class="inner">
-			<div class="mtit"><span>News</span><div class="tit">PLS의 다양한 소식을 <br/>빠르게 전달드립니다.</div><a href="{{ route('pr-center.news') }}" class="btn_more line">VIEW MORE</a></div>
+			<div class="mtit pr"><span>News</span><div class="tit">Stay up to date with the latest news and announcements from PLS.</div><a href="{{ route('pr-center.news') }}" class="btn_more line">VIEW MORE</a></div>
 			<div class="mc03_slide slide_area">
 				@forelse($galleryPosts as $post)
 				<a href="{{ $post->url }}" class="box">
@@ -138,7 +138,7 @@
 				<a href="#" class="box">
 					<span class="imgfit"></span>
 					<span class="txt">
-						<p>등록된 소식이 없습니다.</p>
+						<p>There are no registered news.</p>
 						<span class="date">{{ date('Y.m.d') }}</span>
 					</span>
 				</a>
@@ -146,20 +146,20 @@
 			</div>
 			<div class="navi navi_type1 flex_center">
 				<div class="paging"></div>
-				<button class="papl pause on">정지</button>
-				<button class="papl play">재생</button>
+				<button class="papl pause on">Pause</button>
+				<button class="papl play">Play</button>
 			</div>
 		</div>
 	</div>
 
 	<div class="mcon mcon04">
 		<div class="inner">
-			<div class="mtit"><span>News</span><div class="tit">PLS의 <strong>공지사항</strong>을 <br/>확인하세요.</div><a href="{{ route('pr-center.announcements') }}" class="btn_more line">VIEW MORE</a></div>
+			<div class="mtit"><span>News</span><div class="tit"><strong>Notices</strong></div><a href="{{ route('pr-center.announcements') }}" class="btn_more line">VIEW MORE</a></div>
 			<div class="list">
 				@forelse($noticePosts as $post)
 				<a href="{{ $post->url }}"><p>{{ $post->title }}</p><span class="date">{{ \Carbon\Carbon::parse($post->created_at)->format('Y.m.d') }}</span></a>
 				@empty
-				<a href="#"><p>등록된 공지사항이 없습니다.</p><span class="date">{{ date('Y.m.d') }}</span></a>
+				<a href="#"><p>There are no registered notices.</p><span class="date">{{ date('Y.m.d') }}</span></a>
 				@endforelse
 			</div>
 		</div>
@@ -167,8 +167,8 @@
 
 	<div class="mcon mcon05">
 		<div class="bgbox bg1">
-			<a href="/recruitment/information" class="flex_center colm btn1"><span class="tit">채용</span><p>개개인의 무한한 가능성을 이끌어내어 <br/>꿈을 현실로 이루는 피엘에스에서  우수한 인재를 모집합니다.<br/>(주)피엘에스는 언제나 여러분을 향해 열려 있습니다.</p><i class="btn_more">VIEW MORE</i></a>
-			<a href="/contact-us" class="flex_center colm btn2"><span class="tit">사업문의</span><p>물류 혁신, 함께 만드는 가치 <br/>체계적인 운영과 스마트 물류 플랫폼으로 <br/>미래 물류를 선도합니다.</p><i class="btn_more">VIEW MORE</i></a>
+			<a href="/recruitment/information" class="flex_center colm btn1"><span class="tit">Careers</span><p>At PLS, we recruit talented individuals who turn their limitless potential into reality.<br/>We are always open to passionate and dedicated professionals ready to grow with us.</p><i class="btn_more">VIEW MORE</i></a>
+			<a href="/contact-us" class="flex_center colm btn2"><span class="tit">Business Inquiries</span><p>Driving logistics innovation and shared value PLS leads the future of logistics through systematic operations and a smart logistics platform.</p><i class="btn_more">VIEW MORE</i></a>
 		</div>
 	</div>
 

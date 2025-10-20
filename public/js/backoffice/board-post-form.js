@@ -10,7 +10,22 @@ function initSummernote() {
     if (typeof $.fn.summernote !== 'undefined') {
         $('#content').summernote({
             height: 400,
-            lang: 'ko-KR',                
+            lang: 'ko-KR',
+            // HTML 태그 필터링 비활성화
+            disableHtml: false,
+            // 드래그 앤 드롭 비활성화 (썸네일/첨부파일과 충돌 방지)
+            disableDragAndDrop: true,
+            // 허용할 HTML 태그 설정
+            allowedTags: ['p', 'br', 'strong', 'b', 'em', 'i', 'u', 'strike', 'div', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'pre', 'code', 'a', 'img', 'table', 'thead', 'tbody', 'tr', 'td', 'th', 'iframe', 'video', 'source'],
+            // 허용할 속성 설정
+            allowedAttributes: {
+                '*': ['style', 'class', 'id'],
+                'iframe': ['src', 'width', 'height', 'frameborder', 'allowfullscreen', 'title', 'allow'],
+                'img': ['src', 'alt', 'width', 'height'],
+                'a': ['href', 'target'],
+                'table': ['border', 'cellpadding', 'cellspacing'],
+                'td': ['colspan', 'rowspan']
+            },
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'underline', 'italic', 'strikethrough', 'clear']],
@@ -33,6 +48,15 @@ function initSummernote() {
                 },
                 onInit: function() {
                     // Summernote 초기화 완료
+                },
+                onChange: function(contents, $editable) {
+                    // 콘텐츠 변경 시 실제 textarea에 동기화
+                    $('#content').val(contents);
+                },
+                onBlur: function() {
+                    // 포커스 잃을 때 최종 동기화
+                    const content = $('#content').summernote('code');
+                    $('#content').val(content);
                 }
             }
         });
@@ -72,6 +96,34 @@ function initSummernote() {
             });
             
         }, 1000);
+        
+        // Summernote tooltip 완전 비활성화
+        setTimeout(function() {
+            // 모든 버튼의 title과 data-original-title 속성 제거
+            $('.note-toolbar .note-btn').each(function() {
+                $(this).removeAttr('title').removeAttr('data-original-title');
+            });
+            
+            // tooltip 관련 이벤트 제거
+            $('.note-toolbar .note-btn').off('mouseenter mouseleave');
+            
+            // Bootstrap tooltip 비활성화
+            $('.note-toolbar .note-btn').tooltip('dispose');
+        }, 1500);
+        
+        // Summernote 드래그 앤 드롭 완전 비활성화
+        setTimeout(function() {
+            // Summernote 에디터 영역의 모든 드래그 앤 드롭 이벤트 제거
+            $('.note-editable').off('dragover dragenter dragleave drop');
+            $('.note-editable').on('dragover dragenter dragleave drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            });
+            
+            // Summernote 에디터 영역의 드래그 앤 드롭 관련 CSS 클래스 제거
+            $('.note-editable').removeClass('note-drag-over');
+        }, 2000);
         
         // Summernote 모달 문제 해결 - modal-backdrop 즉시 제거
         setTimeout(function() {
@@ -141,6 +193,21 @@ function initCustomFieldEditors() {
             $(this).summernote({
                 height: 300,
                 lang: 'ko-KR',
+                // HTML 태그 필터링 비활성화
+                disableHtml: false,
+                // 드래그 앤 드롭 비활성화 (썸네일/첨부파일과 충돌 방지)
+                disableDragAndDrop: true,
+                // 허용할 HTML 태그 설정
+                allowedTags: ['p', 'br', 'strong', 'b', 'em', 'i', 'u', 'strike', 'div', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'blockquote', 'pre', 'code', 'a', 'img', 'table', 'thead', 'tbody', 'tr', 'td', 'th', 'iframe', 'video', 'source'],
+                // 허용할 속성 설정
+                allowedAttributes: {
+                    '*': ['style', 'class', 'id'],
+                    'iframe': ['src', 'width', 'height', 'frameborder', 'allowfullscreen', 'title', 'allow'],
+                    'img': ['src', 'alt', 'width', 'height'],
+                    'a': ['href', 'target'],
+                    'table': ['border', 'cellpadding', 'cellspacing'],
+                    'td': ['colspan', 'rowspan']
+                },
                 toolbar: [
                     ['style', ['style']],
                     ['font', ['bold', 'underline', 'italic', 'strikethrough', 'clear']],
@@ -158,6 +225,21 @@ function initCustomFieldEditors() {
                     onImageUpload: function(files) {
                         for (let i = 0; i < files.length; i++) {
                             uploadImage(files[i], this);
+                        }
+                    },
+                    onChange: function(contents, $editable) {
+                        // 커스텀 필드 에디터 콘텐츠 변경 시 실제 textarea에 동기화
+                        const editorId = $editable.attr('id');
+                        if (editorId) {
+                            $('#' + editorId).val(contents);
+                        }
+                    },
+                    onBlur: function() {
+                        // 포커스 잃을 때 최종 동기화
+                        const content = $(this).summernote('code');
+                        const editorId = $(this).attr('id');
+                        if (editorId) {
+                            $('#' + editorId).val(content);
                         }
                     }
                 }
@@ -240,16 +322,118 @@ function convertToEmbedCode(url) {
     return null;
 }
 
+// 썸네일 이미지 관리 클래스
+class ThumbnailManager {
+    constructor() {
+        this.thumbnailInput = document.getElementById('thumbnail');
+        this.thumbnailPreview = document.getElementById('thumbnailPreview');
+        this.thumbnailUpload = this.thumbnailInput?.closest('.board-file-upload');
+        this.maxFileSize = 5 * 1024 * 1024; // 5MB
+        this.allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        
+        if (this.thumbnailInput && this.thumbnailUpload) {
+            this.init();
+        }
+    }
+    
+    init() {
+        // 파일 선택 이벤트
+        this.thumbnailInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                this.handleThumbnail(file);
+            }
+        });
+        
+        // 드래그 앤 드롭 이벤트 (썸네일 전용)
+        this.thumbnailUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.stopPropagation(); // 이벤트 전파 차단
+            this.thumbnailUpload.classList.add('board-file-drag-over');
+        });
+        
+        this.thumbnailUpload.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            e.stopPropagation(); // 이벤트 전파 차단
+            this.thumbnailUpload.classList.remove('board-file-drag-over');
+        });
+        
+        this.thumbnailUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation(); // 이벤트 전파 차단 - 첨부파일 영역과 완전 분리
+            this.thumbnailUpload.classList.remove('board-file-drag-over');
+            
+            const file = e.dataTransfer.files[0]; // 첫 번째 파일만
+            if (file) {
+                this.handleThumbnail(file);
+            }
+        });
+    }
+    
+    // 썸네일 파일 처리
+    handleThumbnail(file) {
+        // 파일 타입 체크
+        if (!this.allowedTypes.includes(file.type)) {
+            alert('이미지 파일만 업로드 가능합니다. (JPG, PNG, GIF)');
+            this.thumbnailInput.value = '';
+            return;
+        }
+        
+        // 파일 크기 체크
+        if (file.size > this.maxFileSize) {
+            alert('썸네일 이미지는 5MB 이하만 가능합니다.');
+            this.thumbnailInput.value = '';
+            return;
+        }
+        
+        // FileList를 DataTransfer로 변환
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        this.thumbnailInput.files = dt.files;
+        
+        // 미리보기 생성
+        this.updateThumbnailPreview(file);
+    }
+    
+    // 썸네일 미리보기 업데이트
+    updateThumbnailPreview(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            this.thumbnailPreview.innerHTML = `
+                <div class="board-file-item">
+                    <div class="board-file-info">
+                        <img src="${e.target.result}" alt="썸네일 미리보기" style="max-width: 200px; max-height: 200px; object-fit: cover; border-radius: 8px;">
+                        <span class="board-file-name">${file.name}</span>
+                        <span class="board-file-size">(${(file.size / 1024 / 1024).toFixed(2)}MB)</span>
+                    </div>
+                    <button type="button" class="board-file-remove" onclick="thumbnailManager.removeThumbnail()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+        };
+        reader.readAsDataURL(file);
+    }
+    
+    // 썸네일 제거
+    removeThumbnail() {
+        this.thumbnailInput.value = '';
+        this.thumbnailPreview.innerHTML = '';
+    }
+}
+
 // 첨부파일 관리 클래스
 class FileManager {
     constructor() {
         this.fileInput = document.getElementById('attachments');
         this.filePreview = document.getElementById('filePreview');
-        this.fileUpload = document.querySelector('.board-file-upload');
+        this.fileUpload = this.fileInput?.closest('.board-file-upload');
         this.maxFiles = 5;
         this.maxFileSize = 10 * 1024 * 1024; // 10MB
         
-        this.init();
+        if (this.fileInput && this.fileUpload) {
+            this.init();
+        }
     }
     
     init() {
@@ -261,20 +445,24 @@ class FileManager {
             }
         });
         
-        // 드래그 앤 드롭 이벤트
+        // 드래그 앤 드롭 이벤트 (첨부파일 전용)
         this.fileUpload.addEventListener('dragover', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // 이벤트 전파 차단
             this.fileUpload.classList.add('board-file-drag-over');
         });
         
         this.fileUpload.addEventListener('dragleave', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // 이벤트 전파 차단
             this.fileUpload.classList.remove('board-file-drag-over');
         });
         
         this.fileUpload.addEventListener('drop', (e) => {
             e.preventDefault();
+            e.stopPropagation(); // 이벤트 전파 차단 - 썸네일 영역과 완전 분리
             this.fileUpload.classList.remove('board-file-drag-over');
+            
             const files = Array.from(e.dataTransfer.files);
             this.handleFiles(files);
         });
@@ -441,6 +629,24 @@ $(document).ready(function() {
     }, 500);
 });
 
+// 폼 제출 전 콘텐츠 동기화 함수
+function syncEditorContent() {
+    // 메인 에디터 콘텐츠 동기화
+    if ($('#content').length && typeof $('#content').summernote === 'function') {
+        const content = $('#content').summernote('code');
+        $('#content').val(content);
+    }
+    
+    // 커스텀 필드 에디터들 콘텐츠 동기화
+    $('.summernote-editor').each(function() {
+        const editorId = $(this).attr('id');
+        if (editorId && typeof $(this).summernote === 'function') {
+            const content = $(this).summernote('code');
+            $('#' + editorId).val(content);
+        }
+    });
+}
+
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
     // jQuery 로드 확인 후 Summernote 초기화
@@ -458,12 +664,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }
     
-    // 파일 관리자 초기화
+    // 썸네일 관리자 초기화 (첨부파일과 완전 분리)
+    window.thumbnailManager = new ThumbnailManager();
+    
+    // 첨부파일 관리자 초기화 (썸네일과 완전 분리)
     window.fileManager = new FileManager();
     
     // 기존 첨부파일 제거 함수를 전역으로 사용할 수 있도록 설정
     window.removeExistingFile = function(index) {
         window.fileManager.removeExistingFile(index);
     };
+    
+    // 폼 제출 전 콘텐츠 동기화
+    $('form').on('submit', function() {
+        syncEditorContent();
+    });
 });
 

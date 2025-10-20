@@ -157,7 +157,7 @@ class BoardPostService
      */
     private function sanitizeContent(string $content): string
     {
-        $allowedTags = '<p><br><strong><em><u><ol><ul><li><h1><h2><h3><h4><h5><h6><blockquote><pre><code><table><thead><tbody><tr><td><th><a><img><div><span>';
+        $allowedTags = '<p><br><strong><em><u><ol><ul><li><h1><h2><h3><h4><h5><h6><blockquote><pre><code><table><thead><tbody><tr><td><th><a><img><div><span><iframe><video><source>';
         return strip_tags($content, $allowedTags);
     }
 

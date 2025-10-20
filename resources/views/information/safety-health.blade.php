@@ -61,7 +61,7 @@
 					</div>
 				@endforelse
 			</div>
-			<a href="mailto:dhyim69@plscorp.co.kr" class="btn_mail flex_center">안전보건 제안 채널</a>
+			<a href="mailto:{{ $safetyHealthEmail }}" class="btn_mail flex_center">안전보건 제안 채널</a>
 		</div>
 	</div>
 

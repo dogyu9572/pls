@@ -59,7 +59,7 @@
 		<a href="{{ route('contact-us') }}" class="btn_contact">CONTACT US</a>
 		<div class="langs">
 			<a href="/" class="on">KOR</a>
-			<a href="#this">ENG</a>
+			<a href="/eng/">ENG</a>
 		</div>
 	</div>
 	<a href="javascript:void(0);" class="btn_menu">

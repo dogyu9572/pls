@@ -125,12 +125,21 @@ class InformationController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        // safety_health_mail 게시판에서 최신 메일주소 가져오기
+        $mailModel = (new BoardPost)->setTableBySlug('safety_health_mail');
+        $latestMail = $mailModel->newQuery()
+            ->orderBy('created_at', 'desc')
+            ->first();
+        
+        $safetyHealthEmail = $latestMail ? $latestMail->title : 'dhyim69@plscorp.co.kr';
+
         return view('information.safety-health', [
             'gNum' => '01',
             'sNum' => '05',
             'gName' => '기업정보',
             'sName' => '안전/보건경영',
-            'certifications' => $certifications
+            'certifications' => $certifications,
+            'safetyHealthEmail' => $safetyHealthEmail
         ]);
     }
 
