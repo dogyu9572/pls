@@ -15,7 +15,7 @@
 			@if($post->attachments && count($post->attachments) > 0)
 			<div class="view_files">
 				@foreach($post->attachments as $file)
-					<a href="{{ asset('storage/' . $file['path']) }}" download>{{ $file['name'] }}</a>
+					<a href="{{ asset('storage/' . $file['path']) }}" download="{{ $file['name'] }}">{{ $file['name'] }}</a>
 				@endforeach
 			</div>
 			@endif
