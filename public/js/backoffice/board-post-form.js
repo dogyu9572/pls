@@ -30,6 +30,9 @@ function initSummernote() {
                     for (let i = 0; i < files.length; i++) {
                         uploadImage(files[i], this);
                     }
+                },
+                onInit: function() {
+                    // Summernote 초기화 완료
                 }
             }
         });
@@ -105,6 +108,55 @@ function uploadImage(file, editor) {
         console.error('Error:', error);
         alert('이미지 업로드 중 오류가 발생했습니다.');
     });
+}
+
+
+// URL을 embed 코드로 변환
+function convertToEmbedCode(url) {
+    let videoId = '';
+    let embedUrl = '';
+    
+    // YouTube URL 처리 - 다양한 형식 지원
+    if (url.includes('youtube.com/watch')) {
+        const match = url.match(/[?&]v=([^&]+)/);
+        if (match) {
+            videoId = match[1];
+            embedUrl = `https://www.youtube.com/embed/${videoId}`;
+        }
+    } else if (url.includes('youtu.be/')) {
+        const match = url.match(/youtu\.be\/([^?&]+)/);
+        if (match) {
+            videoId = match[1];
+            embedUrl = `https://www.youtube.com/embed/${videoId}`;
+        }
+    } else if (url.includes('youtube.com/embed/')) {
+        // 이미 embed URL인 경우
+        const match = url.match(/youtube\.com\/embed\/([^?&]+)/);
+        if (match) {
+            videoId = match[1];
+            embedUrl = url; // 그대로 사용
+        }
+    }
+    // Vimeo URL 처리
+    else if (url.includes('vimeo.com/')) {
+        const match = url.match(/vimeo\.com\/(\d+)/);
+        if (match) {
+            videoId = match[1];
+            embedUrl = `https://player.vimeo.com/video/${videoId}`;
+        }
+    }
+    
+    if (embedUrl) {
+        return `<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 20px 0;">
+            <iframe src="${embedUrl}" 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                    frameborder="0" 
+                    allowfullscreen>
+            </iframe>
+        </div>`;
+    }
+    
+    return null;
 }
 
 // 첨부파일 관리 클래스
@@ -268,6 +320,46 @@ class FileManager {
     }
 }
 
+// 모달창 내 Insert Video 버튼 기능 교체
+$(document).ready(function() {
+    // 모달이 나타날 때마다 체크하여 Insert Video 버튼 기능 교체
+    setInterval(function() {
+        const insertBtn = $('.note-video-btn[value="Insert Video"]');
+        if (insertBtn.length > 0 && !insertBtn.data('custom-attached')) {
+            insertBtn.data('custom-attached', true);
+            insertBtn.off('click').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // 모달창의 URL 입력값 가져오기
+                const videoUrl = $('.note-video-url').val();
+                
+                if (videoUrl && videoUrl.trim() !== '') {
+                    const embedCode = convertToEmbedCode(videoUrl.trim());
+                    
+                    if (embedCode) {
+                        // HTML 문자열을 DOM 요소로 변환
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = embedCode;
+                        const videoElement = tempDiv.firstElementChild;
+                        
+                        $('#content').summernote('insertNode', videoElement);
+                        
+                        // 모달창 닫기
+                        $('.modal').modal('hide');
+                    } else {
+                        alert('지원하지 않는 비디오 URL입니다. YouTube 또는 Vimeo URL을 입력해주세요.');
+                    }
+                } else {
+                    alert('비디오 URL을 입력해주세요.');
+                }
+                
+                return false;
+            });
+        }
+    }, 500);
+});
+
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', function() {
     // jQuery 로드 확인 후 Summernote 초기화
@@ -293,3 +385,4 @@ document.addEventListener('DOMContentLoaded', function() {
         window.fileManager.removeExistingFile(index);
     };
 });
+
