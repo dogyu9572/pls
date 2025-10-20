@@ -167,8 +167,8 @@
 
 	<div class="mcon mcon05">
 		<div class="bgbox bg1">
-			<a href="#this" class="flex_center colm btn1"><span class="tit">채용</span><p>개개인의 무한한 가능성을 이끌어내어 <br/>꿈을 현실로 이루는 피엘에스에서  우수한 인재를 모집합니다.<br/>(주)피엘에스는 언제나 여러분을 향해 열려 있습니다.</p><i class="btn_more">VIEW MORE</i></a>
-			<a href="#this" class="flex_center colm btn2"><span class="tit">사업문의</span><p>물류 혁신, 함께 만드는 가치 <br/>체계적인 운영과 스마트 물류 플랫폼으로 <br/>미래 물류를 선도합니다.</p><i class="btn_more">VIEW MORE</i></a>
+			<a href="/recruitment/information" class="flex_center colm btn1"><span class="tit">채용</span><p>개개인의 무한한 가능성을 이끌어내어 <br/>꿈을 현실로 이루는 피엘에스에서  우수한 인재를 모집합니다.<br/>(주)피엘에스는 언제나 여러분을 향해 열려 있습니다.</p><i class="btn_more">VIEW MORE</i></a>
+			<a href="/contact-us" class="flex_center colm btn2"><span class="tit">사업문의</span><p>물류 혁신, 함께 만드는 가치 <br/>체계적인 운영과 스마트 물류 플랫폼으로 <br/>미래 물류를 선도합니다.</p><i class="btn_more">VIEW MORE</i></a>
 		</div>
 	</div>
 

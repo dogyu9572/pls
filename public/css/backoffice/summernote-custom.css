@@ -117,6 +117,10 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     background: white !important;
     padding: 4px 0 !important;
+    max-height: 300px !important; /* 최대 높이 설정 */
+    overflow-y: auto !important; /* 스크롤 가능 */
+    z-index: 9999 !important; /* 다른 요소 위에 표시 */
+    position: absolute !important;
 }
 
 .note-dropdown-menu .note-btn {
@@ -125,11 +129,31 @@
     border: none !important;
     padding: 6px 16px !important;
     border-radius: 0 !important;
+    white-space: nowrap !important; /* 텍스트 줄바꿈 방지 */
 }
 
 .note-dropdown-menu .note-btn:hover {
     background: #f8f9fa !important;
     color: #212529 !important;
+}
+
+/* 드롭다운 메뉴 위치 조정 */
+.note-dropdown-menu {
+    min-width: 120px !important;
+    max-width: 200px !important;
+}
+
+/* 폰트 크기 드롭다운 특별 처리 */
+.note-dropdown-menu[data-event="fontSize"] {
+    max-height: 250px !important;
+    overflow-y: auto !important;
+}
+
+/* 색상 선택 드롭다운 특별 처리 */
+.note-dropdown-menu[data-event="foreColor"],
+.note-dropdown-menu[data-event="backColor"] {
+    max-height: 200px !important;
+    overflow-y: auto !important;
 }
 
 /* 그룹 간 구분선 제거 */
@@ -176,4 +200,30 @@
 .note-editable .video-container {
     max-width: 100%;
     margin: 16px auto;
+}
+
+/* Summernote 에디터 컨테이너 z-index 설정 */
+.note-editor {
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+.note-toolbar {
+    position: relative !important;
+    z-index: 1001 !important;
+}
+
+/* 드롭다운 메뉴가 다른 요소에 가려지지 않도록 */
+.note-dropdown-menu {
+    z-index: 9999 !important;
+    position: absolute !important;
+}
+
+/* 모달과 드롭다운 충돌 방지 */
+.modal {
+    z-index: 1050 !important;
+}
+
+.note-dropdown-menu {
+    z-index: 1060 !important;
 }

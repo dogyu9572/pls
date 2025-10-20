@@ -37,14 +37,41 @@ function initSummernote() {
             }
         });
         
-        // 드롭다운 이벤트 강제 활성화
+        // 드롭다운 이벤트 강제 활성화 및 재클릭 문제 해결
         setTimeout(function() {
-            $('.note-btn-group .dropdown-toggle').off('click').on('click', function(e) {
+            // 모든 드롭다운 버튼에 대해 이벤트 재설정
+            $('.note-btn-group .dropdown-toggle').off('click.dropdownFix').on('click.dropdownFix', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                $(this).dropdown('toggle');
+                
+                // 현재 드롭다운 상태 확인
+                const $this = $(this);
+                const $dropdown = $this.next('.note-dropdown-menu');
+                
+                // 다른 드롭다운 닫기
+                $('.note-dropdown-menu').not($dropdown).hide();
+                
+                // 현재 드롭다운 토글
+                if ($dropdown.is(':visible')) {
+                    $dropdown.hide();
+                } else {
+                    $dropdown.show();
+                }
             });
-        }, 500);
+            
+            // 드롭다운 외부 클릭 시 닫기
+            $(document).on('click.dropdownFix', function(e) {
+                if (!$(e.target).closest('.note-btn-group').length) {
+                    $('.note-dropdown-menu').hide();
+                }
+            });
+            
+            // 드롭다운 메뉴 항목 클릭 시 메뉴 닫기
+            $('.note-dropdown-menu .note-btn').on('click', function() {
+                $(this).closest('.note-dropdown-menu').hide();
+            });
+            
+        }, 1000);
         
     } else {
         console.error('Summernote가 로드되지 않았습니다!');
