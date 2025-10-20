@@ -675,6 +675,19 @@ document.addEventListener('DOMContentLoaded', function() {
         window.fileManager.removeExistingFile(index);
     };
     
+    // 썸네일 제거 함수를 전역으로 사용할 수 있도록 설정
+    window.removeThumbnail = function() {
+        if (window.thumbnailManager) {
+            // 기존 썸네일 숨겨진 입력 필드 제거
+            const existingThumbnailInput = document.querySelector('input[name="existing_thumbnail"]');
+            if (existingThumbnailInput) {
+                existingThumbnailInput.remove();
+            }
+            // 썸네일 매니저의 제거 함수 호출
+            window.thumbnailManager.removeThumbnail();
+        }
+    };
+    
     // 폼 제출 전 콘텐츠 동기화
     $('form').on('submit', function() {
         syncEditorContent();
