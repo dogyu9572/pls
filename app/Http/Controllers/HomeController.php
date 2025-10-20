@@ -50,6 +50,46 @@ class HomeController extends Controller
         
         return view('home.index', compact('gNum', 'gName', 'sName', 'galleryPosts', 'noticePosts', 'popups', 'banners'));
     }
+
+    public function eng_index()
+    {
+        $gNum = "main";
+        $gName = "";
+        $sName = "";
+        
+        // gallerys 게시판 최신글 4개
+        $galleryPosts = $this->getLatestPosts('gallerys', 4);
+        
+        // notices 게시판 최신글 4개  
+        $noticePosts = $this->getLatestPosts('notices', 4);
+        
+        // 활성화된 팝업 조회
+        $popups = Popup::where('is_active', true)
+            ->where(function($query) {
+                $query->where('use_period', false)
+                      ->orWhere(function($q) {
+                          $q->where('use_period', true)
+                            ->where(function($periodQuery) {
+                                $periodQuery->whereNull('start_date')
+                                           ->orWhere('start_date', '<=', now());
+                            })
+                            ->where(function($periodQuery) {
+                                $periodQuery->whereNull('end_date')
+                                           ->orWhere('end_date', '>=', now());
+                            });
+                      });
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // 활성화된 배너 조회
+        $banners = Banner::active()
+            ->inPeriod()
+            ->ordered()
+            ->get();
+        
+        return view('home.eng_index', compact('gNum', 'gName', 'sName', 'galleryPosts', 'noticePosts', 'popups', 'banners'));
+    }
     
     /**
      * 특정 게시판의 최신글을 가져옵니다.
