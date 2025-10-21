@@ -417,8 +417,21 @@ class ThumbnailManager {
     
     // 썸네일 제거
     removeThumbnail() {
-        this.thumbnailInput.value = '';
-        this.thumbnailPreview.innerHTML = '';
+        // 파일 입력 필드 초기화
+        if (this.thumbnailInput) {
+            this.thumbnailInput.value = '';
+        }
+        
+        // 기존 썸네일 숨겨진 입력 필드 제거
+        const existingThumbnailInput = document.querySelector('input[name="existing_thumbnail"]');
+        if (existingThumbnailInput) {
+            existingThumbnailInput.remove();
+        }
+        
+        // 미리보기 영역 초기화
+        if (this.thumbnailPreview) {
+            this.thumbnailPreview.innerHTML = '';
+        }
     }
 }
 
@@ -678,12 +691,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 썸네일 제거 함수를 전역으로 사용할 수 있도록 설정
     window.removeThumbnail = function() {
         if (window.thumbnailManager) {
-            // 기존 썸네일 숨겨진 입력 필드 제거
-            const existingThumbnailInput = document.querySelector('input[name="existing_thumbnail"]');
-            if (existingThumbnailInput) {
-                existingThumbnailInput.remove();
-            }
-            // 썸네일 매니저의 제거 함수 호출
+            // 썸네일 매니저의 제거 함수 호출 (기존 썸네일 처리 포함)
             window.thumbnailManager.removeThumbnail();
         }
     };
