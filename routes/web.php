@@ -55,6 +55,15 @@ Route::prefix('pr-center')->name('pr-center.')->group(function () {
     Route::get('/location', [PrCenterController::class, 'location'])->name('location');
 });
 
+//영문 홍보센터 관련 라우트
+Route::prefix('eng/pr-center')->name('eng.pr-center.')->group(function () {
+    Route::get('/announcements', [PrCenterController::class, 'announcementsEng'])->name('announcements');
+    Route::get('/announcements/{id}', [PrCenterController::class, 'announcementsShowEng'])->name('announcements.show');
+    Route::get('/news', [PrCenterController::class, 'newsEng'])->name('news');
+    Route::get('/news/{id}', [PrCenterController::class, 'newsShowEng'])->name('news.show');
+    Route::get('/location', [PrCenterController::class, 'locationEng'])->name('location');
+});
+
 // Contact Us
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact-us');
 

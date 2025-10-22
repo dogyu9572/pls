@@ -122,7 +122,7 @@
 
 	<div class="mcon mcon03 slide_arrow_type1">
 		<div class="inner">
-			<div class="mtit pr"><span>News</span><div class="tit">Stay up to date with the latest news and announcements from PLS.</div><a href="{{ route('pr-center.news') }}" class="btn_more line">VIEW MORE</a></div>
+			<div class="mtit pr"><span>News</span><div class="tit">Stay up to date with the latest news and announcements from PLS.</div><a href="{{ route('eng.pr-center.news') }}" class="btn_more line">VIEW MORE</a></div>
 			<div class="mc03_slide slide_area">
 				@forelse($galleryPosts as $post)
 				<a href="{{ $post->url }}" class="box">
@@ -154,7 +154,7 @@
 
 	<div class="mcon mcon04">
 		<div class="inner">
-			<div class="mtit"><span>News</span><div class="tit"><strong>Notices</strong></div><a href="{{ route('pr-center.announcements') }}" class="btn_more line">VIEW MORE</a></div>
+			<div class="mtit"><span>News</span><div class="tit"><strong>Notices</strong></div><a href="{{ route('eng.pr-center.announcements') }}" class="btn_more line">VIEW MORE</a></div>
 			<div class="list">
 				@forelse($noticePosts as $post)
 				<a href="{{ $post->url }}"><p>{{ $post->title }}</p><span class="date">{{ \Carbon\Carbon::parse($post->created_at)->format('Y.m.d') }}</span></a>

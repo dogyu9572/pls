@@ -38,14 +38,6 @@
                     <form method="GET" action="{{ route('backoffice.board-posts.index', $board->slug ?? 'notice') }}" class="filter-form">
                         <div class="filter-row">                            
                             <div class="filter-group">
-                                <label for="category" class="filter-label">등록페이지</label>
-                                <select id="category" name="category" class="filter-select">
-                                    <option value="">전체</option>
-                                    <option value="국문" {{ request('category') == '국문' ? 'selected' : '' }}>국문</option>
-                                    <option value="영문" {{ request('category') == '영문' ? 'selected' : '' }}>영문</option>
-                                </select>
-                            </div>
-                            <div class="filter-group">
                                 <label for="search_type" class="filter-label">검색 구분</label>
                                 <select id="search_type" name="search_type" class="filter-select">
                                     <option value="">전체</option>
@@ -115,7 +107,6 @@
                                     <input type="checkbox" id="select-all" class="form-check-input">
                                 </th>
                                 <th class="w5">번호</th>
-                                <th class="w10">등록페이지</th>
                                 <th>제목</th>
                                 <th class="w10">작성자</th>
                                 <th class="w10">조회수</th>
@@ -138,9 +129,6 @@
                                             @endphp
                                             {{ $postNumber }}
                                         @endif
-                                    </td>
-                                    <td>
-                                        <span class="status-badge status-general">{{ $post->category }}</span>
                                     </td>
                                     <td>
                                         {{ $post->title }}

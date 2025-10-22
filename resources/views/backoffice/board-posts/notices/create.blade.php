@@ -60,14 +60,6 @@
                 </div>
                 @endif
 
-                <div class="board-form-group">
-                    <label for="category" class="board-form-label">등록페이지 <span class="required">*</span></label>
-                    <select class="board-form-control" id="category" name="category" required>
-                        <option value="">카테고리를 선택하세요</option>
-                        <option value="국문" {{ old('category') == '국문' ? 'selected' : '' }}>국문</option>
-                        <option value="영문" {{ old('category') == '영문' ? 'selected' : '' }}>영문</option>                       
-                    </select>
-                </div>
 
                 <div class="board-form-group">
                     <label for="title" class="board-form-label">제목 <span class="required">*</span></label>

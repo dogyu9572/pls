@@ -111,7 +111,6 @@
                                     <th class="w5">순서</th>
                                 @endif
                                 <th class="w5">번호</th>
-                                <th class="w10">구분</th>
                                 <th>제목</th>
                                 <th class="w10">작성자</th>
                                 <th class="w10">작성일</th>
@@ -138,9 +137,6 @@
                                             @endphp
                                             {{ $postNumber }}
                                         @endif
-                                    </td>
-                                    <td>
-                                        <span class="status-badge status-general">일반</span>
                                     </td>
                                     <td>
                                         {{ $post->title }}

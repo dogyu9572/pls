@@ -72,9 +72,6 @@ class BoardPostService
             $query->whereDate('created_at', '<=', $request->end_date);
         }
 
-        if ($request->filled('category')) {
-            $query->where('category', $request->category);
-        }
 
         if ($request->filled('keyword')) {
             $this->applyKeywordSearch($query, $request->keyword, $request->search_type);
@@ -140,7 +137,6 @@ class BoardPostService
             'author_name' => '관리자',
             'title' => $validated['title'],
             'content' => $this->sanitizeContent($validated['content']),
-            'category' => $validated['category'],
             'is_notice' => $request->has('is_notice'),
             'thumbnail' => $this->handleThumbnail($request, $slug),
             'attachments' => json_encode($this->handleAttachments($request, $slug)),
@@ -298,7 +294,6 @@ class BoardPostService
         return [
             'title' => $validated['title'],
             'content' => $this->sanitizeContent($validated['content']),
-            'category' => $validated['category'],
             'is_notice' => $request->has('is_notice'),
             'thumbnail' => $this->handleThumbnail($request, $slug),
             'attachments' => json_encode($this->handleAttachments($request, $slug)),

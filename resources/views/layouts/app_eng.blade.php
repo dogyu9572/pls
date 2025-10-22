@@ -116,9 +116,9 @@
 					<a href="{{ route('business.port-logistics') }}" class="{{ $gNum == '02' && $sNum == '02' ? 'on' : '' }}">Port Logistics Business</a>
 					<a href="{{ route('business.special-vehicle') }}" class="{{ $gNum == '02' && $sNum == '03' ? 'on' : '' }}">Special Vehicle Manufacturing Business</a>
 				@elseif($gNum == '04')
-					<a href="{{ route('pr-center.announcements') }}" class="{{ $gNum == '04' && $sNum == '01' ? 'on' : '' }}">PLS Announcements</a>
-					<a href="{{ route('pr-center.news') }}" class="{{ $gNum == '04' && $sNum == '02' ? 'on' : '' }}">PLS News</a>
-					<a href="{{ route('pr-center.location') }}" class="{{ $gNum == '04' && $sNum == '03' ? 'on' : '' }}">Location & Directions</a>
+					<a href="{{ route('eng.pr-center.announcements') }}" class="{{ $gNum == '04' && $sNum == '01' ? 'on' : '' }}">PLS Announcements</a>
+					<a href="{{ route('eng.pr-center.news') }}" class="{{ $gNum == '04' && $sNum == '02' ? 'on' : '' }}">PLS News</a>
+					<a href="{{ route('eng.pr-center.location') }}" class="{{ $gNum == '04' && $sNum == '03' ? 'on' : '' }}">Location & Directions</a>
 				@endif
 				</dd>
 			</dl>

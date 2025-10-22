@@ -116,7 +116,6 @@
                                 </th>
                                 <th class="w5">번호</th>
                                 <th class="w10">썸네일</th>
-                                <th class="w10">등록페이지</th>
                                 <th>제목</th>
                                 <th class="w10">작성자</th>
                                 <th class="w10">조회수</th>
@@ -144,9 +143,6 @@
                                         <img src="{{ $post->thumbnail ? asset('storage/' . $post->thumbnail) : asset('images/default.jpg') }}" 
                                              alt="썸네일" 
                                              class="gallery-thumbnail-small">
-                                    </td>
-                                    <td>
-                                        {{ $post->category }}
                                     </td>
                                     <td>
                                         {{ $post->title }}

@@ -66,14 +66,15 @@ class HomeController extends Controller
         $gName = "";
         $sName = "";
         
-        // gallerys 게시판 최신글 4개
-        $galleryPosts = $this->getLatestPosts('gallerys', 4);
+        // gallerys_eng 게시판 최신글 4개
+        $galleryPosts = $this->getLatestPostsEng('gallerys_eng', 4);
         
-        // notices 게시판 최신글 4개  
-        $noticePosts = $this->getLatestPosts('notices', 4);
+        // notices_eng 게시판 최신글 4개  
+        $noticePosts = $this->getLatestPostsEng('notices_eng', 4);
         
-        // 활성화된 팝업 조회
+        // 활성화된 팝업 조회 (영문만)
         $popups = Popup::where('is_active', true)
+            ->where('language', 'en')
             ->where(function($query) {
                 $query->where('use_period', false)
                       ->orWhere(function($q) {
@@ -91,9 +92,10 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        // 활성화된 배너 조회
+        // 활성화된 배너 조회 (영문만)
         $banners = Banner::active()
             ->inPeriod()
+            ->showEnglish()
             ->ordered()
             ->get();
         
@@ -139,9 +141,8 @@ class HomeController extends Controller
             }
             
             return DB::table($tableName)
-                ->select('id', 'title', 'created_at', 'thumbnail', 'category')
+                ->select('id', 'title', 'created_at', 'thumbnail')
                 ->where('deleted_at', null)
-                ->where('category', '국문')
                 ->orderBy('created_at', 'desc')
                 ->limit($limit)
                 ->get()
@@ -150,6 +151,8 @@ class HomeController extends Controller
                     $url = match ($boardSlug) {
                         'gallerys' => route('pr-center.news.show', $post->id),
                         'notices' => route('pr-center.announcements.show', $post->id),
+                        'gallerys_eng' => route('eng.pr-center.news.show', $post->id),
+                        'notices_eng' => route('eng.pr-center.announcements.show', $post->id),
                         default => route('backoffice.board-posts.show', [$boardSlug, $post->id])
                     };
                     
@@ -164,6 +167,48 @@ class HomeController extends Controller
                 
         } catch (\Exception $e) {
             Log::error("게시판 데이터 조회 오류: " . $e->getMessage());
+            return collect();
+        }
+    }
+
+    /**
+     * 영문 게시판 최신글 조회
+     */
+    private function getLatestPostsEng($boardSlug, $limit = 5)
+    {
+        try {
+            $tableName = 'board_' . $boardSlug;
+            
+            // 테이블 존재 여부 확인
+            if (!DB::getSchemaBuilder()->hasTable($tableName)) {
+                return collect();
+            }
+            
+            return DB::table($tableName)
+                ->select('id', 'title', 'created_at', 'thumbnail')
+                ->where('deleted_at', null)
+                ->orderBy('created_at', 'desc')
+                ->limit($limit)
+                ->get()
+                ->map(function ($post) use ($boardSlug) {
+                    // 게시판 슬러그에 따라 사용자용 라우트 설정
+                    $url = match ($boardSlug) {
+                        'gallerys_eng' => route('eng.pr-center.news.show', $post->id),
+                        'notices_eng' => route('eng.pr-center.announcements.show', $post->id),
+                        default => route('backoffice.board-posts.show', [$boardSlug, $post->id])
+                    };
+                    
+                    return (object) [
+                        'id' => $post->id,
+                        'title' => $post->title,
+                        'created_at' => $post->created_at,
+                        'thumbnail' => $post->thumbnail,
+                        'url' => $url
+                    ];
+                });
+                
+        } catch (\Exception $e) {
+            Log::error("영문 게시판 데이터 조회 오류: " . $e->getMessage());
             return collect();
         }
     }
