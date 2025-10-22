@@ -128,7 +128,8 @@
 }
 
 .banner-order,
-.banner-period {
+.banner-period,
+.banner-language {
     font-size: 12px;
     color: #6c757d;
     background-color: #f8f9fa;

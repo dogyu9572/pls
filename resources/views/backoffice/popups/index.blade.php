@@ -58,6 +58,14 @@
                                 </select>
                             </div>
                             <div class="filter-group">
+                                <label for="language" class="filter-label">언어</label>
+                                <select id="language" name="language" class="filter-select">
+                                    <option value="">전체</option>
+                                    <option value="ko" {{ request('language') == 'ko' ? 'selected' : '' }}>국문</option>
+                                    <option value="en" {{ request('language') == 'en' ? 'selected' : '' }}>영문</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
                                 <label for="start_date" class="filter-label">게시기간</label>
                                 <div class="date-range">
                                     <input type="date" id="start_date" name="start_date" class="filter-input"
@@ -144,6 +152,7 @@
                                         <div class="popup-meta">
                                             <span class="popup-type">{{ $popup->popup_type === 'image' ? '이미지' : 'HTML' }}</span>
                                             <span class="popup-display-type">{{ $popup->popup_display_type === 'normal' ? '일반팝업' : '레이어팝업' }}</span>
+                                            <span class="popup-language">{{ $popup->language === 'ko' ? '국문' : '영문' }}</span>
                                             <span class="popup-size">{{ $popup->width }}x{{ $popup->height }}px</span>
                                             <span class="popup-position">위치: {{ $popup->position_top }}, {{ $popup->position_left }}</span>
                                         </div>

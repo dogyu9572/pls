@@ -29,6 +29,7 @@ return new class extends Migration
             $table->longText('popup_content')->nullable(); // HTML 콘텐츠
             $table->boolean('is_active')->default(true); // 사용여부
             $table->integer('sort_order')->default(0); // 순서
+            $table->enum('language', ['ko', 'en'])->default('ko')->comment('팝업 언어 (ko: 국문, en: 영문)');
             $table->timestamps();
             $table->softDeletes(); // 소프트 삭제
         });

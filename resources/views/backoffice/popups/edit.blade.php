@@ -42,6 +42,27 @@
                     <div class="board-form-row">
                         <div class="board-form-col board-form-col-12">
                             <div class="board-form-group">
+                                <label class="board-form-label">언어 <span class="text-danger">*</span></label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="language" value="ko" {{ old('language', $popup->language) == 'ko' ? 'checked' : '' }}>
+                                        <span class="radio-text">국문</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="language" value="en" {{ old('language', $popup->language) == 'en' ? 'checked' : '' }}>
+                                        <span class="radio-text">영문</span>
+                                    </label>
+                                </div>
+                                @error('language')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="board-form-row">
+                        <div class="board-form-col board-form-col-12">
+                            <div class="board-form-group">
                                 <label class="board-form-label">게시기간 사용여부</label>
                                 <div class="radio-group">
                                     <label class="radio-label">

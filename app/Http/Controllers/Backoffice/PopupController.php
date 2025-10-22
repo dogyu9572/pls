@@ -51,6 +51,11 @@ class PopupController extends Controller
             $query->where('popup_display_type', $request->popup_display_type);
         }
         
+        // 언어 필터
+        if ($request->filled('language')) {
+            $query->where('language', $request->language);
+        }
+        
         // 목록 개수 설정
         $perPage = $request->get('per_page', 10);
         $perPage = in_array($perPage, [10, 20, 50, 100]) ? $perPage : 10;
@@ -91,6 +96,7 @@ class PopupController extends Controller
             'remove_popup_image' => 'nullable|boolean',
             'is_active' => 'boolean',
             'sort_order' => 'nullable|integer|min:0',
+            'language' => 'required|in:ko,en',
         ]);
 
         $data = $request->all();
@@ -159,6 +165,7 @@ class PopupController extends Controller
             'remove_popup_image' => 'nullable|boolean',
             'is_active' => 'boolean',
             'sort_order' => 'nullable|integer|min:0',
+            'language' => 'required|in:ko,en',
         ]);
 
         $data = $request->all();

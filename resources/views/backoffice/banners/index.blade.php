@@ -157,7 +157,8 @@
                                         </span>
                                         <span class="banner-type {{ $banner->banner_type === 'video' ? 'video' : 'image' }}">
                                             {{ $banner->banner_type === 'video' ? '영상' : '이미지' }}
-                                        </span>                                       
+                                        </span>
+                                        <span class="banner-language">{{ $banner->language === 'ko' ? '국문' : '영문' }}</span>
                                         <span class="banner-order">순서: {{ $banner->sort_order }}</span>
                                         @if($banner->use_period && $banner->start_date && $banner->end_date)
                                             <span class="banner-period">
