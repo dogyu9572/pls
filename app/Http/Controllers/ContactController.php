@@ -22,4 +22,20 @@ class ContactController extends Controller
             'contact' => $customFields
         ]);
     }
+
+    /**
+     * 영문 Contact Us 페이지
+     */
+    public function indexEng()
+    {
+        $model = (new BoardPost)->setTableBySlug('contact_us_eng');
+        $contact = $model->newQuery()->first();
+        $customFields = $contact ? $contact->getCustomFieldsArray() : [];
+
+        return view('contact.index-eng', [
+            'gNum' => '00',
+            'gName' => 'Contact Us',
+            'contact' => $customFields
+        ]);
+    }
 }

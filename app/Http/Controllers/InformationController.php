@@ -160,4 +160,162 @@ class InformationController extends Controller
             'reportingEmail' => $customFields['email'] ?? ''
         ]);
     }
+
+    // =============================================================================
+    // 영문 기업정보 메서드들
+    // =============================================================================
+
+    /**
+     * 영문 CEO 인사말 페이지
+     */
+    public function ceoMessageEng()
+    {
+        $model = (new BoardPost)->setTableBySlug('greetings');
+        $greeting = $model->newQuery()
+            ->where('id', 1)
+            ->first();
+
+        return view('information.ceo-message-eng', [
+            'gNum' => '01',
+            'sNum' => '01',
+            'gName' => 'Company Information',
+            'sName' => 'CEO Message',
+            'greeting' => $greeting
+        ]);
+    }
+
+    /**
+     * 영문 회사소개 페이지
+     */
+    public function aboutCompanyEng()
+    {
+        return view('information.about-company-eng', [
+            'gNum' => '01',
+            'sNum' => '02',
+            'gName' => 'Company Information',
+            'sName' => 'About Us'
+        ]);
+    }
+
+    /**
+     * 영문 회사연혁 페이지
+     */
+    public function historyEng()
+    {
+        $model = (new BoardPost)->setTableBySlug('company_history_en');
+        $histories = $model->newQuery()
+            ->orderBy('sort_order', 'desc')
+            ->orderBy('category', 'desc')
+            ->get();
+
+        // 실제 데이터가 있는 연도 범위 확인
+        if ($histories->isEmpty()) {
+            return view('information.history-eng', [
+                'gNum' => '01',
+                'sNum' => '03',
+                'gName' => 'Company Information',
+                'sName' => 'PLS History',
+                'groupedByDecade' => [],
+                'availableDecades' => []
+            ]);
+        }
+
+        // 게시글의 연도를 10년 단위로 변환하여 수집
+        $decades = $histories->map(function($item) {
+            return floor($item->category / 10) * 10;
+        })->unique()->sort()->reverse()->values();
+
+        // 10년 단위 범위 동적 생성
+        $decadeRanges = [];
+        foreach ($decades as $decade) {
+            $decadeRanges[$decade] = [
+                'start' => $decade,
+                'end' => $decade + 9
+            ];
+        }
+
+        // 10년 단위로 그룹화
+        $groupedByDecade = [];
+        foreach ($decadeRanges as $decade => $range) {
+            $groupedByDecade[$decade] = $histories->filter(function($item) use ($range) {
+                return $item->category >= $range['start'] && $item->category <= $range['end'];
+            })->groupBy('category');
+        }
+
+        return view('information.history-eng', [
+            'gNum' => '01',
+            'sNum' => '03',
+            'gName' => 'Company Information',
+            'sName' => 'PLS History',
+            'groupedByDecade' => $groupedByDecade,
+            'availableDecades' => $decades->toArray()
+        ]);
+    }
+
+    /**
+     * 영문 품질/환경경영 페이지
+     */
+    public function qualityEnvironmentalEng()
+    {
+        $model = (new BoardPost)->setTableBySlug('quality_environment');
+        $certifications = $model->newQuery()
+            ->where('category', '영문')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('information.quality-environmental-eng', [
+            'gNum' => '01',
+            'sNum' => '04',
+            'gName' => 'Company Information',
+            'sName' => 'Quality & Environmental Management',
+            'certifications' => $certifications
+        ]);
+    }
+
+    /**
+     * 영문 안전/보건경영 페이지
+     */
+    public function safetyHealthEng()
+    {
+        $model = (new BoardPost)->setTableBySlug('safety_health');
+        $certifications = $model->newQuery()
+            ->where('category', '영문')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // safety_health_mail 게시판에서 최신 메일주소 가져오기
+        $mailModel = (new BoardPost)->setTableBySlug('safety_health_mail');
+        $latestMail = $mailModel->newQuery()
+            ->orderBy('created_at', 'desc')
+            ->first();
+        
+        $safetyHealthEmail = $latestMail ? $latestMail->title : 'dhyim69@plscorp.co.kr';
+
+        return view('information.safety-health-eng', [
+            'gNum' => '01',
+            'sNum' => '05',
+            'gName' => 'Company Information',
+            'sName' => 'Safety & Health Management',
+            'certifications' => $certifications,
+            'safetyHealthEmail' => $safetyHealthEmail
+        ]);
+    }
+
+    /**
+     * 영문 윤리경영 페이지
+     */
+    public function ethicalEng()
+    {
+        $model = (new BoardPost)->setTableBySlug('business_ethics_eng');
+        $ethics = $model->newQuery()->first();
+        $customFields = $ethics ? $ethics->getCustomFieldsArray() : [];
+
+        return view('information.ethical-eng', [
+            'gNum' => '01',
+            'sNum' => '06',
+            'gName' => 'Company Information',
+            'sName' => 'Ethical Management',
+            'reportingEmail' => $customFields['email'] ?? ''
+        ]);
+    }
 }

@@ -109,6 +109,34 @@ Route::prefix('auth')->name('auth.')->group(function () {
 // 메인 페이지
 Route::get('/eng', [HomeController::class, 'eng_index'])->name('home.eng');
 
+// 기업정보 영문 라우트
+Route::prefix('eng/information')->name('eng.information.')->group(function () {
+    Route::get('/ceo-message', [InformationController::class, 'ceoMessageEng'])->name('ceo-message');
+    Route::get('/about-company', [InformationController::class, 'aboutCompanyEng'])->name('about-company');
+    Route::get('/history', [InformationController::class, 'historyEng'])->name('history');
+    Route::get('/quality-environmental', [InformationController::class, 'qualityEnvironmentalEng'])->name('quality-environmental');
+    Route::get('/safety-health', [InformationController::class, 'safetyHealthEng'])->name('safety-health');
+    Route::get('/ethical', [InformationController::class, 'ethicalEng'])->name('ethical');
+});
+
+// 사업분야 영문 라우트
+Route::prefix('eng/business')->name('eng.business.')->group(function () {
+    Route::get('/imported-automobiles', [BusinessController::class, 'importedAutomobilesEng'])->name('imported-automobiles');
+    Route::get('/port-logistics', [BusinessController::class, 'portLogisticsEng'])->name('port-logistics');
+    Route::get('/special-vehicle', [BusinessController::class, 'specialVehicleEng'])->name('special-vehicle');
+});
+
+// 약관 영문 라우트
+Route::prefix('eng/terms')->name('eng.terms.')->group(function () {
+    Route::get('/privacy-policy', [TermsController::class, 'privacyPolicyEng'])->name('privacy-policy');
+    Route::get('/email-rejection', [TermsController::class, 'emailEng'])->name('email-rejection');
+    Route::get('/ethic', [TermsController::class, 'ethicEng'])->name('ethic');
+    Route::get('/internal-reporting', [TermsController::class, 'internalReportingEng'])->name('internal-reporting');
+});
+
+// 연락처 영문 라우트
+Route::get('/eng/contact-us', [ContactController::class, 'indexEng'])->name('eng.contact-us');
+
 
 // =============================================================================
 // 분리된 라우트 파일들 포함

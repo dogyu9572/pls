@@ -137,6 +137,7 @@ class BoardPostService
             'author_name' => '관리자',
             'title' => $validated['title'],
             'content' => $this->sanitizeContent($validated['content']),
+            'category' => $request->input('category'),
             'is_notice' => $request->has('is_notice'),
             'thumbnail' => $this->handleThumbnail($request, $slug),
             'attachments' => json_encode($this->handleAttachments($request, $slug)),
@@ -294,6 +295,7 @@ class BoardPostService
         return [
             'title' => $validated['title'],
             'content' => $this->sanitizeContent($validated['content']),
+            'category' => $request->input('category'),
             'is_notice' => $request->has('is_notice'),
             'thumbnail' => $this->handleThumbnail($request, $slug),
             'attachments' => json_encode($this->handleAttachments($request, $slug)),

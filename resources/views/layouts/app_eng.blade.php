@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="{{ asset('css/reactive.css') }}" media="all">
 <link rel="stylesheet" href="{{ asset('css/reactive_eng.css') }}" media="all">
 <link rel="stylesheet" href="{{ asset('css/popup.css') }}" media="all">
+@yield('additional_styles')
 
 <script src="//code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="{{ asset('js/com.js') }}"></script>
@@ -22,35 +23,35 @@
 <div class="blind_link"><a href="#mainContent">Skip to content</a></div>
 
 <div class="header {{ isset($gNum) && $gNum == 'main' ? 'main' : '' }}">
-	<a href="/" class="logo flex_center"><img src="{{ asset('images/logo.svg') }}" alt="logo"><h1>PLS Corp</h1></a>
+	<a href="/eng" class="logo flex_center"><img src="{{ asset('images/logo.svg') }}" alt="logo"><h1>PLS Corp</h1></a>
 	<div class="gnb">
-		<div class="menu {{ isset($gNum) && $gNum == '01' ? 'on' : '' }}"><a href="{{ route('information.ceo-message') }}">Company Information</a>
+		<div class="menu {{ isset($gNum) && $gNum == '01' ? 'on' : '' }}"><a href="{{ route('eng.information.ceo-message') }}">Company Information</a>
 			<div class="snb">
-				<a href="{{ route('information.ceo-message') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">CEO’s Message</a>
-				<a href="{{ route('information.about-company') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">About Us</a>
-				<a href="{{ route('information.history') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">PLS History</a>
-				<a href="{{ route('information.quality-environmental') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '04' ? 'on' : '' }}">Quality & Environmental Management</a>
-				<a href="{{ route('information.safety-health') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '05' ? 'on' : '' }}">Safety & Health Management</a>
-				<a href="{{ route('information.ethical') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '06' ? 'on' : '' }}">Ethical Management</a>
+				<a href="{{ route('eng.information.ceo-message') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">CEO's Message</a>
+				<a href="{{ route('eng.information.about-company') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">About Us</a>
+				<a href="{{ route('eng.information.history') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">PLS History</a>
+				<a href="{{ route('eng.information.quality-environmental') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '04' ? 'on' : '' }}">Quality & Environmental Management</a>
+				<a href="{{ route('eng.information.safety-health') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '05' ? 'on' : '' }}">Safety & Health Management</a>
+				<a href="{{ route('eng.information.ethical') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '06' ? 'on' : '' }}">Ethical Management</a>
 			</div>
 		</div>
-		<div class="menu {{ isset($gNum) && $gNum == '02' ? 'on' : '' }}"><a href="{{ route('business.imported-automobiles') }}">Business Areas</a>
+		<div class="menu {{ isset($gNum) && $gNum == '02' ? 'on' : '' }}"><a href="{{ route('eng.business.imported-automobiles') }}">Business Areas</a>
 			<div class="snb">
-				<a href="{{ route('business.imported-automobiles') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">Imported Vehicle PDI Business</a>
-				<a href="{{ route('business.port-logistics') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">Port Logistics Business</a>
-				<a href="{{ route('business.special-vehicle') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">Special Vehicle Manufacturing Business</a>
+				<a href="{{ route('eng.business.imported-automobiles') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">Imported Vehicle PDI Business</a>
+				<a href="{{ route('eng.business.port-logistics') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">Port Logistics Business</a>
+				<a href="{{ route('eng.business.special-vehicle') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">Special Vehicle Manufacturing Business</a>
 			</div>
 		</div>
-		<div class="menu {{ isset($gNum) && $gNum == '04' ? 'on' : '' }}"><a href="{{ route('pr-center.announcements') }}">PR Center</a>
+		<div class="menu {{ isset($gNum) && $gNum == '04' ? 'on' : '' }}"><a href="{{ route('eng.pr-center.announcements') }}">PR Center</a>
 			<div class="snb">
-				<a href="{{ route('pr-center.announcements') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">PLS Announcements</a>
-				<a href="{{ route('pr-center.news') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">PLS News</a>
-				<a href="{{ route('pr-center.location') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">Location & Directions</a>
+				<a href="{{ route('eng.pr-center.announcements') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">PLS Announcements</a>
+				<a href="{{ route('eng.pr-center.news') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">PLS News</a>
+				<a href="{{ route('eng.pr-center.location') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">Location & Directions</a>
 			</div>
 		</div>
 	</div>
 	<div class="right flex_center">
-		<a href="{{ route('contact-us') }}" class="btn_contact">CONTACT US</a>
+		<a href="{{ route('eng.contact-us') }}" class="btn_contact">CONTACT US</a>
 		<div class="langs">
 			<a href="/">KOR</a>
 			<a href="/eng/" class="on">ENG</a>
@@ -67,28 +68,28 @@
 			<div class="menu {{ isset($gNum) && $gNum == '01' ? 'on' : '' }}">
 				<button type="button">Company Information<i></i></button>
 				<div class="snb">
-					<a href="{{ route('information.ceo-message') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">CEO’s Message</a>
-					<a href="{{ route('information.about-company') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">About Us</a>
-					<a href="{{ route('information.history') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">PLS History</a>
-					<a href="{{ route('information.quality-environmental') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '04' ? 'on' : '' }}">Quality & Environmental Management</a>
-					<a href="{{ route('information.safety-health') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '05' ? 'on' : '' }}">Safety & Health Management</a>
-					<a href="{{ route('information.ethical') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '06' ? 'on' : '' }}">Ethical Management</a>
+					<a href="{{ route('eng.information.ceo-message') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">CEO's Message</a>
+					<a href="{{ route('eng.information.about-company') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">About Us</a>
+					<a href="{{ route('eng.information.history') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">PLS History</a>
+					<a href="{{ route('eng.information.quality-environmental') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '04' ? 'on' : '' }}">Quality & Environmental Management</a>
+					<a href="{{ route('eng.information.safety-health') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '05' ? 'on' : '' }}">Safety & Health Management</a>
+					<a href="{{ route('eng.information.ethical') }}" class="{{ isset($gNum) && $gNum == '01' && isset($sNum) && $sNum == '06' ? 'on' : '' }}">Ethical Management</a>
 				</div>
 			</div>
 			<div class="menu {{ isset($gNum) && $gNum == '02' ? 'on' : '' }}">
 				<button type="button">Business Areas<i></i></button>
 				<div class="snb">
-					<a href="{{ route('business.imported-automobiles') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">Imported Vehicle PDI Business</a>
-					<a href="{{ route('business.port-logistics') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">Port Logistics Business</a>
-					<a href="{{ route('business.special-vehicle') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">Special Vehicle Manufacturing Business</a>
+					<a href="{{ route('eng.business.imported-automobiles') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">Imported Vehicle PDI Business</a>
+					<a href="{{ route('eng.business.port-logistics') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">Port Logistics Business</a>
+					<a href="{{ route('eng.business.special-vehicle') }}" class="{{ isset($gNum) && $gNum == '02' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">Special Vehicle Manufacturing Business</a>
 				</div>
 			</div>
 			<div class="menu {{ isset($gNum) && $gNum == '04' ? 'on' : '' }}">
 				<button type="button">PR Center<i></i></button>
 				<div class="snb">
-					<a href="{{ route('pr-center.announcements') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">PLS Announcements</a>
-					<a href="{{ route('pr-center.news') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">PLS News</a>
-					<a href="{{ route('pr-center.location') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">Location & Directions</a>
+					<a href="{{ route('eng.pr-center.announcements') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '01' ? 'on' : '' }}">PLS Announcements</a>
+					<a href="{{ route('eng.pr-center.news') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '02' ? 'on' : '' }}">PLS News</a>
+					<a href="{{ route('eng.pr-center.location') }}" class="{{ isset($gNum) && $gNum == '04' && isset($sNum) && $sNum == '03' ? 'on' : '' }}">Location & Directions</a>
 				</div>
 			</div>
 		</div>
@@ -105,16 +106,16 @@
 				<dt><button type="button">{{ $sName ?? '' }}</button></dt>
 				<dd>
 				@if($gNum == '01')
-					<a href="{{ route('information.ceo-message') }}" class="{{ $gNum == '01' && $sNum == '01' ? 'on' : '' }}">CEO’s Message</a>
-					<a href="{{ route('information.about-company') }}" class="{{ $gNum == '01' && $sNum == '02' ? 'on' : '' }}">About Us</a>
-					<a href="{{ route('information.history') }}" class="{{ $gNum == '01' && $sNum == '03' ? 'on' : '' }}">PLS History</a>
-					<a href="{{ route('information.quality-environmental') }}" class="{{ $gNum == '01' && $sNum == '04' ? 'on' : '' }}">Quality & Environmental Management</a>
-					<a href="{{ route('information.safety-health') }}" class="{{ $gNum == '01' && $sNum == '05' ? 'on' : '' }}">Safety & Health Management</a>
-					<a href="{{ route('information.ethical') }}" class="{{ $gNum == '01' && $sNum == '06' ? 'on' : '' }}">Ethical Management</a>
+					<a href="{{ route('eng.information.ceo-message') }}" class="{{ $gNum == '01' && $sNum == '01' ? 'on' : '' }}">CEO's Message</a>
+					<a href="{{ route('eng.information.about-company') }}" class="{{ $gNum == '01' && $sNum == '02' ? 'on' : '' }}">About Us</a>
+					<a href="{{ route('eng.information.history') }}" class="{{ $gNum == '01' && $sNum == '03' ? 'on' : '' }}">PLS History</a>
+					<a href="{{ route('eng.information.quality-environmental') }}" class="{{ $gNum == '01' && $sNum == '04' ? 'on' : '' }}">Quality & Environmental Management</a>
+					<a href="{{ route('eng.information.safety-health') }}" class="{{ $gNum == '01' && $sNum == '05' ? 'on' : '' }}">Safety & Health Management</a>
+					<a href="{{ route('eng.information.ethical') }}" class="{{ $gNum == '01' && $sNum == '06' ? 'on' : '' }}">Ethical Management</a>
 				@elseif($gNum == '02')
-					<a href="{{ route('business.imported-automobiles') }}" class="{{ $gNum == '02' && $sNum == '01' ? 'on' : '' }}">Imported Vehicle PDI Business</a>
-					<a href="{{ route('business.port-logistics') }}" class="{{ $gNum == '02' && $sNum == '02' ? 'on' : '' }}">Port Logistics Business</a>
-					<a href="{{ route('business.special-vehicle') }}" class="{{ $gNum == '02' && $sNum == '03' ? 'on' : '' }}">Special Vehicle Manufacturing Business</a>
+					<a href="{{ route('eng.business.imported-automobiles') }}" class="{{ $gNum == '02' && $sNum == '01' ? 'on' : '' }}">Imported Vehicle PDI Business</a>
+					<a href="{{ route('eng.business.port-logistics') }}" class="{{ $gNum == '02' && $sNum == '02' ? 'on' : '' }}">Port Logistics Business</a>
+					<a href="{{ route('eng.business.special-vehicle') }}" class="{{ $gNum == '02' && $sNum == '03' ? 'on' : '' }}">Special Vehicle Manufacturing Business</a>
 				@elseif($gNum == '04')
 					<a href="{{ route('eng.pr-center.announcements') }}" class="{{ $gNum == '04' && $sNum == '01' ? 'on' : '' }}">PLS Announcements</a>
 					<a href="{{ route('eng.pr-center.news') }}" class="{{ $gNum == '04' && $sNum == '02' ? 'on' : '' }}">PLS News</a>
@@ -135,8 +136,8 @@
 	<div class="inner">
 		<div class="flogo"><img src="{{ asset('images/logo.svg') }}" alt="logo"></div>
 		<ul class="links">
-			<li><a href="{{ route('terms.privacy-policy') }}"><strong>Privacy Policy</strong></a></li>
-			<li><a href="{{ route('terms.email') }}">Email Collection Refusal</a></li>
+			<li><a href="{{ route('eng.terms.privacy-policy') }}"><strong>Privacy Policy</strong></a></li>
+			<li><a href="{{ route('eng.terms.email-rejection') }}">Email Collection Refusal</a></li>
 		</ul>
 		<ul class="address">
 			<li><strong>Address</strong>437-100 Seodong-daero, Poseung-eup, Pyeongtaek-si, Gyeonggi-do, Republic of Korea</li>
@@ -237,6 +238,7 @@
 
 <!-- 팝업 JavaScript -->
 <script src="{{ asset('js/popup.js') }}"></script>
+@yield('additional_scripts')
 
 </body>
 </html>

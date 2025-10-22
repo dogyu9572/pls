@@ -68,4 +68,70 @@ class TermsController extends Controller
             'enactmentDate' => $customFields['enactment_date'] ?? ''
         ]);
     }
+
+    // =============================================================================
+    // 영문 약관 메서드들
+    // =============================================================================
+
+    /**
+     * 영문 개인정보처리방침
+     */
+    public function privacyPolicyEng()
+    {
+        $model = (new BoardPost)->setTableBySlug('privacy_policy_eng');
+        $policy = $model->newQuery()->first();
+
+        return view('terms.privacy-policy-eng', [
+            'gNum' => '00',
+            'gName' => 'PLS Corp Privacy Policy',
+            'policy' => $policy
+        ]);
+    }
+
+    /**
+     * 영문 이메일 무단수집 거부
+     */
+    public function emailEng()
+    {
+        $model = (new BoardPost)->setTableBySlug('email_rejection_eng');
+        $emailRejection = $model->newQuery()->first();
+
+        return view('terms.email-eng', [
+            'gNum' => '00',
+            'gName' => 'Email Collection Refusal',
+            'emailRejection' => $emailRejection
+        ]);
+    }
+
+    /**
+     * 영문 피엘에스 윤리규범
+     */
+    public function ethicEng()
+    {
+        $model = (new BoardPost)->setTableBySlug('business_ethics_eng');
+        $ethic = $model->newQuery()->first();
+
+        return view('terms.ethic-eng', [
+            'gNum' => '00',
+            'gName' => 'PLS Code of Ethics',
+            'ethic' => $ethic
+        ]);
+    }
+
+    /**
+     * 영문 내부신고제도 운영규정
+     */
+    public function internalReportingEng()
+    {
+        $model = (new BoardPost)->setTableBySlug('business_ethics_eng');
+        $ethic = $model->newQuery()->first();
+        $customFields = $ethic ? $ethic->getCustomFieldsArray() : [];
+
+        return view('terms.internal-reporting-eng', [
+            'gNum' => '00',
+            'gName' => 'Internal Reporting System Operation Regulations',
+            'reportingRules' => $customFields['reporting_rules_eng'] ?? '',
+            'enactmentDate' => $customFields['enactment_date_eng'] ?? ''
+        ]);
+    }
 }
