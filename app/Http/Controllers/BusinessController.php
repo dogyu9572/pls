@@ -108,7 +108,7 @@ class BusinessController extends Controller
         $inquiry = $inquiryModel->newQuery()->first();
         $customFields = $inquiry ? $inquiry->getCustomFieldsArray() : [];
 
-        return view('business.imported-automobiles-eng', [
+        return view('eng.business.imported-automobiles', [
             'gNum' => '02',
             'sNum' => '01',
             'gName' => 'Business Areas',
@@ -133,7 +133,7 @@ class BusinessController extends Controller
         $inquiry = $inquiryModel->newQuery()->first();
         $customFields = $inquiry ? $inquiry->getCustomFieldsArray() : [];
 
-        return view('business.port-logistics-eng', [
+        return view('eng.business.port-logistics', [
             'gNum' => '02',
             'sNum' => '02',
             'gName' => 'Business Areas',
@@ -163,7 +163,7 @@ class BusinessController extends Controller
             }
         }
 
-        return view('business.special-vehicle-eng', [
+        return view('eng.business.special-vehicle', [
             'gNum' => '02',
             'sNum' => '03',
             'gName' => 'Business Areas',

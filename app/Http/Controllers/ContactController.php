@@ -32,7 +32,7 @@ class ContactController extends Controller
         $contact = $model->newQuery()->first();
         $customFields = $contact ? $contact->getCustomFieldsArray() : [];
 
-        return view('contact.index-eng', [
+        return view('eng.contact.index', [
             'gNum' => '00',
             'gName' => 'Contact Us',
             'contact' => $customFields

@@ -81,7 +81,7 @@ class TermsController extends Controller
         $model = (new BoardPost)->setTableBySlug('privacy_policy_eng');
         $policy = $model->newQuery()->first();
 
-        return view('terms.privacy-policy-eng', [
+        return view('eng.terms.privacy-policy', [
             'gNum' => '00',
             'gName' => 'PLS Corp Privacy Policy',
             'policy' => $policy
@@ -96,7 +96,7 @@ class TermsController extends Controller
         $model = (new BoardPost)->setTableBySlug('email_rejection_eng');
         $emailRejection = $model->newQuery()->first();
 
-        return view('terms.email-eng', [
+        return view('eng.terms.email', [
             'gNum' => '00',
             'gName' => 'Email Collection Refusal',
             'emailRejection' => $emailRejection
@@ -111,7 +111,7 @@ class TermsController extends Controller
         $model = (new BoardPost)->setTableBySlug('business_ethics_eng');
         $ethic = $model->newQuery()->first();
 
-        return view('terms.ethic-eng', [
+        return view('eng.terms.ethic', [
             'gNum' => '00',
             'gName' => 'PLS Code of Ethics',
             'ethic' => $ethic
@@ -127,7 +127,7 @@ class TermsController extends Controller
         $ethic = $model->newQuery()->first();
         $customFields = $ethic ? $ethic->getCustomFieldsArray() : [];
 
-        return view('terms.internal-reporting-eng', [
+        return view('eng.terms.internal-reporting', [
             'gNum' => '00',
             'gName' => 'Internal Reporting System Operation Regulations',
             'reportingRules' => $customFields['reporting_rules_eng'] ?? '',

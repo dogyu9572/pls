@@ -175,7 +175,7 @@ class InformationController extends Controller
             ->where('id', 1)
             ->first();
 
-        return view('information.ceo-message-eng', [
+        return view('eng.information.ceo-message', [
             'gNum' => '01',
             'sNum' => '01',
             'gName' => 'Company Information',
@@ -189,7 +189,7 @@ class InformationController extends Controller
      */
     public function aboutCompanyEng()
     {
-        return view('information.about-company-eng', [
+        return view('eng.information.about-company', [
             'gNum' => '01',
             'sNum' => '02',
             'gName' => 'Company Information',
@@ -210,7 +210,7 @@ class InformationController extends Controller
 
         // 실제 데이터가 있는 연도 범위 확인
         if ($histories->isEmpty()) {
-            return view('information.history-eng', [
+            return view('eng.information.history', [
                 'gNum' => '01',
                 'sNum' => '03',
                 'gName' => 'Company Information',
@@ -242,7 +242,7 @@ class InformationController extends Controller
             })->groupBy('category');
         }
 
-        return view('information.history-eng', [
+        return view('eng.information.history', [
             'gNum' => '01',
             'sNum' => '03',
             'gName' => 'Company Information',
@@ -263,7 +263,7 @@ class InformationController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('information.quality-environmental-eng', [
+        return view('eng.information.quality-environmental', [
             'gNum' => '01',
             'sNum' => '04',
             'gName' => 'Company Information',
@@ -291,7 +291,7 @@ class InformationController extends Controller
         
         $safetyHealthEmail = $latestMail ? $latestMail->title : 'dhyim69@plscorp.co.kr';
 
-        return view('information.safety-health-eng', [
+        return view('eng.information.safety-health', [
             'gNum' => '01',
             'sNum' => '05',
             'gName' => 'Company Information',
@@ -310,7 +310,7 @@ class InformationController extends Controller
         $ethics = $model->newQuery()->first();
         $customFields = $ethics ? $ethics->getCustomFieldsArray() : [];
 
-        return view('information.ethical-eng', [
+        return view('eng.information.ethical', [
             'gNum' => '01',
             'sNum' => '06',
             'gName' => 'Company Information',
