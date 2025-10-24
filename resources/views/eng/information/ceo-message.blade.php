@@ -6,10 +6,10 @@
 	<div class="ceo_message_top"></div>
 	<div class="ceo_message_btm">
 		<div class="inner">
-				<div class="tit">Premier Comprehensive Logistics Company<br/><strong class="c_navy"><span class="roboto">㈜</span>PLS</strong></div>
+				<div class="tit">A Premier Comprehensive Logistics Company<br/><strong class="c_navy">PLS</strong></div>
 				<div class="con">
 					{!! $greeting->getCustomFieldsArray()['greeting_en'] ?? '' !!}
-					<div class="name"><span class="roboto">㈜</span>PLS CEO<i>{{ $greeting->getCustomFieldsArray()['ceo_message_en'] ?? '' }}</i></div>
+					<div class="name">{{ $greeting->getCustomFieldsArray()['ceo_message_en'] ?? '' }}</i> <i>Chief Executive Officer PLS Co., Ltd.</i></div>
 				</div>
 			
 		</div>

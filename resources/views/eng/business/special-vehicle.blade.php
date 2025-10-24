@@ -7,7 +7,8 @@
 		<div class="inner">
 			<div class="pagename">{{ $sName }}</div>
 			<div class="tt">Global Manufacturing Competitiveness<br/><strong>Aircraft Refueller</strong></div>
-			<p>Starting with the export of aircraft refuelers to the Middle East region in 2016, ㈜피엘에스 has manufactured and exported more than 200 aircraft refuelers domestically and internationally to date, and aims to expand global competitiveness through continuous exploration of new markets.</p>
+			<p>Since exporting its first <strong>aircraft refueller</strong> to the Middle East in 2016, PLS Co., Ltd. has manufactured and exported <strong>over 200 units</strong> of aircraft refuellers both domestically and internationally.<br/>
+			Through continuous development of new markets and technological innovation, PLS aims to further strengthen its <strong>global competitiveness</strong> as a trusted special vehicle manufacturer.</p>
 		</div>
 	</div>
 	
@@ -28,7 +29,7 @@
 	<div class="special_vehicle02 sub_padding gbox">
 		<div class="inner">
 			<div class="dl_area">
-				<div class="stit mb"><p>Delivery Record</p><strong>Delivery Performance</strong></div>
+				<div class="stit mb"><p>Delivery Record</p><strong>Delivery <br class="pc_vw"/>Record</strong></div>
 				<div class="con">
 					<ul>
 						<li><img src="{{ asset('images/img_special_vehicle02_01.jpg') }}" alt="image"><p>5,000 Gal</p></li>
@@ -87,7 +88,7 @@
 
 	<div class="business_contact sub_padding">
 		<div class="inner">
-			<div class="stit mb"><p>Business Contact</p><strong>Business Inquiry</strong>@if($brochureUrl)<a href="{{ $brochureUrl }}" class="btn_download flex_center" download="{{ $brochureFileName ?? 'brochure.pdf' }}">Brochure Download</a>@endif</div>
+			<div class="stit mb"><p>Business Contact</p><strong>Business Inquiry</strong>@if($brochureUrl)<a href="{{ $brochureUrl }}" class="btn_download flex_center" download="{{ $brochureFileName ?? 'brochure.pdf' }}">Download Brochure</a>@endif</div>
 			<ul>
 				<li class="i1"><div class="tt">TEL</div><p><strong>{{ $specialVehicleTel }}</strong></p></li>
 				<li class="i2"><div class="tt">MAIL</div><p><strong>{{ $specialVehicleMail }}</strong></p></li>

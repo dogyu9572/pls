@@ -20,7 +20,7 @@
 		<div class="map_text bdrs20">
 			<div class="logo"><img src="{{ asset('images/logo_w.svg') }}" alt="logo"></div>
 			<ul>
-				<li><strong>PLS HQ</strong><p>437-100 Seodong-daero, Poseung-eup, Pyeongtaek-si, Gyeonggi-do, Republic of Korea <br class="hide"><span class="roboto">㈜</span>PLS</p></li>
+				<li><strong>PLS HQ</strong><p>437-100 Seodong-daero, Poseung-eup, Pyeongtaek-si, Gyeonggi-do, Republic of Korea. <br class="hide">PLS Co., Ltd.</p></li>
 			</ul>
 		</div>
 	</div>

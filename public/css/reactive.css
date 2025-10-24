@@ -82,7 +82,7 @@
 	.sub_tit .title {font-size:56px;}
 	.sub_tit p {font-size:22px; margin-bottom:60px;}
 	.aside {margin-bottom:60px;}
-	.aside dd a {font-size:18px; line-height:50px;}
+	.aside dd a {font-size:18px; height:50px;}
 	.container {padding-bottom:140px; font-size:16px;}
 	.container.no_aside {margin-top:80px; padding-top:100px;}
 	.container .pb_container {padding-bottom:140px;}
@@ -117,9 +117,8 @@
 	.ceo_message_btm .tit {/* width:36%; */ font-size:40px;}
 	.ceo_message_btm .con strong {font-size:22px;}
 	.ceo_message_btm .con p {font-size:20px; margin-top:20px;}
-	.ceo_message_btm .con .name {margin-top:30px; font-size:18px;}
-	.ceo_message_btm .con .name i {padding-left:30px;}
-	.ceo_message_btm .con .name i:before {left:14px; height:12px;}
+	.ceo_message_btm .con .name {margin-top:30px; font-size:18px; gap:30px;}
+	.ceo_message_btm .con .name i:before {left:-15px; height:12px;}
 /* 회사소개 */
 	.about_company_top {padding:140px 0;}
 	.about_company_top .tit {font-size:40px;}
@@ -147,7 +146,7 @@
 	.history_btm .list .dots_list p + p {margin-top:28px;}
 	.history_btm.start .years {top:80px; left:20px; margin-left:0;}
 /* 품질/환경경영 */
-	.quality_environmental_graph .tit {font-size:20px; line-height:60px; width:420px; margin-bottom:30px;}
+	.quality_environmental_graph .tit {font-size:20px; width:420px; margin-bottom:30px;}
 	.quality_environmental_graph .box {width:16vw;}
 	.quality_environmental_graph .box:before {height:60px; /* margin-bottom:4px; */}
 	.quality_environmental_graph ul {gap:50px;}
@@ -437,7 +436,7 @@
 	.sub_tit .title {font-size:44px;}
 	.sub_tit p {font-size:20px; margin-bottom:50px;}
 	.aside {margin-bottom:50px;}
-	.aside dd a {font-size:16px; line-height:44px;}
+	.aside dd a {font-size:16px; height:44px;}
 	.container {padding-bottom:100px; font-size:15px;}
 	.container.no_aside {margin-top:80px; padding-top:80px;}
 	.container .pb_container {padding-bottom:100px;}
@@ -472,9 +471,10 @@
 	.ceo_message_btm .con {/* width:64%; */}
 	.ceo_message_btm .con strong {font-size:20px;}
 	.ceo_message_btm .con p {font-size:18px; margin-top:15px;}
-	.ceo_message_btm .con .name {margin-top:25px; font-size:16px;}
-	.ceo_message_btm .con .name i {padding-left:26px;}
-	.ceo_message_btm .con .name i:before {left:12px; /* height:12px; */}
+	.ceo_message_btm .con .name {margin-top:25px; font-size:16px; gap:26px;}
+	.ceo_message_btm .con .name i:before {left:-13px; /* height:12px; */}
+	/* 에디터 수정 */
+	.ceo_message_btm .con p[style] {font-size:18px !important;}
 /* 회사소개 */
 	.about_company_top {padding:100px 0;}
 	.about_company_top .tit {font-size:30px;}
@@ -506,7 +506,7 @@
 	.history_btm .list .dots_list p + p {margin-top:24px;}
 	.history_btm .list .imgfit {border-radius:16px;}
 /* 품질/환경경영 */
-	.quality_environmental_graph .tit {font-size:18px; line-height:50px; width:400px; margin-bottom:25px;}
+	.quality_environmental_graph .tit {font-size:18px; width:400px; margin-bottom:25px;}
 	.quality_environmental_graph .box {width:15vw;}
 	.quality_environmental_graph .box:before {height:50px;}
 	.quality_environmental_graph ul {gap:40px;}
@@ -684,6 +684,7 @@
 	.gallery_list p {font-size:18px; line-height:26px; margin-bottom:15px;}
 	.gallery_list .date {font-size:14px; padding-left:22px; background-size:contain;}
 /* 오시는 길 */
+	.map_area iframe,
 	.root_daum_roughmap .wrap_map {height:440px !important;}
 	.map_area .map_img:before {width:190px;}
 	.map_text {margin-top:-100px; padding:40px;}
@@ -866,7 +867,7 @@
 	.aside .on dt button {color:#fff; background:#15269D;}
 	.aside .on dt button:after {transform:rotate(180deg); background:#fff;}
 	.aside dd {position:absolute; top:24px; left:0; width:100%; border:#ddd 1px solid; background:#fff; padding:32px 0 12px; border-radius:0 0 24px 24px; display:none;}
-	.aside dd a {position:relative; display:block; font-size:15px; line-height:24px; padding:8px 0 8px 30px; text-align:left;}
+	.aside dd a {position:relative; display:block; font-size:15px; line-height:24px; height:auto; padding:8px 0 8px 30px; text-align:left;}
 	.aside dd a:before {content:""; position:absolute; top:50%; left:18px; width:3px; height:3px; background:#0006; border-radius:50%; transform:translateY(-50%);}
 	.aside dd a.on {color:#222; font-weight:600; background:#fff;}
 	.container {padding-bottom:120px; font-size:15px;}
@@ -912,9 +913,10 @@
 	.ceo_message_btm .con {width:100%;}
 	.ceo_message_btm .con strong {font-size:18px;}
 	.ceo_message_btm .con p {font-size:16px; margin-top:20px;}
-	.ceo_message_btm .con .name {margin-top:32px; font-size:15px;}
-	.ceo_message_btm .con .name i {padding-left:24px;}
-	.ceo_message_btm .con .name i:before {left:11px; height:14px;}
+	.ceo_message_btm .con .name {margin-top:32px; font-size:15px; gap:24px;}
+	.ceo_message_btm .con .name i:before {left:-12px; height:14px;}
+	/* 에디터 수정 */
+	.ceo_message_btm .con p[style] {font-size:16px !important;}
 /* 회사소개 */
 	.about_company_top {padding:80px 0; background-image:url('/images/bg_about_company_top_m.jpg');}
 	.about_company_top .tit {font-size:30px;}
@@ -958,7 +960,7 @@
 /* 품질/환경경영 */
 	.quality_environmental_top {background-image:url('/images/bg_quality_environmental_top_m.jpg');}
 	.quality_environmental_graph {position:relative;}
-	.quality_environmental_graph .tit {position:absolute; top:218px; left:50%; font-size:16px; line-height:50px; width:calc(100% - 72px); margin-bottom:0; transform:translateX(-50%); z-index:1;}
+	.quality_environmental_graph .tit {position:absolute; top:218px; left:50%; font-size:16px; width:calc(100% - 72px); margin-bottom:0; transform:translateX(-50%); z-index:1;}
 	.quality_environmental_graph .box {width:160px;}
 	.quality_environmental_graph .box:before {height:32px;}
 	.quality_environmental_graph > ul {flex-direction:column; gap:58px;}
@@ -1149,7 +1151,7 @@
 	.board_list td.tal {width:100%; display:flex; align-items:center; gap:5px;}
 	.board_list a {display:none;}
 	.board_list .hit:before {content:"조회수 :";}
-	.board_list .date:before {content:"등록일  :";}
+	.board_list .date:before {content:"등록일 :";}
 	.board_list .notice td.tal:before {content:"공지"; font-size:12px; color:#fff; font-weight:600; line-height:24px; height:24px; width:50px; text-align:center; background:#222; border-radius:12px;}
 	.board_list .new td.tal a {padding-right:24px;}
 	.board_list .new td.tal a:after {width:18px;}
@@ -1179,6 +1181,7 @@
 	.gallery_list p {font-size:14px; line-height:22px; margin-bottom:8px;}
 	.gallery_list .date {font-size:13px; padding-left:20px; background-size:14px;}
 /* 오시는 길 */
+	.map_area iframe,
 	.root_daum_roughmap .wrap_map {height:300px !important;}
 	.map_area .map_img:before {width:160px;}
 	.map_text {margin-top:-50px; padding:20px; gap:20px;}

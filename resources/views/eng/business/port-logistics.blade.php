@@ -6,8 +6,9 @@
 	<div class="sub_visual port_logistics_top">
 		<div class="inner">
 			<div class="pagename">{{ $sName }}</div>
-			<div class="tt">New Value in Port Logistics <br/><strong>Value Chain</strong> Expansion</div>
-			<p>(주)피엘에스 operates port logistics business (stevedoring, storage, transportation) based in Pyeongtaek Port, and promotes growth through cargo diversification and business area expansion based on stable port operation capabilities.</p>
+			<div class="tt">Expanding the <br/><strong>Value Chain</strong> in Port Logistics</div>
+			<p>PLS Co., Ltd. operates port logistics services including <strong>stevedoring, storage, and transportation based</strong> at <strong>Pyeongtaek Port</strong>.<br/>
+			Building on our strong and stable port operation capabilities, we are expanding our <strong>cargo portfolio</strong> and <strong>business areas</strong>, continuously enhancing the value chain and driving sustainable growth in the port logistics sector.</p>
 		</div>
 	</div>
 	
@@ -16,8 +17,8 @@
 			<div class="dl_area">
 				<div class="stit"><p>Project Overview</p><strong>Business Overview</strong></div>
 				<div class="con">
-					<p>To establish a stable supply chain for Bio-mass power generation fuel supplied to GS Group power plants, we provide Total Logistics Service covering the entire process from port stevedoring of cargo imported from overseas to storage, management, and final transportation to power plants.<br/>
-					Through this, we ensure the efficiency and reliability of the power generation fuel logistics process and support our customers' stable energy production activities.</p>
+					<p>To establish a stable supply chain for biomass fuel supplied to GS Group’s power generation subsidiaries, PLS provides a <strong>Total Logistics Service</strong> that covers the entire process from <strong>port unloading and storage</strong> of imported cargo to <strong>management and final transportation</strong> to the power plants.<br/>
+					Through this integrated logistics system, PLS ensures both <strong>efficiency and reliability</strong> in the fuel logistics process, supporting our clients’ <strong>stable and sustainable energy production operations.</strong></p>
 					<div class="imgs">
 						<img src="{{ asset('images/img_port_logistics01_01.jpg') }}" alt="image">
 						<img src="{{ asset('images/img_port_logistics01_02.jpg') }}" alt="image">
@@ -30,7 +31,7 @@
 	
 	<div class="port_logistics02 sub_padding gbox">
 		<div class="inner">
-			<div class="stit mb"><p>Cargo handled in port logistics</p><strong>Port Logistics Cargo</strong></div>
+			<div class="stit mb"><p>Cargo handled in port logistics</p><strong>Handled Cargo in Port Logistics</strong></div>
 			<ul>
 				<li class="i1">
 					<div class="port_logistics02_slide">
@@ -39,7 +40,8 @@
 						<img src="{{ asset('images/img_port_logistics02_psk03.jpg') }}" alt="image">
 					</div>
 					<div class="txt">
-						<div class="tit">PKS(Palm Kernel Shell)</div><p>A hard shell generated during palm oil extraction process, it is a stable energy source with calorific value of <strong>3,500~4,200 kcal/kg</strong>. With low moisture content and fibrous structure similar to nut shells, it is suitable for eco-friendly biomass fuel.</p>
+						<div class="tit">PKS(Palm Kernel Shel)</div><p>Palm Kernel Shells are hard shells generated during the palm oil extraction process, serving as a stable biomass fuel with a calorific value of <strong>3,500–4,200 kcal/kg</strong>.<br/>
+						With low moisture content and a fibrous structure similar to nut shells, PKS is highly suitable as an <strong>eco-friendly renewable energy source</strong>.</p>
 					</div>
 				</li>
 				<li class="i2">
@@ -49,7 +51,8 @@
 						<img src="{{ asset('images/img_port_logistics02_woodpellet03.jpg') }}" alt="image">
 					</div>
 					<div class="txt">
-						<div class="tit">Wood Pellet</div><p>An eco-friendly biomass fuel made by compressing wood byproducts, featuring high energy efficiency with calorific value of <strong>4,000~4,500 kcal/kg</strong> and low carbon emissions. It is utilized in various fields including power plants, industrial boilers, and heating fuels.</p>
+						<div class="tit">Wood Pellet</div><p>Wood pellets are <strong>compressed biomass fuel</strong> made from wood by-products, featuring a high calorific value of <strong>4,000–4,500 kcal/kg</strong>, excellent energy efficiency, and low carbon emissions.<br/>
+						They are widely used in <strong>power generation, industrial boilers, and heating systems</strong>, contributing to sustainable and clean energy production.</p>
 					</div>
 				</li>
 				<li class="i3">
@@ -59,7 +62,8 @@
 						<img src="{{ asset('images/img_port_logistics02_woodchip02.jpg') }}" alt="image">
 					</div>
 					<div class="txt">
-						<div class="tit">Wood Chip</div><p>A biomass fuel made by finely cutting and crushing wood, it is an economical energy source with calorific value of <strong>2,000~3,000 kcal/kg</strong>. With easy raw material procurement and excellent price competitiveness, it is widely used in power plants and industrial boilers.</p>
+						<div class="tit">Wood Chip</div><p>Wood chips are <strong>biomass fuel</strong> produced by cutting and shredding wood materials, offering a calorific value of <strong>2,000–3,000 kcal/kg</strong> as a <strong>cost-effective energy source</strong>.<br/>
+						Due to their easy availability and strong price competitiveness, wood chips are extensively used in <strong>power plants and industrial boilers</strong>.</p>
 					</div>
 				</li>
 			</ul>
@@ -70,19 +74,19 @@
 		<div class="inner">
 			<div class="stit mb"><p>Port Logistics Process</p><strong>Port Logistics Process</strong></div>
 			<ul class="process_list set3">
-				<li><div class="imgfit"><img src="{{ asset('images/img_pdiprocess_b01.jpg') }}" alt="image"></div><div class="txt"><span>01</span><p>Fuel Cargo Loading<em>North America/Vietnam/Indonesia</em></p></div></li>
-				<li><div class="imgfit"><img src="{{ asset('images/img_pdiprocess_b02.jpg') }}" alt="image"></div><div class="txt"><span>02</span><p>Pyeongtaek/Dangjin Port Arrival</p></div></li>
-				<li><div class="imgfit"><img src="{{ asset('images/img_pdiprocess_b03.jpg') }}" alt="image"></div><div class="txt"><span>03</span><p>Stevedoring Operation</p></div></li>
+				<li><div class="imgfit"><img src="{{ asset('images/img_pdiprocess_b01.jpg') }}" alt="image"></div><div class="txt"><span>01</span><p>Fuel Cargo Shipment<em>(North America / Vietnam / Indonesia)</em></p></div></li>
+				<li><div class="imgfit"><img src="{{ asset('images/img_pdiprocess_b02.jpg') }}" alt="image"></div><div class="txt"><span>02</span><p>Arrival at Pyeongtaek & Dangjin Ports</p></div></li>
+				<li><div class="imgfit"><img src="{{ asset('images/img_pdiprocess_b03.jpg') }}" alt="image"></div><div class="txt"><span>03</span><p>Stevedoring (Unloading Operations)</p></div></li>
 				<li><div class="imgfit"><img src="{{ asset('images/img_pdiprocess_b04.jpg') }}" alt="image"></div><div class="txt"><span>04</span><p>Indoor Storage</p></div></li>
 				<li><div class="imgfit"><img src="{{ asset('images/img_pdiprocess_b05.jpg') }}" alt="image"></div><div class="txt"><span>05</span><p>Transportation</p></div></li>
-				<li><div class="imgfit"><img src="{{ asset('images/img_pdiprocess_b06.jpg') }}" alt="image"></div><div class="txt"><span>06</span><p>Power Plant Delivery (Outbound)</p></div></li>
+				<li><div class="imgfit"><img src="{{ asset('images/img_pdiprocess_b06.jpg') }}" alt="image"></div><div class="txt"><span>06</span><p>Delivery to Power Plants (Outbound)</p></div></li>
 			</ul>
 		</div>
 	</div>
 
 	<div class="imported_automobiles04 sub_padding gbox_b">
 		<div class="inner">
-			<div class="stit mb"><p>Port Logistics Partner</p><strong>Port Logistics Business Partners</strong></div>
+			<div class="stit mb"><p>Port Logistics Partner</p><strong>Port Logistics Partners</strong></div>
 		</div>
 		<div class="partner_list marquee_list">
 			<div class="slide">
@@ -97,7 +101,7 @@
 
 	<div class="business_contact sub_padding">
 		<div class="inner">
-			<div class="stit mb"><p>Business Contact</p><strong>Business Inquiry</strong></div>
+			<div class="stit mb"><p>Business Contact</p><strong>Business Contact</strong></div>
 			<ul>
 				<li class="i1"><div class="tt">TEL</div><p><strong>{{ $logisticsTel }}</strong></p></li>
 				<li class="i2"><div class="tt">MAIL</div><p><strong>{{ $logisticsMail }}</strong></p></li>

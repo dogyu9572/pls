@@ -1,9 +1,53 @@
+/* ------------------------------ PC Guide ------------------------------ */
 @media screen and (max-width:1620px){
 	.header .gnb .menu {width:auto;}
 	.header .gnb .menu > a {padding:0 30px;}
 }
 
+/* ------------------------------ PC Guide ------------------------------ */
 @media screen and (max-width:1440px){
 	.header .gnb .menu {width:auto;}
 	.header .gnb .menu > a {padding:0 20px;}
+	.aside dd a {font-size:15px;}
+
+	.about_company_btm li {height:240px;}
+}
+
+/* ------------------------------ Hover ------------------------------ */
+@media screen and (min-width:1024px){
+	.header.hover:before,
+	.header.hover .gnb .snb {height:386px;}
+}
+
+/* ------------------------------ Tablet PC ------------------------------ */
+@media screen and (max-width:1023px){
+	.aside dd a {font-size:14px;}
+}
+
+/* ------------------------------ Mobile ------------------------------ */
+@media screen and (max-width:767px){
+	.aside dd a {font-size:15px;}
+	.sub_tit .title {font-size:32px;}
+	.sub_tit p {width:100%;}
+
+	.sub_visual .pagename {font-size:15px; margin-bottom:14px;}
+	.sub_visual .tt {font-size:24px;}
+	.sub_visual p {font-size:14px; margin-top:24px;}
+
+	.stit a {position: relative; width: 100%; margin-top:10px;}
+
+	.ceo_message_btm .tit {font-size:28px;}
+	.ceo_message_btm .con .name {flex-direction: column; align-items: flex-start; gap:10px;}
+	.ceo_message_btm .con .name i:before {top:-5px; left:0; width: 14px; height: 2px; transform:none;}
+
+	.about_company_top .tit {font-size:24px;}
+	.about_company_top p {font-size:15px;}
+
+	.quality_environmental_graph .tit {font-size:14px; width: calc(100% - 40px);}
+
+	.num_ko_list li {padding-left:52px;}
+	.safety_health03 li .tt {font-size:18px;}
+
+	.board_list .hit:before {content:"Hit :";}
+	.board_list .date:before {content:"date :";}
 }

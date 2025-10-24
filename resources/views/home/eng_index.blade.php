@@ -64,7 +64,7 @@
 	<div class="mcon mcon01">
 		<div class="positionbox">
 			<div class="inner">
-				<div class="mtit"><span>Business</span><div class="tit">PLS specializes in <br class="pc_vw"><strong>import automobile PDI services, port logistics,<br/>and special-purpose vehicle manufacturing.</strong></div></div>
+				<div class="mtit"><span>Business</span><div class="tit">PLS is engaged in <br class="pc_vw"><strong>three core business areas: imported vehicle PDI services, <br/>port logistics, and special vehicle manufacturing.</strong></div></div>
 				<div class="flex before">
 					<div class="box i2"><div class="inbox"><div class="tit">Port Logistics Business</div></div></div>
 					<div class="box i1"><div class="inbox"><div class="tit">Imported Vehicle PDI Business</div></div></div>
@@ -84,8 +84,8 @@
 						<div class="txt">
 							<div class="cate">Business</div>
 							<div class="tit">Imported Vehicle PDI Business</div>
-							<p>As a leading PDI (Pre-Delivery Inspection) company for imported vehicles in Korea, PLS provides One-Stop PDI Services  from vehicle inspection and diagnostics to storage and transportation based on the automotive logistics infrastructure of the Pyeongtaek Port Free Trade Zone and our proprietary PDI operation</p>
-							<a href="{{ route('business.imported-automobiles') }}" class="btn_more">VIEW MORE</a>
+							<p>As a leading PDI (Pre-Delivery Inspection) company for imported vehicles in Korea, PLS provides One-Stop PDI Services  from vehicle inspection and diagnostics to storage and transportation based on the automotive logistics infrastructure of the Pyeongtaek Port Free Trade Zone and our proprietary PDI operation management platform.</p>
+							<a href="{{ route('eng.business.imported-automobiles') }}" class="btn_more">VIEW MORE</a>
 						</div>
 					</div>
 				</div>
@@ -97,7 +97,7 @@
 							<div class="cate">Business</div>
 							<div class="tit">Port Logistics Business</div>
 							<p>Based in Pyeongtaek Port, PLS handles port logistics operations  including unloading, storage, and transportation for biomass power generation fuel supplied to GS Group power plants.</p>
-							<a href="{{ route('business.port-logistics') }}" class="btn_more">VIEW MORE</a>
+							<a href="{{ route('eng.business.port-logistics') }}" class="btn_more">VIEW MORE</a>
 						</div>
 					</div>
 				</div>
@@ -109,7 +109,7 @@
 							<div class="cate">Business</div>
 							<div class="tit">Special Vehicle Manufacturing Business</div>
 							<p>Since exporting aircraft refueling trucks to the Middle East in 2016, PLS has continued to expand its global competitiveness through ongoing development of new markets and product innovations.</p>
-							<a href="{{ route('business.special-vehicle') }}" class="btn_more">VIEW MORE</a>
+							<a href="{{ route('eng.business.special-vehicle') }}" class="btn_more">VIEW MORE</a>
 						</div>
 					</div>
 				</div>
@@ -168,7 +168,7 @@
 	<div class="mcon mcon05">
 		<div class="bgbox bg1">
 			<a href="/recruitment/information" class="flex_center colm btn1"><span class="tit">Careers</span><p>At PLS, we recruit talented individuals who turn their limitless potential into reality.<br/>We are always open to passionate and dedicated professionals ready to grow with us.</p><i class="btn_more">VIEW MORE</i></a>
-			<a href="/contact-us" class="flex_center colm btn2"><span class="tit">Business Inquiries</span><p>Driving logistics innovation and shared value PLS leads the future of logistics through systematic operations and a smart logistics platform.</p><i class="btn_more">VIEW MORE</i></a>
+			<a href="/eng/contact-us" class="flex_center colm btn2"><span class="tit">Business Inquiries</span><p>Driving logistics innovation and shared value PLS leads the future of logistics through systematic operations and a smart logistics platform.</p><i class="btn_more">VIEW MORE</i></a>
 		</div>
 	</div>
 

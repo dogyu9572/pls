@@ -14,7 +14,7 @@
 	<div class="safety_health02 sub_padding pt0">
 		<div class="inner">
 			<div class="dl_area">
-				<div class="stit"><p>safety_health_top</p><strong>안전보건 <br/>경영방침</strong></div>
+				<div class="stit"><p>Management Policy</p><strong>안전보건 <br/>경영방침</strong></div>
 				<div class="con gbox pd46 bdrs20">
 					<ol class="num_ko_list">
 						<li><strong>하나.</strong> 경영자는 안전보건 문화 정착을 위한 의지를 지속적으로 표명하고 솔선수범 한다.</li>

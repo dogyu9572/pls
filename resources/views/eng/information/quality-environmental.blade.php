@@ -6,23 +6,23 @@
 	<div class="sub_visual quality_environmental_top">
 		<div class="inner">
 			<div class="pagename">{{ $sName }}</div>
-			<div class="tt"><span class="roboto">㈜</span>PLS operates a <br/><strong>Quality and Environmental Management System</strong><br/>to achieve customer satisfaction and create the best customer value.</div>
-			<p>We continuously strive to provide optimal solutions and differentiated services to customers by not only continuously improving quality but also systematically managing environmental risks.</p>
+			<div class="tt">PLS Co., Ltd. has implemented and operates a <br/><strong>quality and environmental management system</strong><br/>to achieve customer satisfaction and create the highest customer value.</div>
+			<p>We are committed not only to continuous quality improvement, but also to the systematic management of environmental risks, striving to provide our customers with optimal logistics solutions and differentiated services.</p>
 		</div>
 	</div>
 	
 	<div class="quality_environmental_btm">
 		<div class="inner">
 			<div class="quality_environmental_graph">
-				<div class="tit">Quality/Environmental Management System Continuous Improvement</div>
+				<div class="tit">Continuous Improvement of Quality and Environmental Management System</div>
 				<ul class="flex_center">
 					<li class="box i1 bg_b">Customer Requirements</li>
 					<li class="center">
 						<ul class="flex_center">
 							<li class="box i2 bg_s">Management Responsibility</li>
-							<li class="box i3 bg_s">Management of Management Resources</li>
+							<li class="box i3 bg_s">Resource Management</li>
 							<li class="box i4 bg_s">Service Realization</li>
-							<li class="box i5 bg_s">Measurement/Analysis Improvement</li>
+							<li class="box i5 bg_s">Measurement, Analysis & Improvement</li>
 						</ul>
 					</li>
 					<li class="box i6 bg_b">Customer Satisfaction</li>

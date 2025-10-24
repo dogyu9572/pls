@@ -6,8 +6,8 @@
 	<div class="sub_visual history_top">
 		<div class="inner">
 			<div class="pagename">{{ $sName }}</div>
-			<div class="tt"><span class="roboto">㈜</span>PLS is growing as a <br class="mo_vw"/><strong>global logistics company</strong><br/>based on challenge and innovation.</div>
-			<p>Since moving to Pyeongtaek Port Free Trade Zone, we have diversified our business areas and are continuously investing in infrastructure for future growth.</p>
+			<div class="tt">PLS Co., Ltd. has been growing into a <br class="mo_vw"/><strong>global logistics company</strong><br/>based on challenge and innovation.</div>
+			<p>Since relocating to the Pyeongtaek Port Free Trade Zone, we have diversified our business portfolio and continuously invested in infrastructure to drive sustainable future growth.</p>
 		</div>
 	</div>
 
