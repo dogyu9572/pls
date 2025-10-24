@@ -6,6 +6,9 @@
 	.sub_visual:before {content:""; position:absolute; top:0; left:0; width:100%; height:100%; background:#0006;}
 	.sub_visual * {position:relative; z-index:1;}
 	.sub_visual .tt {font-size:48px;}
+/* 게시판 상세 */
+	.view_foot .prev {padding-left:110px;}
+	.view_foot .next {padding-right:110px;}
 /* 회사소개 */
 	.about_company_top .tit {font-size:38px;}
 	.about_company_btm li {height:280px;}

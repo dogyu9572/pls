@@ -130,8 +130,8 @@ class TermsController extends Controller
         return view('eng.terms.internal-reporting', [
             'gNum' => '00',
             'gName' => 'Internal Reporting System Operation Regulations',
-            'reportingRules' => $customFields['reporting_rules_eng'] ?? '',
-            'enactmentDate' => $customFields['enactment_date_eng'] ?? ''
+            'reportingRules' => $customFields['reporting_rules'] ?? '',
+            'enactmentDate' => $customFields['enactment_date'] ?? ''
         ]);
     }
 }

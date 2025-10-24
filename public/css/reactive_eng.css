@@ -22,6 +22,9 @@
 /* ------------------------------ Tablet PC ------------------------------ */
 @media screen and (max-width:1023px){
 	.aside dd a {font-size:14px;}
+/* 게시판 상세 */
+	.view_foot .prev {padding-left:100px;}
+	.view_foot .next {padding-right:100px;}
 }
 
 /* ------------------------------ Mobile ------------------------------ */
@@ -50,4 +53,7 @@
 
 	.board_list .hit:before {content:"Hit :";}
 	.board_list .date:before {content:"date :";}
+/* 게시판 상세 */
+	.view_foot .prev {padding-left:28px;}
+	.view_foot .next {padding-right:28px;}
 }

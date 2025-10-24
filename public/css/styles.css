@@ -687,7 +687,7 @@
 	.view_files a + a {margin-top:8px;}
 	.view_foot {position:relative; margin-top:54px; border-top:#ddd 1px solid; padding-top:54px;}
 	.view_foot .btn_list {display:block; color:#fff; font-weight:600; line-height:60px; height:60px; width:240px; border-radius:30px; margin:0 auto; background:#222; text-align:center;}
-	.view_foot .arrow {position:absolute; bottom:0; width:calc(50% - 140px;); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+	.view_foot .arrow {position:absolute; bottom:0; width:calc(50% - 140px); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 	.view_foot .arrow:before {content:""; position:absolute; top:0; width:20px; height:100%; background:url('/images/arrow_page.svg') no-repeat 50% 50% / contain;}
 	.view_foot .arrow span {position:absolute; top:0; color:#222; font-weight:600;}
 	.view_foot .prev {left:0; padding-left:90px;}

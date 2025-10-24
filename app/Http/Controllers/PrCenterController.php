@@ -174,7 +174,6 @@ class PrCenterController extends Controller
         $searchKeyword = $request->input('search_keyword');
         
         $query = $model->newQuery()
-            ->where('category', '영문')
             ->when($searchKeyword, function ($q) use ($searchType, $searchKeyword) {
                 $column = $searchType === 'Title' ? 'title' : 'content';
                 return $q->where($column, 'like', '%' . $searchKeyword . '%');
@@ -183,7 +182,7 @@ class PrCenterController extends Controller
             ->orderBy('created_at', 'desc');
 
         $posts = $query->paginate(10);
-        $total = $model->newQuery()->where('category', '영문')->count();
+        $total = $model->newQuery()->count();
 
         return view('pr-center.announcements-eng', [
             'gNum' => '04',
@@ -241,7 +240,6 @@ class PrCenterController extends Controller
         $searchKeyword = $request->input('search_keyword');
         
         $query = $model->newQuery()
-            ->where('category', '영문')
             ->when($searchKeyword, function ($q) use ($searchType, $searchKeyword) {
                 $column = $searchType === 'Title' ? 'title' : 'content';
                 return $q->where($column, 'like', '%' . $searchKeyword . '%');
@@ -250,7 +248,7 @@ class PrCenterController extends Controller
             ->orderBy('created_at', 'desc');
 
         $posts = $query->paginate(9);
-        $total = $model->newQuery()->where('category', '영문')->count();
+        $total = $model->newQuery()->count();
 
         // 게시글 데이터 가공
         $posts->getCollection()->transform(function ($post) {
